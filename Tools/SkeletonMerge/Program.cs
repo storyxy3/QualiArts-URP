@@ -4,6 +4,19 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
+if(args[0]=="fields" || args[0]=="field-types" || args[0]=="visibility") {
+ using var pe=new System.Reflection.PortableExecutable.PEReader(File.OpenRead(args[1]));
+ var md=System.Reflection.Metadata.PEReaderExtensions.GetMetadataReader(pe);
+ string TypeName(System.Reflection.Metadata.TypeDefinitionHandle h) {var t=md.GetTypeDefinition(h);var parent=t.GetDeclaringType();return (parent.IsNil?md.GetString(t.Namespace):TypeName(parent))+"."+md.GetString(t.Name);}
+ var types=md.TypeDefinitions.ToDictionary(h=>TypeName(h),h=>md.GetTypeDefinition(h).GetFields().Select(f=>md.GetFieldDefinition(f)).Where(f=>(f.Attributes&System.Reflection.FieldAttributes.Static)==0).Select(f=>md.GetString(f.Name)).ToArray());
+ if(args[0]=="visibility") {
+  var visibility=md.TypeDefinitions.ToDictionary(h=>TypeName(h),h=>new{type=(md.GetTypeDefinition(h).Attributes & System.Reflection.TypeAttributes.VisibilityMask).ToString(),methods=md.GetTypeDefinition(h).GetMethods().Select(m=>md.GetMethodDefinition(m)).Where(m=>(m.Attributes&System.Reflection.MethodAttributes.MemberAccessMask)==System.Reflection.MethodAttributes.Public).Select(m=>md.GetString(m.Name)).ToArray(),fields=md.GetTypeDefinition(h).GetFields().Select(f=>md.GetFieldDefinition(f)).Where(f=>(f.Attributes&System.Reflection.FieldAttributes.FieldAccessMask)==System.Reflection.FieldAttributes.Public).Select(f=>md.GetString(f.Name)).ToArray()});
+  File.WriteAllText(args[2],JsonSerializer.Serialize(visibility,new JsonSerializerOptions{WriteIndented=true}));
+ } else if(args[0]=="field-types") {
+  var fieldTypes=md.TypeDefinitions.ToDictionary(h=>TypeName(h),h=>md.GetTypeDefinition(h).GetFields().Select(f=>md.GetFieldDefinition(f)).Where(f=>(f.Attributes&System.Reflection.FieldAttributes.Static)==0).Select(f=>new{name=md.GetString(f.Name),type=f.DecodeSignature(new FieldTypeProvider(),(object?)null)}).ToArray());
+  File.WriteAllText(args[2],JsonSerializer.Serialize(fieldTypes,new JsonSerializerOptions{WriteIndented=true}));
+ } else File.WriteAllText(args[2],JsonSerializer.Serialize(types,new JsonSerializerOptions{WriteIndented=true}));return;
+}
 var root = Path.GetFullPath(args[0]);
 var mode = args.Length > 1 ? args[1] : "inventory";
 var fieldStage=mode=="generate-fields";
@@ -39,7 +52,7 @@ string Key(MemberDeclarationSyntax m) => m switch {
 var log = new List<object>();
 var patches = new Dictionary<string,List<(int pos,string text,string owner)>>();
 var excluded = new HashSet<string>{
- "UnityEngine.Rendering.Universal.PlatformAutoDetect", "UnityEngine.Rendering.ProfilingSampler", "UnityEngine.Rendering.CoreUtils"
+ "UnityEngine.Rendering.DebugUI.Table", "UnityEngine.Rendering.Universal.PlatformAutoDetect", "UnityEngine.Rendering.ProfilingSampler", "UnityEngine.Rendering.CoreUtils"
 };
 
 foreach (var (stage, package) in packages) {
@@ -116,3 +129,20 @@ if(mode=="merge") {
 }
 File.WriteAllText(Path.Combine(root,".qa-work","inventory.json"),JsonSerializer.Serialize(log,new JsonSerializerOptions{WriteIndented=true}));
 Console.WriteLine($"{log.Count} changes inventoried");
+
+sealed class FieldTypeProvider : System.Reflection.Metadata.ISignatureTypeProvider<string, object?> {
+ public string GetArrayType(string e,System.Reflection.Metadata.ArrayShape s)=>e+"["+new string(',',s.Rank-1)+"]";
+ public string GetByReferenceType(string e)=>e+"&";
+ public string GetFunctionPointerType(System.Reflection.Metadata.MethodSignature<string> s)=>"fn("+string.Join(",",s.ParameterTypes)+")->"+s.ReturnType;
+ public string GetGenericInstantiation(string t,System.Collections.Immutable.ImmutableArray<string> a)=>t+"<"+string.Join(",",a)+">";
+ public string GetGenericMethodParameter(object? c,int i)=>"!!"+i;
+ public string GetGenericTypeParameter(object? c,int i)=>"!"+i;
+ public string GetModifiedType(string m,string u,bool r)=>u;
+ public string GetPinnedType(string e)=>e;
+ public string GetPointerType(string e)=>e+"*";
+ public string GetPrimitiveType(System.Reflection.Metadata.PrimitiveTypeCode c)=>c.ToString();
+ public string GetSZArrayType(string e)=>e+"[]";
+ public string GetTypeFromDefinition(System.Reflection.Metadata.MetadataReader r,System.Reflection.Metadata.TypeDefinitionHandle h,byte k){var t=r.GetTypeDefinition(h);var p=t.GetDeclaringType();return (p.IsNil?r.GetString(t.Namespace):GetTypeFromDefinition(r,p,k))+"."+r.GetString(t.Name);}
+ public string GetTypeFromReference(System.Reflection.Metadata.MetadataReader r,System.Reflection.Metadata.TypeReferenceHandle h,byte k){var t=r.GetTypeReference(h);return (t.ResolutionScope.Kind==System.Reflection.Metadata.HandleKind.TypeReference?GetTypeFromReference(r,(System.Reflection.Metadata.TypeReferenceHandle)t.ResolutionScope,k):r.GetString(t.Namespace))+"."+r.GetString(t.Name);}
+ public string GetTypeFromSpecification(System.Reflection.Metadata.MetadataReader r,object? c,System.Reflection.Metadata.TypeSpecificationHandle h,byte k)=>r.GetTypeSpecification(h).DecodeSignature(this,c);
+}
