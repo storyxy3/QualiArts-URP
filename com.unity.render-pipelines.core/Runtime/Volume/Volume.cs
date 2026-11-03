@@ -115,7 +115,7 @@ namespace UnityEngine.Rendering
         float m_PreviousPriority;
         VolumeProfile m_InternalProfile;
 
-        void OnEnable()
+        protected virtual void OnEnable()
         {
             m_PreviousLayer = gameObject.layer;
             VolumeManager.instance.Register(this, m_PreviousLayer);
@@ -123,7 +123,7 @@ namespace UnityEngine.Rendering
             GetComponents(m_Colliders);
         }
 
-        void OnDisable()
+        protected virtual void OnDisable()
         {
             VolumeManager.instance.Unregister(this, gameObject.layer);
         }
