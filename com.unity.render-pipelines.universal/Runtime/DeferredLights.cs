@@ -80,6 +80,9 @@ namespace UnityEngine.Rendering.Universal.Internal
             public static int _ShadowLightIndex = Shader.PropertyToID("_ShadowLightIndex");
             public static int _LightLayerMask = Shader.PropertyToID("_LightLayerMask");
             public static int _CookieLightIndex = Shader.PropertyToID("_CookieLightIndex");
+            // QualiArts: VL custom lighting (UniversalAdditionalLightData) and the lighting-complexity debug view.
+            public static int _CustomLightProperty = Shader.PropertyToID("_CustomLightProperty");
+            public static int _ComplexityScore = Shader.PropertyToID("_ComplexityScore");
         }
 
         internal static readonly string[] k_GBufferNames = new string[]
@@ -93,16 +96,19 @@ namespace UnityEngine.Rendering.Universal.Internal
             "_GBuffer6"
         };
 
+        // QualiArts: Hidden/Campus/StencilDeferred passes (punctual Lit / Emission / Multiply, complexity debug passes).
         static readonly string[] k_StencilDeferredPassNames = new string[]
         {
             "Stencil Volume",
             "Deferred Punctual Light (Lit)",
-            "Deferred Punctual Light (SimpleLit)",
+            "Deferred Punctual Light (Emission)",
+            "Deferred Punctual Light (Multiply)",
             "Deferred Directional Light (Lit)",
-            "Deferred Directional Light (SimpleLit)",
             "ClearStencilPartial",
             "Fog",
-            "SSAOOnly"
+            "SSAOOnly",
+            "Complexity Punctual Light (Lit)",
+            "Complexity Directional Light (Lit)"
         };
 
         internal enum StencilDeferredPasses
@@ -234,6 +240,61 @@ namespace UnityEngine.Rendering.Universal.Internal
         ProfilingSampler m_ProfilingSamplerClearStencilPartialPass = new ProfilingSampler(k_ClearStencilPartial);
 
         private LightCookieManager m_LightCookieManager;
+
+        // ---- QualiArts (VL SRP) additions ----
+        public static readonly int _LitColorMultiplier = Shader.PropertyToID("_LitColorMultiplier");
+        static readonly string[] k_vlStencilDeferredPassNames = new string[]
+        {
+            "Clear Stencil Volume",
+            "Mask PlanarReflection",
+            "Clear PlanarReflection Depth",
+            "Indirect Reflection",
+            "PreEmission Debug",
+            "Emission Debug",
+            "Copy Depth",
+            "AdditionalInfo With Color",
+            "AdditionalInfo"
+        };
+        static readonly ProfilingSampler m_ProfilingSamplerCopyGbufferPass = new ProfilingSampler("Copy Gbuffer");
+        static readonly ProfilingSampler m_ProfilingSamplerFillIndirectPass = new ProfilingSampler("Fill Indirect");
+        static readonly ProfilingSampler m_ProfilingSamplerCopyLitColor = new ProfilingSampler("Copy LitColor");
+        static readonly ProfilingSampler m_ProfilingActorDeferredPass = new ProfilingSampler("Actor Deferred Pass");
+        static readonly ProfilingSampler m_ProfilingLightingComplexity = new ProfilingSampler("Lighting Complexity");
+        static readonly ProfilingSampler m_profilingSamplerActorLightingPass = new ProfilingSampler("Actor Lighting Pass");
+        static readonly ProfilingSampler m_ProfilingSamplerCopyDepthPass = new ProfilingSampler("Copy Depth Pass");
+        static readonly ProfilingSampler m_ProfilingSamplerPostRender = new ProfilingSampler("Post Render");
+        static readonly ProfilingSampler m_ProfilingDirectReflection = new ProfilingSampler("Direct Reflection");
+        static readonly ProfilingSampler m_ProfilingIndirectReflection = new ProfilingSampler("Indirect Reflection");
+
+        int[] m_vlStencilDeferredPasses;
+        Mesh m_BoxMesh;
+
+        internal bool storeLitColor { get; set; }
+        internal bool renderedDirectReflection { get; set; }
+
+        static readonly ProfilingSampler m_ProfilingPlanarReflection = new ProfilingSampler("Planar Reflection");
+
+        internal static bool IsStencilDeferredLightType(LightType lightType)
+        {
+            return (uint)lightType < 3u;   // Spot, Directional, Point
+        }
+
+        int GetPunctualPass(CustomLightingType lightingType, bool useComplexity)
+        {
+            if (useComplexity)
+                return m_StencilDeferredPasses[8];
+            switch (lightingType)
+            {
+                case CustomLightingType.Emission: return m_StencilDeferredPasses[2];
+                case CustomLightingType.Multiply: return m_StencilDeferredPasses[3];
+                default: return m_StencilDeferredPasses[1];
+            }
+        }
+
+        void SetComplexityScore(CommandBuffer cmd, CustomLightingType lightingType)
+        {
+            cmd.SetGlobalFloat(ShaderConstants._ComplexityScore, lightingType == CustomLightingType.Emission || lightingType == CustomLightingType.Multiply ? 4.0f : 8.0f);
+        }
 
         internal struct InitParams
         {
