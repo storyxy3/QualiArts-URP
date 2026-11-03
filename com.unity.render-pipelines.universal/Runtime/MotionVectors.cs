@@ -104,5 +104,29 @@ namespace UnityEngine.Rendering.Universal
                 m_PrevAspectRatio[idx] = cameraData.aspectRatio;
             }
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private Vector4[] m_WorldSpaceCameraPos;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private Vector4[] m_PreviousWorldSpaceCameraPos;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+internal Vector4 previousWorldSpaceCameraPos
+{
+    get
+    {
+        return default(Vector4);
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+internal Vector4[] previousWorldSpaceCameraPosStereo
+{
+    get
+    {
+        return null;
+    }
+}
     }
 }
