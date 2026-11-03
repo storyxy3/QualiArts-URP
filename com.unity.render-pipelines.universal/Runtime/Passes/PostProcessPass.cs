@@ -1553,7 +1553,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Internal utilities
 
-        class MaterialLibrary
+        protected class MaterialLibrary
         {
             public readonly Material stopNaN;
             public readonly Material subpixelMorphologicalAntialiasing;
@@ -1624,7 +1624,7 @@ namespace UnityEngine.Rendering.Universal
         }
 
         // Precomputed shader ids to same some CPU cycles (mostly affects mobile)
-        static class ShaderConstants
+        protected static class ShaderConstants
         {
             public static readonly int _TempTarget = Shader.PropertyToID("_TempTarget");
             public static readonly int _TempTarget2 = Shader.PropertyToID("_TempTarget2");
