@@ -175,6 +175,10 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public float validationRangeMax { get; set; } = 1.0f;
 
+        // TODO(qa-recon): escaped metadata field; original name <gameViewOnly>k__BackingField.
+        [System.Runtime.CompilerServices.CompilerGenerated]
+        private bool _003CgameViewOnly_003Ek__BackingField;
+
         static class Strings
         {
             public const string RangeValidationSettingsContainerName = "Pixel Range Settings";
