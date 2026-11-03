@@ -159,6 +159,20 @@ namespace UnityEngine.Rendering.Universal
             m_LastAccumUpdateFrameIndex2 = -1;
         }
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private RTHandle m_cocPing;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private RTHandle m_cocPong;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private bool m_cocPingPong;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void GrapCocTexture(out RTHandle prevCoc, out RTHandle nextCoc)
+{
+}
+
     };
 
     // All of TAA here, work on TAA == work on this file.
