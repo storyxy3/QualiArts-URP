@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +49,12 @@ namespace UnityEngine.Rendering
             public static readonly string globalDefaultValueTooltip = "Default value for this parameter, defined by the Default Volume Profile in Global Settings.";
             public static readonly string qualityLevelValue = "Quality Settings";
             public static readonly string qualityLevelValueTooltip = "Override value for this parameter, defined by the Volume Profile in the current SRP Asset.";
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly string interpolatedValue;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly string defaultValue;
             public static readonly string global = "Global";
             public static readonly string local = "Local";
             public static readonly string volumeProfile = "Volume Profile";
