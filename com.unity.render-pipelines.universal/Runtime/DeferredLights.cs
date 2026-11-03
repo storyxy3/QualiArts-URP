@@ -270,8 +270,8 @@ namespace UnityEngine.Rendering.Universal.Internal
         int[] m_vlStencilDeferredPasses;
         Mesh m_BoxMesh;
 
-        internal bool storeLitColor { get; set; }
-        internal bool renderedDirectReflection { get; set; }
+        public bool storeLitColor { get; set; }
+        public bool renderedDirectReflection { get; set; }
 
         static readonly ProfilingSampler m_ProfilingPlanarReflection = new ProfilingSampler("Planar Reflection");
 
