@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System;
 using UnityEditor;
 
@@ -33,6 +34,16 @@ namespace UnityEngine.Rendering.Universal
         internal static bool isSupported => onDecalAdd != null;
 
         internal DecalEntity decalEntity { get; set; }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly string _DecalTypeName;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly int _DecalType;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+private Color32 m_Color;
 
         [SerializeField]
         private Material m_Material = null;
@@ -173,6 +184,10 @@ namespace UnityEngine.Rendering.Universal
             get => m_DecalLayerMask;
             set => m_DecalLayerMask = value;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+private int m_DecalPriority;
 
         [SerializeField]
         private DecalScaleMode m_ScaleMode = DecalScaleMode.ScaleInvariant;
@@ -388,5 +403,36 @@ namespace UnityEngine.Rendering.Universal
         {
             onAllDecalPropertyChange?.Invoke();
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public Color32 color
+{
+    get
+    {
+        return default(Color32);
+    }
+
+    set
+    {
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public int priority
+{
+    get
+    {
+        return default(int);
+    }
+
+    set
+    {
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void UpdateDecalProperty()
+{
+}
     }
 }
