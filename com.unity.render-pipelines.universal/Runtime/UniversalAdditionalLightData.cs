@@ -266,6 +266,18 @@ namespace UnityEngine.Rendering.Universal
         }
         [SerializeField] private SoftShadowQuality m_SoftShadowQuality = SoftShadowQuality.UsePipelineSettings;
 
+        // ---- QualiArts (VL SRP): custom lighting model of the light (Hidden/Campus/StencilDeferred _CustomLightProperty) ----
+        public CustomLightingType customLightingType { get => m_CustomLightingType; set => m_CustomLightingType = value; }
+        [SerializeField] private CustomLightingType m_CustomLightingType;
+        public bool indirectLighting { get => m_IndirectLighting; set => m_IndirectLighting = value; }
+        [SerializeField] private bool m_IndirectLighting;
+        public float backLightingIntensity { get => m_BackLightingIntensity; set => m_BackLightingIntensity = value; }
+        [SerializeField] private float m_BackLightingIntensity;
+        public float mainLightShadowStrength { get => m_MainLightShadowStrength; set => m_MainLightShadowStrength = value; }
+        [SerializeField] private float m_MainLightShadowStrength;
+        public float specularStrength { get => m_SpecularStrength; set => m_SpecularStrength = value; }
+        [SerializeField] private float m_SpecularStrength;
+
         /// <inheritdoc/>
         public void OnBeforeSerialize()
         {
