@@ -86,7 +86,10 @@ namespace UnityEngine.Rendering.Universal
         /// <summary>
         /// Use this for 4096x4096 shadow resolution.
         /// </summary>
-        _4096 = 4096
+        _4096 = 4096,
+
+        /// <summary>Game 3.5.3 shadow-map resolution.</summary>
+        _8192 = 8192
     }
 
     /// <summary>
