@@ -20,6 +20,9 @@ namespace UnityEngine.Rendering.Universal
         public NativeArray<float4x4> decalToWorlds;
         public NativeArray<float4x4> normalToDecals;
         public NativeArray<float> renderingLayerMasks;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public NativeArray<float> colors;
         public NativeArray<DecalSubDrawCall> subCalls;
         public NativeArray<int> subCallCounts;
 
@@ -57,6 +60,9 @@ namespace UnityEngine.Rendering.Universal
             count = 0;
             capacity = 0;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public NativeArray<DecalInstanceData> instanceDatas;
     }
 
     /// <summary>
