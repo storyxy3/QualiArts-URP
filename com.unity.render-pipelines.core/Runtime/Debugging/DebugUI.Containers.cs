@@ -466,14 +466,6 @@ namespace UnityEngine.Rendering
                 m_Header = null;
             }
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public bool[] VisibleColumns
-{
-    get
-    {
-        return null;
-    }
-}
         }
     }
 }
