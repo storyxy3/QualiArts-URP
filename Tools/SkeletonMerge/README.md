@@ -49,3 +49,33 @@ dotnet Tools/SkeletonMerge/bin/Debug/net8.0/SkeletonMerge.dll field-types input.
 Inherited package `Tests` directories were removed, and the URP/ShaderGraph
 Editor asmdefs no longer infer VFX authoring availability from the installed
 runtime-only VFX package. Runtime VFX integration remains enabled.
+
+## Stock-only instance storage before IL2CPP stripping
+
+The following is an assembly-metadata comparison using Android player compiler
+defines, not the acceptance report's native offset comparison. Sources are the
+original DummyDll and the newly compiled Core/URP DLLs; detailed local evidence
+is `.qa-work/{Core,Universal}-{game,player}-{fields,field-types}.json`.
+
+| Assembly | Type (namespace abbreviated) | Extra fields |
+| --- | --- | --- |
+| Core | RenderGraphDebugParams | `m_DebugItems`, `m_DebugPanel` |
+| Core | RenderGraphDefaultResources | `m_IsValid` |
+| Core | DynamicResolutionHandler | `cachedOriginalSize`, `m_OwnerCameraWeakRef` |
+| Core | DebugUI.EnumField | `m_Indexes` |
+| Core | ObjectParameter<T> | `<parameters>k__BackingField` |
+| Universal | DBufferRenderPass | `m_DBufferDepth`, `<depthHandle>k__BackingField` |
+| Universal | DecalProjector | `m_OldDrawDistance`, `m_OldFadeScale`, `m_OldStartAngleFade`, `m_OldEndAngleFade`, `m_OldUVScale`, `m_OldUVBias`, `m_OldScaleMode`, `m_OldOffset`, `m_OldSize`, `m_OldFadeFactor` |
+| Universal | DecalDrawSystem | `<overrideMaterial>k__BackingField` |
+| Universal | DrawScreenSpaceUIPass.PassData | `offscreenTexture` |
+| Universal | UniversalRenderer | `m_ColorFrontBuffer` |
+| Universal | UniversalRendererData.ShaderResources | `terrainDetailLitPS`, `terrainDetailGrassPS`, `terrainDetailGrassBillboardPS` |
+
+No missing instance fields remained among shared non-compiler-generated types.
+The sole field-type difference initially found was
+`UniversalAdditionalLightData.m_LightLayerMask` (stock `LightLayerEnum`, game
+`uint`); the field and public property now use `uint`. The only ordering
+difference among types with the same field set was ScriptableRenderer's
+`_screenToWorld`; it now follows DebugHandler's backing field and precedes
+supportedRenderingFeatures' backing field. DebugDisplaySettingsRendering's
+missing gameViewOnly backing field was also restored.
