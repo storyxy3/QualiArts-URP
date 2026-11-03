@@ -91,7 +91,6 @@ namespace UnityEngine.Rendering
         };
 
         // Debug
-        private Vector2Int cachedOriginalSize;
 
         /// <summary>
         /// The filter that is used to upscale the rendering result to the native resolution.
@@ -531,7 +530,6 @@ namespace UnityEngine.Rendering
         /// <returns>The parameter size scaled by the dynamic resolution system.</returns>
         public Vector2Int GetScaledSize(Vector2Int size)
         {
-            cachedOriginalSize = size;
 
             if (!m_Enabled || !m_CurrentCameraRequest)
             {
