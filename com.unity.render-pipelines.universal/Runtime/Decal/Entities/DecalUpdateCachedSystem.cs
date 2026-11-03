@@ -29,6 +29,12 @@ namespace UnityEngine.Rendering.Universal
         public NativeArray<BoundingSphere> boundingSpheres;
         public NativeArray<DecalScaleMode> scaleModes;
         public NativeArray<uint> renderingLayerMasks;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public NativeArray<Color32> colors;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public NativeArray<int> priorities;
         public NativeArray<float3> positions;
         public NativeArray<quaternion> rotation;
         public NativeArray<float3> scales;
