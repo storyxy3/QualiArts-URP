@@ -191,6 +191,9 @@ public void GrapCocTexture(out RTHandle prevCoc, out RTHandle nextCoc)
             public static readonly int _TaaFrameInfluence     = Shader.PropertyToID("_TaaFrameInfluence");
             public static readonly int _TaaVarianceClampScale = Shader.PropertyToID("_TaaVarianceClampScale");
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly int _TaaJitterStrength;
+
             public static readonly int _CameraDepthTexture = Shader.PropertyToID("_CameraDepthTexture");
         }
 
