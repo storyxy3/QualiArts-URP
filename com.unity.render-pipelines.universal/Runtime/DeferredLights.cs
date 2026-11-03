@@ -988,6 +988,10 @@ namespace UnityEngine.Rendering.Universal.Internal
                 m_HemisphereMesh = CreateHemisphereMesh();
 
             cmd.EnableShaderKeyword(ShaderKeywordStrings._SPOT);
+
+            Span<int> multiplyLights = stackalloc int[visibleLights.Length];
+            int multiplyLightCount = 0;
+
             for (int soffset = m_stencilVisLightOffsets[(int)LightType.Spot]; soffset < m_stencilVisLights.Length; ++soffset)
             {
                 ushort visLightIndex = m_stencilVisLights[soffset];
@@ -997,6 +1001,20 @@ namespace UnityEngine.Rendering.Universal.Internal
 
                 // Cache light to local, avoid light find on every access.
                 Light light = vl.light;
+
+                var additionalLightData = light.GetUniversalAdditionalLightData();
+                uint lightLayerMask = RenderingLayerUtils.ToValidRenderingLayers(additionalLightData.renderingLayers);
+                // QualiArts: deferred lighting only for lights on the default rendering layer; "Multiply" lights go after all others.
+                if ((additionalLightData.renderingLayers & 1) == 0)
+                    continue;
+                if (additionalLightData.customLightingType == CustomLightingType.Multiply)
+                {
+                    multiplyLights[multiplyLightCount++] = visLightIndex;
+                    continue;
+                }
+
+                int stencilPass = m_StencilDeferredPasses[0];
+                int lightingPass = GetPunctualPass(additionalLightData.customLightingType, useComplexity);
 
                 float alpha = Mathf.Deg2Rad * vl.spotAngle * 0.5f;
                 float cosAlpha = Mathf.Cos(alpha);
@@ -1008,15 +1026,14 @@ namespace UnityEngine.Rendering.Universal.Internal
                 Vector4 lightPos, lightColor, lightAttenuation, lightSpotDir, lightOcclusionChannel;
                 UniversalRenderPipeline.InitializeLightConstants_Common(visibleLights, visLightIndex, out lightPos, out lightColor, out lightAttenuation, out lightSpotDir, out lightOcclusionChannel);
 
-                var additionalLightData = light.GetUniversalAdditionalLightData();
-                uint lightLayerMask = RenderingLayerUtils.ToValidRenderingLayers(additionalLightData.renderingLayers);
-
                 int lightFlags = 0;
                 if (light.bakingOutput.lightmapBakeType == LightmapBakeType.Mixed)
                     lightFlags |= (int)LightFlag.SubtractiveMixedLighting;
 
                 int shadowLightIndex = m_AdditionalLightsShadowCasterPass != null ? m_AdditionalLightsShadowCasterPass.GetShadowLightIndexFromLightIndex(visLightIndex) : -1;
                 bool hasDeferredLightShadows = light && light.shadows != LightShadows.None && shadowLightIndex >= 0;
+                // QualiArts: realtime lights only.
+                hasDeferredLightShadows &= light.bakingOutput.lightmapBakeType == LightmapBakeType.Realtime;
                 SetAdditionalLightsShadowsKeyword(ref cmd, ref renderingData, hasDeferredLightShadows);
 
                 bool hasSoftShadow = hasDeferredLightShadows && renderingData.shadowData.supportsSoftShadows && light.shadows == LightShadows.Soft;
@@ -1029,6 +1046,12 @@ namespace UnityEngine.Rendering.Universal.Internal
                     cmd.SetGlobalInt(ShaderConstants._CookieLightIndex, cookieLightIndex);
                 }
 
+                if (useComplexity)
+                    SetComplexityScore(cmd, additionalLightData.customLightingType);
+
+                bool indirectLighting = vl.light.bakingOutput.lightmapBakeType == LightmapBakeType.Realtime && additionalLightData.indirectLighting;
+                CoreUtils.SetKeyword(cmd, "_INDIRECT_LIGHTING", indirectLighting);
+
                 cmd.SetGlobalVector(ShaderConstants._SpotLightScale, new Vector4(sinAlpha, sinAlpha, 1.0f - cosAlpha, vl.range));
                 cmd.SetGlobalVector(ShaderConstants._SpotLightBias, new Vector4(0.0f, 0.0f, cosAlpha, 0.0f));
                 cmd.SetGlobalVector(ShaderConstants._SpotLightGuard, new Vector4(guard, guard, guard, cosAlpha * vl.range));
@@ -1040,13 +1063,74 @@ namespace UnityEngine.Rendering.Universal.Internal
                 cmd.SetGlobalInt(ShaderConstants._LightFlags, lightFlags);
                 cmd.SetGlobalInt(ShaderConstants._ShadowLightIndex, shadowLightIndex);
                 cmd.SetGlobalInt(ShaderConstants._LightLayerMask, (int)lightLayerMask);
+                cmd.SetGlobalVector(ShaderConstants._CustomLightProperty, new Vector4(additionalLightData.backLightingIntensity, additionalLightData.mainLightShadowStrength, additionalLightData.specularStrength, 0.0f));
 
                 // Stencil pass.
-                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, m_StencilDeferredPasses[(int)StencilDeferredPasses.StencilVolume]);
+                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, stencilPass);
 
                 // Lighting pass.
-                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, m_StencilDeferredPasses[(int)StencilDeferredPasses.PunctualLit]);
-                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, m_StencilDeferredPasses[(int)StencilDeferredPasses.PunctualSimpleLit]);
+                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, lightingPass);
+            }
+
+            for (int i = 0; i < multiplyLightCount; ++i)
+            {
+                int visLightIndex = multiplyLights[i];
+                ref VisibleLight vl = ref visibleLights.UnsafeElementAtMutable(visLightIndex);
+
+                // Cache light to local, avoid light find on every access.
+                Light light = vl.light;
+
+                var additionalLightData = light.GetUniversalAdditionalLightData();
+                uint lightLayerMask = RenderingLayerUtils.ToValidRenderingLayers(additionalLightData.renderingLayers);
+                int stencilPass = m_StencilDeferredPasses[0];
+                int lightingPass = GetPunctualPass(additionalLightData.customLightingType, useComplexity);
+
+                float alpha = Mathf.Deg2Rad * vl.spotAngle * 0.5f;
+                float cosAlpha = Mathf.Cos(alpha);
+                float sinAlpha = Mathf.Sin(alpha);
+                // Artificially inflate the geometric shape to fit the analytic spot shape.
+                // The tighter the spot shape, the lesser inflation is needed.
+                float guard = Mathf.Lerp(1.0f, kStencilShapeGuard, sinAlpha);
+
+                Vector4 lightPos, lightColor, lightAttenuation, lightSpotDir, lightOcclusionChannel;
+                UniversalRenderPipeline.InitializeLightConstants_Common(visibleLights, visLightIndex, out lightPos, out lightColor, out lightAttenuation, out lightSpotDir, out lightOcclusionChannel);
+
+                int lightFlags = 0;
+                if (light.bakingOutput.lightmapBakeType == LightmapBakeType.Mixed)
+                    lightFlags |= (int)LightFlag.SubtractiveMixedLighting;
+
+                int shadowLightIndex = m_AdditionalLightsShadowCasterPass != null ? m_AdditionalLightsShadowCasterPass.GetShadowLightIndexFromLightIndex(visLightIndex) : -1;
+                bool hasDeferredLightShadows = light && light.shadows != LightShadows.None && shadowLightIndex >= 0;
+                // QualiArts: realtime lights only.
+                hasDeferredLightShadows &= light.bakingOutput.lightmapBakeType == LightmapBakeType.Realtime;
+                SetAdditionalLightsShadowsKeyword(ref cmd, ref renderingData, hasDeferredLightShadows);
+
+                bool hasSoftShadow = hasDeferredLightShadows && renderingData.shadowData.supportsSoftShadows && light.shadows == LightShadows.Soft;
+                ShadowUtils.SetPerLightSoftShadowKeyword(cmd, hasSoftShadow);
+
+                if (useComplexity)
+                    SetComplexityScore(cmd, additionalLightData.customLightingType);
+
+                CoreUtils.SetKeyword(cmd, "_INDIRECT_LIGHTING", false);   // QualiArts: no cookies / indirect lighting for "Multiply" lights
+
+                cmd.SetGlobalVector(ShaderConstants._SpotLightScale, new Vector4(sinAlpha, sinAlpha, 1.0f - cosAlpha, vl.range));
+                cmd.SetGlobalVector(ShaderConstants._SpotLightBias, new Vector4(0.0f, 0.0f, cosAlpha, 0.0f));
+                cmd.SetGlobalVector(ShaderConstants._SpotLightGuard, new Vector4(guard, guard, guard, cosAlpha * vl.range));
+                cmd.SetGlobalVector(ShaderConstants._LightPosWS, lightPos);
+                cmd.SetGlobalVector(ShaderConstants._LightColor, lightColor);
+                cmd.SetGlobalVector(ShaderConstants._LightAttenuation, lightAttenuation);
+                cmd.SetGlobalVector(ShaderConstants._LightDirection, new Vector3(lightSpotDir.x, lightSpotDir.y, lightSpotDir.z));
+                cmd.SetGlobalVector(ShaderConstants._LightOcclusionProbInfo, lightOcclusionChannel);
+                cmd.SetGlobalInt(ShaderConstants._LightFlags, lightFlags);
+                cmd.SetGlobalInt(ShaderConstants._ShadowLightIndex, shadowLightIndex);
+                cmd.SetGlobalInt(ShaderConstants._LightLayerMask, (int)lightLayerMask);
+                cmd.SetGlobalVector(ShaderConstants._CustomLightProperty, new Vector4(additionalLightData.backLightingIntensity, additionalLightData.mainLightShadowStrength, additionalLightData.specularStrength, 0.0f));
+
+                // Stencil pass.
+                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, stencilPass);
+
+                // Lighting pass.
+                cmd.DrawMesh(m_HemisphereMesh, vl.localToWorldMatrix, m_StencilDeferredMaterial, 0, lightingPass);
             }
 
             cmd.DisableShaderKeyword(ShaderKeywordStrings._SPOT);
