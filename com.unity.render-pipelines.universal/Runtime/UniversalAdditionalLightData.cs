@@ -108,7 +108,7 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public static readonly int AdditionalLightsShadowDefaultCustomResolution = 128;
 
-        [NonSerialized] private Light m_Light;
+        private Light m_Light;
 
         /// <summary>
         /// Returns the cached light component associated with the game object that owns this light data.
@@ -145,13 +145,13 @@ namespace UnityEngine.Rendering.Universal
 
         // The layer(s) this light belongs too.
         [Obsolete("This is obsolete, please use m_RenderingLayerMask instead.", false)]
-        [SerializeField] LightLayerEnum m_LightLayerMask = LightLayerEnum.LightLayerDefault;
+        [SerializeField] uint m_LightLayerMask = 1;
 
         /// <summary>
         /// The layer(s) this light belongs to.
         /// </summary>
         [Obsolete("This is obsolete, please use renderingLayerMask instead.", false)]
-        public LightLayerEnum lightLayerMask
+        public uint lightLayerMask
         {
             get { return m_LightLayerMask; }
             set { m_LightLayerMask = value; }
