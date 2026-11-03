@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -535,6 +536,15 @@ namespace UnityEngine.Rendering.Universal
             // Execute after Post-processing.
             public static readonly int AfterRendering = 3;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int ScreenToWorldDownsampleCount = 3;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private Matrix4x4[] _screenToWorld;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly int _ScreenToWorld;
 
         private StoreActionsOptimization m_StoreActionsOptimizationSetting = StoreActionsOptimization.Auto;
         private static bool m_UseOptimizedStoreActions = false;
@@ -2232,5 +2242,15 @@ namespace UnityEngine.Rendering.Universal
                 return new BlockRange(m_BlockRanges[index], m_BlockRanges[index + 1]);
             }
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public virtual void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void ExecuteFast(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
     }
 }
