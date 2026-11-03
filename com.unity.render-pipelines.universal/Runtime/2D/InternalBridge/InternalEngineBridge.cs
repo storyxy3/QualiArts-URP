@@ -6,12 +6,12 @@ namespace UnityEngine.Rendering.Universal
     {
         internal static void AddOnLayerchangedCallback(Action callback)
         {
-            SortingLayer.onLayerChanged += callback;
+            // REF BUILD: SortingLayer.onLayerChanged removed in Unity 6 (2D renderer is not in the game)
         }
 
         internal static void RemoveOnLayerchangedCallback(Action callback)
         {
-            SortingLayer.onLayerChanged -= callback;
+            // REF BUILD: see above
         }
     }
 }

@@ -1558,7 +1558,7 @@ namespace UnityEngine.Rendering.Universal
                         spotLight.angularFalloff = AngularFalloffType.AnalyticAndInnerAngle;
                         lightData.Init(ref spotLight, ref cookie);
                         break;
-                    case LightType.Area:
+                    case LightType.Rectangle: // Unity 6 name of LightType.Area (same value)
                         RectangleLight rectangleLight = new RectangleLight();
                         LightmapperUtils.Extract(light, ref rectangleLight);
                         rectangleLight.mode = LightMode.Baked;
@@ -1613,7 +1613,7 @@ namespace UnityEngine.Rendering.Universal
                             spotLight.angularFalloff = AngularFalloffType.AnalyticAndInnerAngle;
                             lightData.Init(ref spotLight);
                             break;
-                        case LightType.Area:
+                        case LightType.Rectangle: // Unity 6 name of LightType.Area (same value)
                             // Rect area light is baked only in URP.
                             lightData.InitNoBake(light.GetInstanceID());
                             break;
