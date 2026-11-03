@@ -28,6 +28,12 @@ namespace UnityEngine.Rendering.Universal.Internal
             public static int _AdditionalLightsSpotDir;
             public static int _AdditionalLightOcclusionProbeChannel;
             public static int _AdditionalLightsLayerMasks;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static int _MainLightCustomLightProperty;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static int _AdditionalLightsCustomLightProperty;
         }
 
         int m_AdditionalLightsBufferId;
@@ -46,6 +52,9 @@ namespace UnityEngine.Rendering.Universal.Internal
         Vector4[] m_AdditionalLightSpotDirections;
         Vector4[] m_AdditionalLightOcclusionProbeChannels;
         float[] m_AdditionalLightsLayerMasks;  // Unity has no support for binding uint arrays. We will use asuint() in the shader instead.
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private Vector4[] m_AdditionalLightCustomLightProperties;
 
         bool m_UseStructuredBuffer;
 
@@ -638,5 +647,15 @@ namespace UnityEngine.Rendering.Universal.Internal
             perObjectLightIndexMap.Dispose();
             return additionalLightsCount;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void SetFPParams1(CommandBuffer cmd, Vector2 pixelSize)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private void InitializeLightConstants(NativeArray<VisibleLight> lights, int lightIndex, out Vector4 lightPos, out Vector4 lightColor, out Vector4 lightAttenuation, out Vector4 lightSpotDir, out Vector4 lightOcclusionProbeChannel, out uint lightLayerMask, out bool isSubtractive, out Vector4 customLightProperty)
+{
+}
     }
 }
