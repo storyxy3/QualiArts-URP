@@ -1130,5 +1130,11 @@ namespace UnityEngine.Rendering.Universal.Internal
             passData.shadowmapID = m_AdditionalLightsShadowmapID;
             passData.renderingData = renderingData;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public bool Setup(ref RenderingData renderingData, float maxShadowDistance, float shadowBorder)
+{
+    return default(bool);
+}
     }
 }
