@@ -1,4 +1,5 @@
 using System;
+using VL.Rendering;
 using System.Runtime.CompilerServices;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Profiling;
@@ -34,7 +35,7 @@ namespace UnityEngine.Rendering.Universal.Internal
     }
 
     // Manages deferred lights.
-    internal class DeferredLights
+    public class DeferredLights
     {
         internal static class ShaderConstants
         {
@@ -241,61 +242,6 @@ namespace UnityEngine.Rendering.Universal.Internal
 
         private LightCookieManager m_LightCookieManager;
 
-        // ---- QualiArts (VL SRP) additions ----
-        public static readonly int _LitColorMultiplier = Shader.PropertyToID("_LitColorMultiplier");
-        static readonly string[] k_vlStencilDeferredPassNames = new string[]
-        {
-            "Clear Stencil Volume",
-            "Mask PlanarReflection",
-            "Clear PlanarReflection Depth",
-            "Indirect Reflection",
-            "PreEmission Debug",
-            "Emission Debug",
-            "Copy Depth",
-            "AdditionalInfo With Color",
-            "AdditionalInfo"
-        };
-        static readonly ProfilingSampler m_ProfilingSamplerCopyGbufferPass = new ProfilingSampler("Copy Gbuffer");
-        static readonly ProfilingSampler m_ProfilingSamplerFillIndirectPass = new ProfilingSampler("Fill Indirect");
-        static readonly ProfilingSampler m_ProfilingSamplerCopyLitColor = new ProfilingSampler("Copy LitColor");
-        static readonly ProfilingSampler m_ProfilingActorDeferredPass = new ProfilingSampler("Actor Deferred Pass");
-        static readonly ProfilingSampler m_ProfilingLightingComplexity = new ProfilingSampler("Lighting Complexity");
-        static readonly ProfilingSampler m_profilingSamplerActorLightingPass = new ProfilingSampler("Actor Lighting Pass");
-        static readonly ProfilingSampler m_ProfilingSamplerCopyDepthPass = new ProfilingSampler("Copy Depth Pass");
-        static readonly ProfilingSampler m_ProfilingSamplerPostRender = new ProfilingSampler("Post Render");
-        static readonly ProfilingSampler m_ProfilingDirectReflection = new ProfilingSampler("Direct Reflection");
-        static readonly ProfilingSampler m_ProfilingIndirectReflection = new ProfilingSampler("Indirect Reflection");
-
-        int[] m_vlStencilDeferredPasses;
-        Mesh m_BoxMesh;
-
-        internal bool storeLitColor { get; set; }
-        internal bool renderedDirectReflection { get; set; }
-
-        static readonly ProfilingSampler m_ProfilingPlanarReflection = new ProfilingSampler("Planar Reflection");
-
-        internal static bool IsStencilDeferredLightType(LightType lightType)
-        {
-            return (uint)lightType < 3u;   // Spot, Directional, Point
-        }
-
-        int GetPunctualPass(CustomLightingType lightingType, bool useComplexity)
-        {
-            if (useComplexity)
-                return m_StencilDeferredPasses[8];
-            switch (lightingType)
-            {
-                case CustomLightingType.Emission: return m_StencilDeferredPasses[2];
-                case CustomLightingType.Multiply: return m_StencilDeferredPasses[3];
-                default: return m_StencilDeferredPasses[1];
-            }
-        }
-
-        void SetComplexityScore(CommandBuffer cmd, CustomLightingType lightingType)
-        {
-            cmd.SetGlobalFloat(ShaderConstants._ComplexityScore, lightingType == CustomLightingType.Emission || lightingType == CustomLightingType.Multiply ? 4.0f : 8.0f);
-        }
-
         internal struct InitParams
         {
             public Material stencilDeferredMaterial;
@@ -327,7 +273,7 @@ namespace UnityEngine.Rendering.Universal.Internal
 
         internal void SetupLights(ScriptableRenderContext context, ref RenderingData renderingData)
         {
-            Profiler.BeginSample(k_SetupLights);
+            ResolveMixedLightingMode(ref renderingData);
 
             Camera camera = renderingData.cameraData.camera;
             // Support for dynamic resolution.
@@ -379,7 +325,6 @@ namespace UnityEngine.Rendering.Universal.Internal
                 cmd.Clear();
             }
 
-            Profiler.EndSample();
         }
 
         internal void ResolveMixedLightingMode(ref RenderingData renderingData)
@@ -641,25 +586,108 @@ namespace UnityEngine.Rendering.Universal.Internal
                 // - non-baked geometry (== non-static geometry) use shadowMask/occlusionProbes to emulate baked shadows influences.
                 CoreUtils.SetKeyword(cmd, ShaderKeywordStrings._DEFERRED_MIXED_LIGHTING, this.UseShadowMask);
 
-                // This must be set for each eye in XR mode multipass.
-                SetupMatrixConstants(cmd, ref renderingData);
-
-                // Firt directional light will apply SSAO if possible, unless there is none.
-                if (!HasStencilLightsOfType(LightType.Directional))
+                if (!HasLitDirectional(renderingData.lightData.visibleLights))
                     RenderSSAOBeforeShading(cmd, ref renderingData);
 
-                RenderStencilLights(context, cmd, ref renderingData, false);   // TODO(QualiArts ExecuteDeferredPass)
+                RenderStencilLights(context, cmd, ref renderingData, false);
 
                 CoreUtils.SetKeyword(cmd, ShaderKeywordStrings._DEFERRED_MIXED_LIGHTING, false);
 
-                // Legacy fog (Windows -> Rendering -> Lighting Settings -> Fog)
-                RenderFog(context, cmd, ref renderingData);
             }
 
             // Restore shader keywords
             CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.AdditionalLightShadows, renderingData.shadowData.isKeywordAdditionalLightShadowsEnabled);
             ShadowUtils.SetSoftShadowQualityShaderKeywords(cmd, ref renderingData.shadowData);
             CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.LightCookies, m_LightCookieManager != null && m_LightCookieManager.IsKeywordLightCookieEnabled);
+            context.ExecuteCommandBuffer(cmd);
+            cmd.Clear();
+
+            bool HasLitDirectional(NativeArray<VisibleLight> visibleLights)
+            {
+                for (int i = m_stencilVisLightOffsets[(int)LightType.Directional]; i < m_stencilVisLights.Length; ++i)
+                {
+                    ref VisibleLight vl = ref visibleLights.UnsafeElementAtMutable(m_stencilVisLights[i]);
+                    if (vl.lightType != LightType.Directional)
+                        break;
+                    var additionalLightData = vl.light.GetUniversalAdditionalLightData();
+                    if (additionalLightData == null)
+                        continue;
+                    if ((additionalLightData.renderingLayers & 1) != 0)
+                        return true;
+                }
+                return false;
+            }
+        }
+
+        public AdditionalLightsShadowCasterPass GetAdditionalLightsShadowCasterPass()
+        {
+            return m_AdditionalLightsShadowCasterPass;
+        }
+
+        public void ExecuteIndirectReflection(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            if (m_vlStencilDeferredPasses[0] < 0)
+                InitVLStencilDeferredMaterial();
+            var cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, m_ProfilingIndirectReflection))
+            {
+                Blitter.BlitTexture(cmd, Vector2.one, m_StencilDeferredMaterial, m_vlStencilDeferredPasses[3]);
+            }
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
+        public void ExecuteAdditionalInfo(ScriptableRenderContext context, bool copyColor)
+        {
+            if (m_vlStencilDeferredPasses[0] < 0)
+                InitVLStencilDeferredMaterial();
+            var cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, m_ProfilingSamplerPostRender))
+            {
+                Blitter.BlitTexture(cmd, Vector2.one, m_StencilDeferredMaterial, m_vlStencilDeferredPasses[copyColor ? 7 : 8]);
+            }
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
+        internal void ExecuteLightingComplexityPass(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            if (m_StencilDeferredPasses[0] < 0)
+                InitStencilDeferredMaterial();
+            var cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, m_ProfilingLightingComplexity))
+            {
+                RenderStencilLights(context, cmd, ref renderingData, true);
+            }
+            CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.AdditionalLightShadows, renderingData.shadowData.isKeywordAdditionalLightShadowsEnabled);
+            CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.SoftShadows, renderingData.shadowData.isKeywordSoftShadowsEnabled);
+            CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.LightCookies, m_LightCookieManager.IsKeywordLightCookieEnabled);
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
+        internal void ExecutePreEmissionDebugPass(CommandBuffer cmd, ref RenderingData renderingData)
+        {
+            if (m_vlStencilDeferredPasses[0] < 0)
+                InitVLStencilDeferredMaterial();
+            Blitter.BlitTexture(cmd, Vector2.one, m_StencilDeferredMaterial, m_vlStencilDeferredPasses[4]);
+        }
+
+        internal void ExecuteEmissionDebugPass(CommandBuffer cmd, ref RenderingData renderingData)
+        {
+            if (m_vlStencilDeferredPasses[0] < 0)
+                InitVLStencilDeferredMaterial();
+            Blitter.BlitTexture(cmd, Vector2.one, m_StencilDeferredMaterial, m_vlStencilDeferredPasses[5]);
+        }
+
+        void InitVLStencilDeferredMaterial()
+        {
+            if (m_StencilDeferredMaterial == null)
+                return;
+            if (m_vlStencilDeferredPasses == null || m_vlStencilDeferredPasses.Length != k_vlStencilDeferredPassNames.Length)
+                m_vlStencilDeferredPasses = new int[k_vlStencilDeferredPassNames.Length];
+            for (int i = 0; i < k_vlStencilDeferredPassNames.Length; ++i)
+                m_vlStencilDeferredPasses[i] = m_StencilDeferredMaterial.FindPass(k_vlStencilDeferredPassNames[i]);
         }
 
         // adapted from ForwardLights.SetupShaderLightConstants
@@ -679,7 +707,10 @@ namespace UnityEngine.Rendering.Universal.Internal
             Vector4 lightPos, lightColor, lightAttenuation, lightSpotDir, lightOcclusionChannel;
             UniversalRenderPipeline.InitializeLightConstants_Common(lightData.visibleLights, lightData.mainLightIndex, out lightPos, out lightColor, out lightAttenuation, out lightSpotDir, out lightOcclusionChannel);
 
-            var additionalLightData = lightData.visibleLights[lightData.mainLightIndex].light.GetUniversalAdditionalLightData();
+            Light light = lightData.visibleLights.UnsafeElementAtMutable(lightData.mainLightIndex).light;
+            LightBakingOutput bakingOutput = light.bakingOutput;
+            lightColor.w = bakingOutput.isBaked & (bakingOutput.lightmapBakeType == LightmapBakeType.Mixed && bakingOutput.mixedLightingMode == MixedLightingMode.Subtractive) ? 0.0f : 1.0f;
+            var additionalLightData = light.GetUniversalAdditionalLightData();
             uint lightLayerMask = RenderingLayerUtils.ToValidRenderingLayers(additionalLightData.renderingLayers);
 
             cmd.SetGlobalVector(ShaderConstants._MainLightPosition, lightPos);
@@ -762,7 +793,8 @@ namespace UnityEngine.Rendering.Universal.Internal
             for (ushort visLightIndex = 0; visLightIndex < visibleLightCount; ++visLightIndex)
             {
                 ref VisibleLight vl = ref visibleLights.UnsafeElementAtMutable(visLightIndex);
-                ++stencilVisLightOffsets[(int)vl.lightType];
+                if (IsStencilDeferredLightType(vl.lightType))
+                    ++stencilVisLightOffsets[(int)vl.lightType];
             }
 
             int totalStencilLightCount = stencilVisLightOffsets[(int)LightType.Spot] + stencilVisLightOffsets[(int)LightType.Directional] + stencilVisLightOffsets[(int)LightType.Point];
@@ -783,8 +815,11 @@ namespace UnityEngine.Rendering.Universal.Internal
             for (ushort visLightIndex = 0; visLightIndex < visibleLightCount; ++visLightIndex)
             {
                 ref VisibleLight vl = ref visibleLights.UnsafeElementAtMutable(visLightIndex);
-                int i = stencilLightCounts[(int)vl.lightType]++;
-                stencilVisLights[stencilVisLightOffsets[(int)vl.lightType] + i] = visLightIndex;
+                if (IsStencilDeferredLightType(vl.lightType))
+                {
+                    int i = stencilLightCounts[(int)vl.lightType]++;
+                    stencilVisLights[stencilVisLightOffsets[(int)vl.lightType] + i] = visLightIndex;
+                }
             }
             stencilLightCounts.Dispose();
         }
@@ -1242,6 +1277,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             mesh.indexFormat = IndexFormat.UInt16;
             mesh.vertices = positions;
             mesh.triangles = indices;
+            mesh.UploadMeshData(true);
 
             return mesh;
         }
@@ -1299,6 +1335,7 @@ namespace UnityEngine.Rendering.Universal.Internal
             mesh.indexFormat = IndexFormat.UInt16;
             mesh.vertices = positions;
             mesh.triangles = indices;
+            mesh.UploadMeshData(true);
 
             return mesh;
         }
@@ -1320,8 +1357,126 @@ namespace UnityEngine.Rendering.Universal.Internal
             mesh.indexFormat = IndexFormat.UInt16;
             mesh.vertices = positions;
             mesh.triangles = indices;
+            mesh.UploadMeshData(true);
 
             return mesh;
+        }
+
+        // ---- QualiArts (VL SRP) additions ----
+        public static readonly int _LitColorMultiplier = Shader.PropertyToID("_LitColorMultiplier");
+        static readonly string[] k_vlStencilDeferredPassNames = new string[]
+        {
+            "Clear Stencil Volume",
+            "Mask PlanarReflection",
+            "Clear PlanarReflection Depth",
+            "Indirect Reflection",
+            "PreEmission Debug",
+            "Emission Debug",
+            "Copy Depth",
+            "AdditionalInfo With Color",
+            "AdditionalInfo"
+        };
+        static readonly ProfilingSampler m_ProfilingSamplerCopyGbufferPass = new ProfilingSampler("Copy Gbuffer");
+        static readonly ProfilingSampler m_ProfilingSamplerFillIndirectPass = new ProfilingSampler("Fill Indirect");
+        static readonly ProfilingSampler m_ProfilingSamplerCopyLitColor = new ProfilingSampler("Copy LitColor");
+        static readonly ProfilingSampler m_ProfilingActorDeferredPass = new ProfilingSampler("Actor Deferred Pass");
+        static readonly ProfilingSampler m_ProfilingLightingComplexity = new ProfilingSampler("Lighting Complexity");
+        static readonly ProfilingSampler m_profilingSamplerActorLightingPass = new ProfilingSampler("Actor Lighting Pass");
+        static readonly ProfilingSampler m_ProfilingSamplerCopyDepthPass = new ProfilingSampler("Copy Depth Pass");
+        static readonly ProfilingSampler m_ProfilingSamplerPostRender = new ProfilingSampler("Post Render");
+        static readonly ProfilingSampler m_ProfilingDirectReflection = new ProfilingSampler("Direct Reflection");
+        static readonly ProfilingSampler m_ProfilingIndirectReflection = new ProfilingSampler("Indirect Reflection");
+
+        int[] m_vlStencilDeferredPasses = { -1 };
+        Mesh m_BoxMesh;
+
+        public bool storeLitColor { get; set; }
+        public bool renderedDirectReflection { get; set; }
+
+        static readonly ProfilingSampler m_ProfilingPlanarReflection = new ProfilingSampler("Planar Reflection");
+        private static SharedPlanarReflectionEntityManager sharedPlanarReflectionManager { get; } = new SharedPlanarReflectionEntityManager();
+        private PlanarReflectionEntityManager _planarReflectionEntityManager;
+        private PlanarReflectionUpdateCachedSystem _planarReflectionUpdateCachedSystem;
+        private PlanarReflectionCullingSystem _planarReflectionCullingSystem;
+        private PlanarReflectionResultSystem _planarReflectionResultSystem;
+        private int _planarReflectionCount;
+
+        private void CompletePlanarReflectionJob()
+        {
+            if (_planarReflectionEntityManager.combinedChunks == null) return;
+            var culledChunk = _planarReflectionEntityManager.combinedChunks.culledChunk;
+            var resultChunk = _planarReflectionEntityManager.combinedChunks.resultChunk;
+            culledChunk.currentJobHandle.Complete();
+            resultChunk.currentJobHandle.Complete();
+            _planarReflectionCount = Mathf.Min(culledChunk.culledCount[0], 1);
+        }
+
+        public void ExecutePlanarReflection(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            if (m_StencilDeferredPasses[0] < 0) InitStencilDeferredMaterial();
+            if (m_vlStencilDeferredPasses[0] < 0) InitVLStencilDeferredMaterial();
+            if (_planarReflectionEntityManager == null)
+            {
+                _planarReflectionEntityManager = sharedPlanarReflectionManager.Get();
+                _planarReflectionUpdateCachedSystem = new PlanarReflectionUpdateCachedSystem(_planarReflectionEntityManager);
+                _planarReflectionCullingSystem = new PlanarReflectionCullingSystem(_planarReflectionEntityManager);
+                _planarReflectionResultSystem = new PlanarReflectionResultSystem(_planarReflectionEntityManager, true);
+            }
+            if (_planarReflectionEntityManager.combinedChunks == null) return;
+            Matrix4x4 projection = renderingData.cameraData.GetProjectionMatrix();
+            Matrix4x4 view = renderingData.cameraData.GetViewMatrix();
+            Matrix4x4 vp = projection * view;
+            _planarReflectionEntityManager.Update();
+            _planarReflectionEntityManager.UpdateAllEntityData();
+            _planarReflectionUpdateCachedSystem.Execute();
+            _planarReflectionCullingSystem.Execute(renderingData.cameraData.worldSpaceCameraPos, vp);
+            _planarReflectionResultSystem.Execute(renderingData.cameraData.worldSpaceCameraPos, view);
+            CompletePlanarReflectionJob();
+            var cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, m_ProfilingPlanarReflection))
+            {
+                var renderState = new RenderStateBlock(RenderStateMask.Stencil);
+                renderState.stencilReference = 18;
+                var stencil = renderState.stencilState;
+                stencil.enabled = true;
+                stencil.readMask = 16;
+                stencil.writeMask = 2;
+                stencil.SetCompareFunction(CompareFunction.Equal);
+                stencil.SetPassOperation(StencilOp.Replace);
+                renderState.stencilState = stencil;
+                for (int i = 0; i < _planarReflectionCount; ++i)
+                    PlanarReflectionUtility.RenderPlanarReflection(cmd, context, ref renderingData, _planarReflectionEntityManager,
+                        i, m_StencilDeferredMaterial, m_StencilDeferredPasses[0], m_vlStencilDeferredPasses[1], m_vlStencilDeferredPasses[2], ref renderState);
+            }
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
+        public void DisposePlanarReflection()
+        {
+            sharedPlanarReflectionManager.Release(ref _planarReflectionEntityManager);
+        }
+
+        private static bool IsStencilDeferredLightType(LightType lightType)
+        {
+            return (uint)lightType < 3u;   // Spot, Directional, Point
+        }
+
+        int GetPunctualPass(CustomLightingType lightingType, bool useComplexity)
+        {
+            if (useComplexity)
+                return m_StencilDeferredPasses[8];
+            switch (lightingType)
+            {
+                case CustomLightingType.Emission: return m_StencilDeferredPasses[2];
+                case CustomLightingType.Multiply: return m_StencilDeferredPasses[3];
+                default: return m_StencilDeferredPasses[1];
+            }
+        }
+
+        void SetComplexityScore(CommandBuffer cmd, CustomLightingType lightingType)
+        {
+            cmd.SetGlobalFloat(ShaderConstants._ComplexityScore, lightingType == CustomLightingType.Emission || lightingType == CustomLightingType.Multiply ? 4.0f : 8.0f);
         }
     }
 
