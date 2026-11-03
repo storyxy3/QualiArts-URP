@@ -1,3 +1,4 @@
+using UnityEngine.Experimental.Rendering.RenderGraphModule;
 using System;
 using System.Collections.Generic;
 using UnityEngine.Experimental.Rendering;
@@ -37,7 +38,7 @@ namespace UnityEngine.Rendering.Universal
     /// This renderer is supported on all Universal RP supported platforms.
     /// It uses a classic forward rendering strategy with per-object light culling.
     /// </summary>
-    public sealed partial class UniversalRenderer : ScriptableRenderer
+    public partial class UniversalRenderer : ScriptableRenderer
     {
         // Don't use 24 bit format in the editor, because it leads to unnecessary depth buffer re-allocations
         #if (UNITY_SWITCH || UNITY_ANDROID) && !UNITY_EDITOR
@@ -1665,5 +1666,10 @@ namespace UnityEngine.Rendering.Universal
         {
             m_ColorBufferSystem.EnableMSAA(enable);
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public override void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
     }
 }

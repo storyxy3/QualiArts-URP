@@ -4,7 +4,7 @@ using UnityEngine.Rendering.Universal.Internal;
 
 namespace UnityEngine.Rendering.Universal
 {
-    public sealed partial class UniversalRenderer
+    public partial class UniversalRenderer
     {
         private static RTHandle m_RenderGraphCameraColorHandle;
         private static RTHandle m_RenderGraphCameraDepthHandle;
