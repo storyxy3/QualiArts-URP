@@ -126,6 +126,11 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         internal static ScriptableRenderer current = null;
 
+        // Game declaration order, including constants and static storage.
+        public const int ScreenToWorldDownsampleCount = 3;
+        private Matrix4x4[] _screenToWorld;
+        public static readonly int _ScreenToWorld;
+
         /// <summary>
         /// Set camera matrices. This method will set <c>UNITY_MATRIX_V</c>, <c>UNITY_MATRIX_P</c>, <c>UNITY_MATRIX_VP</c> to camera matrices.
         /// Additionally this will also set <c>unity_CameraProjection</c> and <c>unity_CameraProjection</c>.
@@ -514,8 +519,6 @@ namespace UnityEngine.Rendering.Universal
         /// Supported rendering features by this renderer.
         /// <see cref="SupportedRenderingFeatures"/>
         /// </summary>
-        // Game field order: follows DebugHandler and precedes supportedRenderingFeatures.
-        private Matrix4x4[] _screenToWorld;
 
         public RenderingFeatures supportedRenderingFeatures { get; set; } = new RenderingFeatures();
 
@@ -540,12 +543,8 @@ namespace UnityEngine.Rendering.Universal
             public static readonly int AfterRendering = 3;
         }
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int ScreenToWorldDownsampleCount = 3;
 
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly int _ScreenToWorld;
 
         private StoreActionsOptimization m_StoreActionsOptimizationSetting = StoreActionsOptimization.Auto;
         private static bool m_UseOptimizedStoreActions = false;
