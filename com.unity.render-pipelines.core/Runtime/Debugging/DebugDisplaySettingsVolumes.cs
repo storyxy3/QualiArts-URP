@@ -418,6 +418,12 @@ public static readonly string defaultValue;
                     });
                 }
             }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private static DebugUI.Widget CreateVolumeParameterWidget(string name, VolumeParameter param, [Optional] Func<bool> isHiddenCallback)
+{
+    return null;
+}
         }
 
         [DisplayInfo(name = "Volume", order = int.MaxValue)]
