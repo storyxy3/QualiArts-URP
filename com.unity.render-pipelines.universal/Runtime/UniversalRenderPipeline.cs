@@ -1,3 +1,4 @@
+using UnityEngine.Experimental.GlobalIllumination;
 using System;
 using Unity.Collections;
 using System.Collections.Generic;
@@ -2020,5 +2021,15 @@ namespace UnityEngine.Rendering.Universal
             /// </summary>
             public int slice = 0;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private static void RenderSingleCamera(ScriptableRenderContext context, ref CameraData cameraData, bool fastRendering = false)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private static void RenderCameraStackFast(ScriptableRenderContext context, Camera baseCamera)
+{
+}
     }
 }
