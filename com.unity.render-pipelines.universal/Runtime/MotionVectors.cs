@@ -3,7 +3,7 @@ using UnityEngine;
 namespace UnityEngine.Rendering.Universal
 {
     // Motion vector data that persists over frames. (per camera)
-    internal sealed class MotionVectorsPersistentData
+    public sealed class MotionVectorsPersistentData
     {
         #region Fields
 
