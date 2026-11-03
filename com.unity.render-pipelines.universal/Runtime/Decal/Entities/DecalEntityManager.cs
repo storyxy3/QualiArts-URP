@@ -162,6 +162,16 @@ namespace UnityEngine.Rendering.Universal
             count = 0;
             capacity = 0;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void RequestMipmapStreaming()
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void CancelMipmapStreaming()
+{
+}
     }
 
     /// <summary>
