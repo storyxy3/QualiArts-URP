@@ -1,3 +1,5 @@
+using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -463,6 +465,15 @@ namespace UnityEngine.Rendering
                 base.OnItemRemoved(sender, e);
                 m_Header = null;
             }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public bool[] VisibleColumns
+{
+    get
+    {
+        return null;
+    }
+}
         }
     }
 }
