@@ -76,10 +76,10 @@ namespace UnityEngine.Rendering.Universal
         }
 
         // Rendering mode setup from UI. The final rendering mode used can be different. See renderingModeActual.
-        internal RenderingMode renderingModeRequested => m_RenderingMode;
+        public RenderingMode renderingModeRequested => m_RenderingMode;
 
         // Actual rendering mode, which may be different (ex: wireframe rendering, hardware not capable of deferred rendering).
-        internal RenderingMode renderingModeActual => renderingModeRequested == RenderingMode.Deferred && (GL.wireframe || (DebugHandler != null && DebugHandler.IsActiveModeUnsupportedForDeferred) || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame() || m_DeferredLights.IsOverlay)
+        public RenderingMode renderingModeActual => renderingModeRequested == RenderingMode.Deferred && (GL.wireframe || (DebugHandler != null && DebugHandler.IsActiveModeUnsupportedForDeferred) || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame() || m_DeferredLights.IsOverlay)
         ? RenderingMode.Forward
         : this.renderingModeRequested;
 
@@ -162,7 +162,7 @@ namespace UnityEngine.Rendering.Universal
         internal PostProcessPass postProcessPass { get => m_PostProcessPasses.postProcessPass; }
         internal PostProcessPass finalPostProcessPass { get => m_PostProcessPasses.finalPostProcessPass; }
         internal RTHandle colorGradingLut { get => m_PostProcessPasses.colorGradingLut; }
-        internal DeferredLights deferredLights { get => m_DeferredLights; }
+        public DeferredLights deferredLights { get => m_DeferredLights; }
 
         /// <summary>
         /// Constructor for the Universal Renderer.
@@ -1435,7 +1435,7 @@ namespace UnityEngine.Rendering.Universal
             EnqueuePass(m_RenderOpaqueForwardOnlyPass);
         }
 
-        private struct RenderPassInputSummary
+        internal struct RenderPassInputSummary
         {
             internal bool requiresDepthTexture;
             internal bool requiresDepthPrepass;
