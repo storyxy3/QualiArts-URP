@@ -33,6 +33,18 @@ namespace UnityEngine.Rendering.Universal
             [Reload("Shaders/AutodeskInteractive/AutodeskInteractiveMasked.shadergraph")]
             public Shader autodeskInteractiveMaskedPS;
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[Reload("Shaders/Terrain/TerrainDetailLit.shader", ReloadAttribute.Package.Root)]
+public Shader terrainDetailLitPS;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[Reload("Shaders/Terrain/WavingGrass.shader", ReloadAttribute.Package.Root)]
+public Shader terrainDetailGrassPS;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[Reload("Shaders/Terrain/WavingGrassBillboard.shader", ReloadAttribute.Package.Root)]
+public Shader terrainDetailGrassBillboardPS;
+
             /// <summary>
             /// SpeedTree7 shader.
             /// </summary>
