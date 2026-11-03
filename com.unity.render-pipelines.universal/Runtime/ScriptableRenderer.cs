@@ -514,6 +514,9 @@ namespace UnityEngine.Rendering.Universal
         /// Supported rendering features by this renderer.
         /// <see cref="SupportedRenderingFeatures"/>
         /// </summary>
+        // Game field order: follows DebugHandler and precedes supportedRenderingFeatures.
+        private Matrix4x4[] _screenToWorld;
+
         public RenderingFeatures supportedRenderingFeatures { get; set; } = new RenderingFeatures();
 
         /// <summary>
@@ -540,8 +543,6 @@ namespace UnityEngine.Rendering.Universal
         // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
 public const int ScreenToWorldDownsampleCount = 3;
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-private Matrix4x4[] _screenToWorld;
 
         // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
 public static readonly int _ScreenToWorld;
