@@ -39,11 +39,6 @@
             "name": "com.unity.xr.management",
             "expression": "4.0.1",
             "define": "XR_MANAGEMENT_4_0_1_OR_NEWER"
-        },
-        {
-            "name": "com.unity.visualeffectgraph",
-            "expression": "1.0.0",
-            "define": "HAS_VFX_GRAPH"
         }
     ],
     "noEngineReferences": false
