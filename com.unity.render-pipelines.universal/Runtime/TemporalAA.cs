@@ -171,6 +171,9 @@ private bool m_cocPingPong;
         // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
 public void GrapCocTexture(out RTHandle prevCoc, out RTHandle nextCoc)
 {
+            prevCoc = default;
+            nextCoc = default;
+
 }
 
     };
