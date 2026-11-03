@@ -19,4 +19,7 @@ for pkg in ['core','universal']:
    s=re.sub(r'((?:public|internal) '+cls+r'\([^\n]*\))\s*\{',r'\1 : base(default, false) // TODO(qa-recon): original constructor chaining unavailable.\n\t{',s)
   for cls,baseargs in [('VLSRPRenderer','data'),('VLSimpleRenderer','data'),('VLMotionVectorRenderPass','evt, cameraMaterial, objectMaterial, opaqueLayerMask'),('VLPostProcessPass','default, default, ref postProcessParams'),('VLRenderingPanel','default')]:
    s=re.sub(r'((?:public|internal) '+cls+r'\([^\n]*\))\s*\{',r'\1 : base('+baseargs+r') // TODO(qa-recon): original constructor chaining unavailable.\n\t{',s)
+  # Express the explicit interface getter as a property to avoid a second
+  # compiler-generated interface bridge inherited from MonoBehaviour.
+  s=s.replace('private Transform VL_002EEntitySystem_002EIEntityComponent_002Eget_transform()\n\t{\n\t\treturn null;\n\t}', 'Transform VL.EntitySystem.IEntityComponent.transform\n\t{\n\t\tget { return null; }\n\t}')
   p.write_text(s)

@@ -136,9 +136,9 @@ public class PlanarReflection : MonoBehaviour, IEntityComponent
 	}
 
 
-	private Transform VL_002EEntitySystem_002EIEntityComponent_002Eget_transform()
+	Transform VL.EntitySystem.IEntityComponent.transform
 	{
-		return null;
+		get { return null; }
 	}
 }
 
