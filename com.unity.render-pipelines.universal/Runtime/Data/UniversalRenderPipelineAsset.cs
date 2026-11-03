@@ -348,6 +348,9 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         [InspectorName("Use Pipeline Settings")]
         UsePipelineSettings = 2,
+
+        [InspectorName("Use MainCamera")]
+        UseMainCamera = 10,
     }
 
     /// <summary>
