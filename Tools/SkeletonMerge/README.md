@@ -32,7 +32,7 @@ owned by the live project.
 Metadata declaration comparison (before IL2CPP stripping) found all original
 non-compiler-generated types and instance fields, with matching field types and
 order after amendments. This is not an offset comparison. Stock-only fields
-remain in Core's RenderGraphDebugParams, RenderGraphDefaultResources,
+remain in Core's RenderGraphDebugParams,
 DynamicResolutionHandler, DebugUI.EnumField, ObjectParameter<T>; and URP's
 DBufferRenderPass, DecalProjector, DecalDrawSystem, DrawScreenSpaceUIPass.PassData,
 UniversalRendererData.ShaderResources. They may affect the
@@ -60,8 +60,7 @@ is `.qa-work/{Core,Universal}-{game,player}-{fields,field-types}.json`.
 | Assembly | Type (namespace abbreviated) | Extra fields |
 | --- | --- | --- |
 | Core | RenderGraphDebugParams | `m_DebugItems`, `m_DebugPanel` |
-| Core | RenderGraphDefaultResources | `m_IsValid` |
-| Core | DynamicResolutionHandler | `cachedOriginalSize`, `m_OwnerCameraWeakRef` |
+| Core | DynamicResolutionHandler | `m_OwnerCameraWeakRef` |
 | Core | DebugUI.EnumField | `m_Indexes` |
 | Core | ObjectParameter<T> | `<parameters>k__BackingField` |
 | Universal | DBufferRenderPass | `m_DBufferDepth`, `<depthHandle>k__BackingField` |
@@ -90,3 +89,8 @@ ScriptableRenderer's constant/static declaration placement also matches the
 game. Generated skeletons were regenerated with anonymous methods, anonymous
 types and local-function reconstruction disabled, retaining the original
 compiler-generated closure declarations for ILPP name restoration.
+
+RenderGraphDefaultResources.m_IsValid was likewise declaration-only and removed.
+DynamicResolutionHandler.cachedOriginalSize had one write and no reads; its
+field and dead assignment were removed. The live weak-reference owner field
+remains because removing it would require reconstructing pooling behavior.

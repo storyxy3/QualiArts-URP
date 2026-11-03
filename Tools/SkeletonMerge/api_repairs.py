@@ -77,3 +77,14 @@ if 'Game declaration order, including constants and static storage.' not in s:
  anchor='        internal static ScriptableRenderer current = null;'
  s=s.replace(anchor,anchor+'\n\n        // Game declaration order, including constants and static storage.\n        public const int ScreenToWorldDownsampleCount = 3;\n        private Matrix4x4[] _screenToWorld;\n        public static readonly int _ScreenToWorld;')
  path.write_text(s)
+
+# More dead stock storage absent from native game metadata.
+path=root/'com.unity.render-pipelines.core/Runtime/RenderGraph/RenderGraphDefaultResources.cs'
+s=path.read_text()
+s=s.replace('        bool m_IsValid;\n','')
+path.write_text(s)
+path=root/'com.unity.render-pipelines.core/Runtime/Common/DynamicResolutionHandler.cs'
+s=path.read_text()
+s=s.replace('        private Vector2Int cachedOriginalSize;\n','')
+s=s.replace('            cachedOriginalSize = size;\n','')
+path.write_text(s)
