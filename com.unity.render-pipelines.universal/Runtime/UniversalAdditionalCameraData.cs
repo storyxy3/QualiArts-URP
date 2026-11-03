@@ -332,6 +332,19 @@ namespace UnityEngine.Rendering.Universal
         [SerializeField] Vector4 m_ScreenSizeOverride;
         [SerializeField] Vector4 m_ScreenCoordScaleBias;
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+[Range(0.1f, 1f)]
+private float m_RenderScale;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+private bool m_FastRendering;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+private bool m_NeedsAlphaChannel;
+
         [NonSerialized] Camera m_Camera;
         // Deprecated:
         [FormerlySerializedAs("requiresDepthTexture"), SerializeField]
@@ -842,5 +855,44 @@ namespace UnityEngine.Rendering.Universal
 
             return renderers[m_RendererIndex];
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public float renderScale
+{
+    get
+    {
+        return default(float);
+    }
+
+    set
+    {
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public bool fastRendering
+{
+    get
+    {
+        return default(bool);
+    }
+
+    set
+    {
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public bool needsAlphaChannel
+{
+    get
+    {
+        return default(bool);
+    }
+
+    set
+    {
+    }
+}
     }
 }
