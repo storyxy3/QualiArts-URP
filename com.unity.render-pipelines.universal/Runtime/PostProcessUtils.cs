@@ -113,7 +113,7 @@ namespace UnityEngine.Rendering.Universal
             material.SetVector(ShaderConstants._Grain_TilingParams, tilingParams);
         }
 
-        internal static void SetSourceSize(CommandBuffer cmd, RenderTextureDescriptor desc)
+        public static void SetSourceSize(CommandBuffer cmd, RenderTextureDescriptor desc)
         {
             float width = desc.width;
             float height = desc.height;
