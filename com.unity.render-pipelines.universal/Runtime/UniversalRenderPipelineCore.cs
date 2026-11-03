@@ -296,7 +296,7 @@ namespace UnityEngine.Rendering.Universal
             return m_JitterMatrix * m_ProjectionMatrix;
         }
 
-        internal Matrix4x4 GetProjectionMatrixNoJitter(int viewIndex = 0)
+        public Matrix4x4 GetProjectionMatrixNoJitter(int viewIndex = 0)
         {
 #if ENABLE_VR && ENABLE_XR_MODULE
             if (xr.enabled)
@@ -376,8 +376,8 @@ namespace UnityEngine.Rendering.Universal
         internal bool useScreenCoordOverride;
         internal Vector4 screenSizeOverride;
         internal Vector4 screenCoordScaleBias;
-        internal int pixelWidth;
-        internal int pixelHeight;
+        public int pixelWidth;
+        public int pixelHeight;
         internal float aspectRatio;
 
         /// <summary>
@@ -759,7 +759,7 @@ namespace UnityEngine.Rendering.Universal
         internal TaaPersistentData taaPersistentData;
 
         // TAA settings.
-        internal TemporalAA.Settings taaSettings;
+        public TemporalAA.Settings taaSettings;
 
         // Post-process history reset has been triggered for this camera.
         internal bool resetHistory
