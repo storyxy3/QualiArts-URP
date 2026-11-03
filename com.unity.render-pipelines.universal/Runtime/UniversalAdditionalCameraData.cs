@@ -575,7 +575,7 @@ private bool m_NeedsAlphaChannel;
         /// <summary>
         /// Returns the selected mode for Volume Frame Updates.
         /// </summary>
-        internal VolumeFrameworkUpdateMode volumeFrameworkUpdateMode
+        public VolumeFrameworkUpdateMode volumeFrameworkUpdateMode
         {
             get => m_VolumeFrameworkUpdateModeOption;
             set => m_VolumeFrameworkUpdateModeOption = value;
@@ -690,7 +690,7 @@ private bool m_NeedsAlphaChannel;
         /// <summary>
         /// Motion data that persists over a frame.
         /// </summary>
-        internal MotionVectorsPersistentData motionVectorsPersistentData => m_MotionVectorsPersistentData;
+        public MotionVectorsPersistentData motionVectorsPersistentData => m_MotionVectorsPersistentData;
 
         /// <summary>
         /// Reset post-process history.
