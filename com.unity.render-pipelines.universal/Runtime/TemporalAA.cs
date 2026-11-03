@@ -313,6 +313,15 @@ public static readonly int _TaaJitterStrength;
 
                 return s;
             }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public float frameInfluence
+{
+    get
+    {
+        return default(float);
+    }
+}
         }
 
         static internal Matrix4x4 CalculateJitterMatrix(ref CameraData cameraData)
