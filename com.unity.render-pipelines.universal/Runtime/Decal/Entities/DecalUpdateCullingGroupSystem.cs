@@ -15,6 +15,9 @@ namespace UnityEngine.Rendering.Universal
         public CullingGroup cullingGroups;
         public int[] visibleDecalIndexArray;
         public NativeArray<int> visibleDecalIndices;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public NativeArray<uint> sortIndices;
         public int visibleDecalCount;
 
         public override void RemoveAtSwapBack(int entityIndex)
