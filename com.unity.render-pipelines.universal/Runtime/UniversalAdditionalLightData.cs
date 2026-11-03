@@ -145,13 +145,13 @@ namespace UnityEngine.Rendering.Universal
 
         // The layer(s) this light belongs too.
         [Obsolete("This is obsolete, please use m_RenderingLayerMask instead.", false)]
-        [SerializeField] LightLayerEnum m_LightLayerMask = LightLayerEnum.LightLayerDefault;
+        [SerializeField] uint m_LightLayerMask = (uint)LightLayerEnum.LightLayerDefault;
 
         /// <summary>
         /// The layer(s) this light belongs to.
         /// </summary>
         [Obsolete("This is obsolete, please use renderingLayerMask instead.", false)]
-        public LightLayerEnum lightLayerMask
+        public uint lightLayerMask
         {
             get { return m_LightLayerMask; }
             set { m_LightLayerMask = value; }
