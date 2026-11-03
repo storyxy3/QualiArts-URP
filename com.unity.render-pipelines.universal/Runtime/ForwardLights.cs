@@ -656,6 +656,15 @@ public void SetFPParams1(CommandBuffer cmd, Vector2 pixelSize)
         // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
 private void InitializeLightConstants(NativeArray<VisibleLight> lights, int lightIndex, out Vector4 lightPos, out Vector4 lightColor, out Vector4 lightAttenuation, out Vector4 lightSpotDir, out Vector4 lightOcclusionProbeChannel, out uint lightLayerMask, out bool isSubtractive, out Vector4 customLightProperty)
 {
+            lightPos = default;
+            lightColor = default;
+            lightAttenuation = default;
+            lightSpotDir = default;
+            lightOcclusionProbeChannel = default;
+            lightLayerMask = default;
+            isSubtractive = default;
+            customLightProperty = default;
+
 }
     }
 }
