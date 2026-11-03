@@ -595,7 +595,7 @@ namespace UnityEngine.Rendering.Universal
         /// <summary>
         /// The list of renderers used by this pipeline asset.
         /// </summary>
-        internal ReadOnlySpan<ScriptableRenderer> renderers => m_Renderers;
+        public ReadOnlySpan<ScriptableRenderer> renderers => m_Renderers;
 
 #if UNITY_EDITOR
         [NonSerialized]
@@ -981,7 +981,7 @@ namespace UnityEngine.Rendering.Universal
 
         internal Vector2Int additionalLightsCookieResolution => new Vector2Int((int)m_AdditionalLightsCookieResolution, (int)m_AdditionalLightsCookieResolution);
 
-        internal int[] rendererIndexList
+        public int[] rendererIndexList
         {
             get
             {
@@ -1681,9 +1681,9 @@ namespace UnityEngine.Rendering.Universal
             get { return editorResources?.shaders.defaultSpeedTree8PS; }
         }
 
+#endif
         /// <inheritdoc/>
         public override string renderPipelineShaderTag => UniversalRenderPipeline.k_ShaderTagName;
-#endif
 
         /// <summary>
         /// Returns the terrain detail lit shader that this asset uses.
