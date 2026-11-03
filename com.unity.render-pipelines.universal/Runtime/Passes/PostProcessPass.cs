@@ -190,12 +190,12 @@ namespace UnityEngine.Rendering.Universal
         /// <summary>
         /// Cleans up the Material Library used in the passes.
         /// </summary>
-        public void Cleanup() => m_Materials.Cleanup();
+        public virtual void Cleanup() => m_Materials.Cleanup();
 
         /// <summary>
         /// Disposes used resources.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             foreach (var handle in m_BloomMipDown)
                 handle?.Release();
@@ -224,7 +224,7 @@ namespace UnityEngine.Rendering.Universal
         /// <param name="internalLut"></param>
         /// <param name="hasFinalPass"></param>
         /// <param name="enableColorEncoding"></param>
-        public void Setup(in RenderTextureDescriptor baseDescriptor, in RTHandle source, bool resolveToScreen, in RTHandle depth, in RTHandle internalLut, in RTHandle motionVectors, bool hasFinalPass, bool enableColorEncoding)
+        public virtual void Setup(in RenderTextureDescriptor baseDescriptor, in RTHandle source, bool resolveToScreen, in RTHandle depth, in RTHandle internalLut, in RTHandle motionVectors, bool hasFinalPass, bool enableColorEncoding)
         {
             m_Descriptor = baseDescriptor;
             m_Descriptor.useMipMap = false;
@@ -341,7 +341,7 @@ namespace UnityEngine.Rendering.Universal
             return cameraData.isHDROutputActive && cameraData.captureActions == null;
         }
 
-        void Render(CommandBuffer cmd, ref RenderingData renderingData)
+        internal virtual void Render(CommandBuffer cmd, ref RenderingData renderingData)
         {
             ref CameraData cameraData = ref renderingData.cameraData;
             ref ScriptableRenderer renderer = ref cameraData.renderer;
@@ -1257,7 +1257,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Color Grading
 
-        void SetupColorGrading(CommandBuffer cmd, ref RenderingData renderingData, Material material)
+        protected virtual void SetupColorGrading(CommandBuffer cmd, ref RenderingData renderingData, Material material)
         {
             ref var postProcessingData = ref renderingData.postProcessingData;
             bool hdr = postProcessingData.gradingMode == ColorGradingMode.HighDynamicRange;
@@ -1345,7 +1345,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Final pass
 
-        void RenderFinalPass(CommandBuffer cmd, ref RenderingData renderingData)
+        internal virtual void RenderFinalPass(CommandBuffer cmd, ref RenderingData renderingData)
         {
             ref var cameraData = ref renderingData.cameraData;
             var material = m_Materials.finalPass;
