@@ -13,6 +13,10 @@ namespace UnityEngine.Rendering.Universal
     [URPHelpURL("urp-global-settings")]
     partial class UniversalRenderPipelineGlobalSettings : RenderPipelineGlobalSettings, ISerializationCallbackReceiver
     {
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[SerializeField]
+private RenderPipelineGraphicsSettingsContainer m_Settings;
         #region Version system
 
 #pragma warning disable CS0414
@@ -186,6 +190,54 @@ namespace UnityEngine.Rendering.Universal
             UpdateRenderingLayerNames();
         }
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly string[] ShaderLayerNames;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static readonly string[] LightLayerNames;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int LitShaderLayerIndex = 0;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int SimpleLitShaderLayerIndex = 1;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int ActorShaderLayerIndex = 2;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint LitShaderLayerMask = 1u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint SimpleLitShaderLayerMask = 2u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint ActorShaderLayerMask = 4u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint PlanarDepthLayerMask = 65536u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint PlanarEmissionLayerMask = 131072u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint PlanarObjectLayerMask = 262144u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint ShaderLayerMask = 7u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int MaterialFlagsOffset = 4;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const int LightLayerMaskOffset = 8;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint LightLayerBaseMask = 15u;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public const uint LightLayerMask = 3840u;
+
         [SerializeField]
         string[] m_RenderingLayerNames = new string[] { "Default" };
         string[] renderingLayerNames
@@ -336,6 +388,27 @@ namespace UnityEngine.Rendering.Universal
         /// Controls whether Screen Coordinates Override shader variants are automatically stripped.
         /// </summary>
         public bool stripScreenCoordOverrideVariants { get => m_StripScreenCoordOverrideVariants; set => m_StripScreenCoordOverrideVariants = value; }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+protected override List<IRenderPipelineGraphicsSettings> settingsList
+{
+    get
+    {
+        return null;
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static uint GetLightLayerMaskFromRenderingLayerMask(uint renderingLayerMask)
+{
+    return default(uint);
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public static uint GetRenderingLayerMaskFromLightLayerMask(uint lightLayerMask)
+{
+    return default(uint);
+}
 
         #endregion
     }
