@@ -1,3 +1,4 @@
+using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
@@ -147,6 +148,14 @@ namespace UnityEngine.Rendering.Universal
             [ReadOnly] public NativeArray<BoundingSphere> boundingSpheres;
             [ReadOnly] public NativeArray<uint> renderingLayerMasks;
 
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[ReadOnly]
+public NativeArray<Color32> colors;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[ReadOnly]
+public NativeArray<int> priorities;
+
             public Vector3 cameraPosition;
             public ulong sceneCullingMask;
             public int cullingMask;
@@ -157,6 +166,10 @@ namespace UnityEngine.Rendering.Universal
             [WriteOnly] public NativeArray<float4x4> decalToWorldsDraw;
             [WriteOnly] public NativeArray<float4x4> normalToDecalsDraw;
             [WriteOnly] public NativeArray<float> renderingLayerMasksDraw;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[WriteOnly]
+public NativeArray<float> colorsDraw;
             [WriteOnly] public NativeArray<DecalSubDrawCall> subCalls;
             [WriteOnly] public NativeArray<int> subCallCount;
 
@@ -231,6 +244,10 @@ namespace UnityEngine.Rendering.Universal
 
                 subCallCount[0] = subCallIndex;
             }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+[WriteOnly]
+public NativeArray<DecalInstanceData> instanceDatasDraw;
         }
     }
 }
