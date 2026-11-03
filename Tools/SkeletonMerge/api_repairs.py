@@ -61,3 +61,9 @@ if 'UseMainCamera = 10' not in s:s=s.replace('        UsePipelineSettings = 2,',
 start=s.index('public enum ShadowResolution');end=s.index('\n    }',start)
 if '_8192' not in s[start:end]:s=s[:start]+s[start:end].replace('_4096 = 4096','_4096 = 4096,\n\n        /// <summary>Game 3.5.3 shadow-map resolution.</summary>\n        _8192 = 8192')+s[end:]
 path.write_text(s)
+
+# Stock URP14 declared this unused handle; the game has no corresponding field.
+path=root/"com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs"
+s=path.read_text()
+if s.count("m_ColorFrontBuffer")==1:s=s.replace("        RTHandle m_ColorFrontBuffer;\n", "")
+path.write_text(s)
