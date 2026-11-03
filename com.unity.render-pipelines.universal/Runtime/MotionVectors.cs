@@ -37,7 +37,7 @@ namespace UnityEngine.Rendering.Universal
             get => m_ViewProjection[0];
         }
 
-        internal Matrix4x4 previousViewProjection
+        public Matrix4x4 previousViewProjection
         {
             get => m_PreviousViewProjection[0];
         }
