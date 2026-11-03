@@ -5,7 +5,7 @@ using UnityEngine.Experimental.Rendering.RenderGraphModule;
 
 namespace UnityEngine.Rendering.Universal
 {
-    sealed class MotionVectorRenderPass : ScriptableRenderPass
+    public class MotionVectorRenderPass : ScriptableRenderPass
     {
         #region Fields
         const string kPreviousViewProjectionNoJitter = "_PrevViewProjMatrix";
@@ -208,7 +208,7 @@ namespace UnityEngine.Rendering.Universal
         }
         #endregion
 
-        private class PassData
+        protected class PassData
         {
             internal TextureHandle motionVectorColor;
             internal TextureHandle motionVectorDepth;
