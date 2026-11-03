@@ -1,6 +1,8 @@
 // Generated from Gakumas 3.5.3 DummyDll; method bodies are placeholders.
 namespace VL.Rendering.Internal {
 using System;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
@@ -370,6 +372,28 @@ internal class VLPostProcessPass : PostProcessPass
 
 
 		internal static readonly int _RGBSplit;
+	}
+
+	[StructLayout((LayoutKind)3)]
+
+	[CompilerGenerated]
+	private struct _003C_003Ec__DisplayClass29_0
+	{
+
+
+		public RTHandle source;
+
+
+		public RTHandle destination;
+
+
+		public VLPostProcessPass _003C_003E4__this;
+
+
+		public int amountOfPassesRemaining;
+
+
+		public CommandBuffer cmd;
 	}
 
 
@@ -745,6 +769,26 @@ internal class VLPostProcessPass : PostProcessPass
 
 
 	public void DoWaveJitterGlitch(CommandBuffer cmd, RTHandle source, RTHandle destination)
+	{
+	}
+
+
+	[CompilerGenerated]
+	private RTHandle _003CRender_003Eg__GetSource_007C29_0(ref _003C_003Ec__DisplayClass29_0 P_0)
+	{
+		return null;
+	}
+
+
+	[CompilerGenerated]
+	private RTHandle _003CRender_003Eg__GetDestination_007C29_1(ref _003C_003Ec__DisplayClass29_0 P_0)
+	{
+		return null;
+	}
+
+
+	[CompilerGenerated]
+	private void _003CRender_003Eg__Swap_007C29_2(ref ScriptableRenderer r, ref _003C_003Ec__DisplayClass29_0 P_1)
 	{
 	}
 }

@@ -2,6 +2,7 @@
 namespace VL.Rendering {
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -59,6 +60,25 @@ public class VLSRPCapture : MonoBehaviour
 		public override int GetHashCode()
 		{
 			return default(int);
+		}
+	}
+
+	[CompilerGenerated]
+	private sealed class _003C_003Ec__DisplayClass5_0
+	{
+
+
+		public RenderTargetIdentifier target;
+
+
+		public _003C_003Ec__DisplayClass5_0()
+		{
+		}
+
+
+		internal bool _003CRemove_003Eb__0(RequestData x)
+		{
+			return default(bool);
 		}
 	}
 

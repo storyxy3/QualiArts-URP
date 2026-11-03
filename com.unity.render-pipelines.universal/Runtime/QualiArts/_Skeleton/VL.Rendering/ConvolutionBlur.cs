@@ -1,10 +1,33 @@
 // Generated from Gakumas 3.5.3 DummyDll; method bodies are placeholders.
 namespace VL.Rendering {
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
+using VL.Rendering;
 
 public class ConvolutionBlur
 {
+	[Serializable]
+
+	[CompilerGenerated]
+	private sealed class _003C_003Ec
+	{
+
+
+		public static readonly _003C_003Ec _003C_003E9;
+
+
+		public _003C_003Ec()
+		{
+		}
+
+
+		internal int _003C_002Ecctor_003Eb__15_0(int x)
+		{
+			return default(int);
+		}
+	}
 
 	public const int MaxMipCount = 6;
 

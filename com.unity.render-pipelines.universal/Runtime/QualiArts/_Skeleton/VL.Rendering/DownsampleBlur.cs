@@ -1,11 +1,31 @@
 // Generated from Gakumas 3.5.3 DummyDll; method bodies are placeholders.
 namespace VL.Rendering {
 using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 
 public class DownsampleBlur : IDisposable
 {
+
+	[CompilerGenerated]
+	private sealed class _003C_003Ec__DisplayClass8_0
+	{
+
+
+		public string propertyName;
+
+
+		public _003C_003Ec__DisplayClass8_0()
+		{
+		}
+
+
+		internal string _003C_002Ector_003Eb__0(int x)
+		{
+			return null;
+		}
+	}
 
 
 	private static readonly int _BlurOffset;

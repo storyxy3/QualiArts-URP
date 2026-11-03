@@ -1,5 +1,7 @@
 // Generated from Gakumas 3.5.3 DummyDll; method bodies are placeholders.
 namespace VL.Rendering {
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
 using UnityEngine.Rendering;
@@ -10,6 +12,26 @@ using VL.Rendering;
 
 internal class VLDeferredPass : ScriptableRenderPass
 {
+	[Serializable]
+
+	[CompilerGenerated]
+	private sealed class _003C_003Ec
+	{
+
+
+		public static readonly _003C_003Ec _003C_003E9;
+
+
+		public _003C_003Ec()
+		{
+		}
+
+
+		internal AttachmentDescriptor _003C_002Ecctor_003Eb__55_0(GraphicsFormat x)
+		{
+			return default(AttachmentDescriptor);
+		}
+	}
 
 
 	public static readonly int _CameraNormalsTexture;

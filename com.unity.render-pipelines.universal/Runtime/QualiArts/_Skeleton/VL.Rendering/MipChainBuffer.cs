@@ -171,6 +171,20 @@ public class MipChainBuffer : IDisposable
 	{
 		return default(bool);
 	}
+
+
+	[CompilerGenerated]
+	private int _003CExecute_003Eg__GetExtraPixel_007C39_0(int x)
+	{
+		return default(int);
+	}
+
+
+	[CompilerGenerated]
+	internal static int _003CExecute_003Eg__DivRoundUp_007C39_1(int x, int y)
+	{
+		return default(int);
+	}
 }
 
 }

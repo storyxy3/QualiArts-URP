@@ -1,5 +1,7 @@
 // Generated from Gakumas 3.5.3 DummyDll; method bodies are placeholders.
 namespace VL.Rendering {
+using System;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -9,6 +11,38 @@ using VL.Rendering.Internal;
 
 public sealed class VLSRPRenderer : UniversalRenderer
 {
+	[Serializable]
+
+	[CompilerGenerated]
+	private sealed class _003C_003Ec
+	{
+
+
+		public static readonly _003C_003Ec _003C_003E9;
+
+
+		public static Predicate<ScriptableRenderPass> _003C_003E9__27_0;
+
+
+		public static Predicate<ScriptableRenderPass> _003C_003E9__27_1;
+
+
+		public _003C_003Ec()
+		{
+		}
+
+
+		internal bool _003CSetup_003Eb__27_0(ScriptableRenderPass x)
+		{
+			return default(bool);
+		}
+
+
+		internal bool _003CSetup_003Eb__27_1(ScriptableRenderPass x)
+		{
+			return default(bool);
+		}
+	}
 
 
 	private VLMotionVectorRenderPass m_VLMotionVectorPass;
