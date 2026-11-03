@@ -35,7 +35,7 @@ namespace UnityEngine.Rendering.Universal.Internal
     }
 
     // Manages deferred lights.
-    internal class DeferredLights
+    public class DeferredLights
     {
         internal static class ShaderConstants
         {
