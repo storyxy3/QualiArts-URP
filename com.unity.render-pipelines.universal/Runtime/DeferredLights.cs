@@ -1,3 +1,4 @@
+using VL.Rendering;
 using System;
 using System.Runtime.CompilerServices;
 using UnityEngine.Experimental.Rendering;
@@ -1323,6 +1324,82 @@ namespace UnityEngine.Rendering.Universal.Internal
 
             return mesh;
         }
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private PlanarReflectionEntityManager _planarReflectionEntityManager;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private PlanarReflectionUpdateCachedSystem _planarReflectionUpdateCachedSystem;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private PlanarReflectionCullingSystem _planarReflectionCullingSystem;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private PlanarReflectionResultSystem _planarReflectionResultSystem;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private int _planarReflectionCount;
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private static SharedPlanarReflectionEntityManager sharedPlanarReflectionManager
+{
+    [CompilerGenerated]
+    get
+    {
+        return null;
+    }
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public AdditionalLightsShadowCasterPass GetAdditionalLightsShadowCasterPass()
+{
+    return null;
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void ExecuteIndirectReflection(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void ExecuteAdditionalInfo(ScriptableRenderContext context, bool copyColor)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+internal void ExecuteLightingComplexityPass(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+internal void ExecutePreEmissionDebugPass(CommandBuffer cmd, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+internal void ExecuteEmissionDebugPass(CommandBuffer cmd, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private void InitVLStencilDeferredMaterial()
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+private void CompletePlanarReflectionJob()
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void ExecutePlanarReflection(ScriptableRenderContext context, ref RenderingData renderingData)
+{
+}
+
+        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
+public void DisposePlanarReflection()
+{
+}
     }
 
     /*
