@@ -35,7 +35,7 @@ order after amendments. This is not an offset comparison. Stock-only fields
 remain in Core's RenderGraphDebugParams, RenderGraphDefaultResources,
 DynamicResolutionHandler, DebugUI.EnumField, ObjectParameter<T>; and URP's
 DBufferRenderPass, DecalProjector, DecalDrawSystem, DrawScreenSpaceUIPass.PassData,
-UniversalRenderer, UniversalRendererData.ShaderResources. They may affect the
+UniversalRendererData.ShaderResources. They may affect the
 IL2CPP report, depending on stripping. Their stock code has not been rewritten
 merely to remove storage.
 
@@ -68,7 +68,6 @@ is `.qa-work/{Core,Universal}-{game,player}-{fields,field-types}.json`.
 | Universal | DecalProjector | `m_OldDrawDistance`, `m_OldFadeScale`, `m_OldStartAngleFade`, `m_OldEndAngleFade`, `m_OldUVScale`, `m_OldUVBias`, `m_OldScaleMode`, `m_OldOffset`, `m_OldSize`, `m_OldFadeFactor` |
 | Universal | DecalDrawSystem | `<overrideMaterial>k__BackingField` |
 | Universal | DrawScreenSpaceUIPass.PassData | `offscreenTexture` |
-| Universal | UniversalRenderer | `m_ColorFrontBuffer` |
 | Universal | UniversalRendererData.ShaderResources | `terrainDetailLitPS`, `terrainDetailGrassPS`, `terrainDetailGrassBillboardPS` |
 
 No missing instance fields remained among shared non-compiler-generated types.
@@ -79,3 +78,15 @@ difference among types with the same field set was ScriptableRenderer's
 `_screenToWorld`; it now follows DebugHandler's backing field and precedes
 supportedRenderingFeatures' backing field. DebugDisplaySettingsRendering's
 missing gameViewOnly backing field was also restored.
+
+
+Native-report follow-up: the first ARM64 build exposed an eight-byte inherited
+shift in VLSRPRenderer caused by stock UniversalRenderer.m_ColorFrontBuffer.
+This field had no usages anywhere in the universal package (declaration only)
+and was removed without replacing any method behavior. A subsequent native
+build must confirm the corrected offsets. UniversalRenderPipelineAsset now
+uses the game's `RenderPipelineAsset<UniversalRenderPipeline>` base, and
+ScriptableRenderer's constant/static declaration placement also matches the
+game. Generated skeletons were regenerated with anonymous methods, anonymous
+types and local-function reconstruction disabled, retaining the original
+compiler-generated closure declarations for ILPP name restoration.

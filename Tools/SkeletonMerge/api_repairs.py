@@ -67,3 +67,13 @@ path=root/"com.unity.render-pipelines.universal/Runtime/UniversalRenderer.cs"
 s=path.read_text()
 if s.count("m_ColorFrontBuffer")==1:s=s.replace("        RTHandle m_ColorFrontBuffer;\n", "")
 path.write_text(s)
+path=root/'com.unity.render-pipelines.universal/Runtime/Data/UniversalRenderPipelineAsset.cs'
+s=path.read_text().replace('UniversalRenderPipelineAsset : RenderPipelineAsset, ISerializationCallbackReceiver','UniversalRenderPipelineAsset : RenderPipelineAsset<UniversalRenderPipeline>, ISerializationCallbackReceiver');path.write_text(s)
+path=root/'com.unity.render-pipelines.universal/Runtime/ScriptableRenderer.cs';s=path.read_text()
+if 'Game declaration order, including constants and static storage.' not in s:
+ for line in ['public const int ScreenToWorldDownsampleCount = 3;','public static readonly int _ScreenToWorld;']:
+  s=s.replace('        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.\n'+line+'\n','')
+ s=s.replace('        // Game field order: follows DebugHandler and precedes supportedRenderingFeatures.\n        private Matrix4x4[] _screenToWorld;\n','')
+ anchor='        internal static ScriptableRenderer current = null;'
+ s=s.replace(anchor,anchor+'\n\n        // Game declaration order, including constants and static storage.\n        public const int ScreenToWorldDownsampleCount = 3;\n        private Matrix4x4[] _screenToWorld;\n        public static readonly int _ScreenToWorld;')
+ path.write_text(s)
