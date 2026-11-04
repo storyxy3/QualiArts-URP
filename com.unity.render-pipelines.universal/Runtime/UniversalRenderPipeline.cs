@@ -151,7 +151,7 @@ namespace UnityEngine.Rendering.Universal
         internal static int lightsPerTile => ((maxVisibleAdditionalLights + 31) / 32) * 32;
         internal static int maxZBinWords => 1024 * 4;
         internal static int maxTileWords => (maxVisibleAdditionalLights <= 32 ? 1024 : 4096) * 4;
-        internal static int maxVisibleReflectionProbes => Math.Min(maxVisibleAdditionalLights, 64);
+        internal static int maxVisibleReflectionProbes => maxVisibleAdditionalLights / 4;
 
         internal const int k_DefaultRenderingLayerMask = 0x00000001;
         private readonly DebugDisplaySettingsUI m_DebugDisplaySettingsUI = new DebugDisplaySettingsUI();
@@ -367,7 +367,10 @@ namespace UnityEngine.Rendering.Universal
                 var camera = cameras[i];
                 if (IsGameCamera(camera))
                 {
-                    RenderCameraStack(renderContext, camera);
+                    if (camera.TryGetComponent<UniversalAdditionalCameraData>(out var additionalCameraData) && additionalCameraData.fastRendering)
+                        RenderCameraStackFast(renderContext, camera);
+                    else
+                        RenderCameraStack(renderContext, camera);
                 }
                 else
                 {
@@ -375,7 +378,7 @@ namespace UnityEngine.Rendering.Universal
                     {
                         BeginCameraRendering(renderContext, camera);
                     }
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
                     //It should be called before culling to prepare material. When there isn't any VisualEffect component, this method has no effect.
                     VFX.VFXManager.PrepareCamera(camera);
 #endif
@@ -598,7 +601,7 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         /// <param name="context">Render context used to record commands during execution.</param>
         /// <param name="cameraData">Camera rendering data. This might contain data inherited from a base camera.</param>
-        static void RenderSingleCamera(ScriptableRenderContext context, ref CameraData cameraData)
+        static void RenderSingleCamera(ScriptableRenderContext context, ref CameraData cameraData, bool fastRendering = false)
         {
             Camera camera = cameraData.camera;
             var renderer = cameraData.renderer;
@@ -674,6 +677,9 @@ namespace UnityEngine.Rendering.Universal
                     ApplyAdaptivePerformance(ref renderingData);
 #endif
 
+                if (!useRenderGraph)
+                    renderer.PreSetup(context, ref renderingData);
+
                 renderer.AddRenderPasses(ref renderingData);
 
                 if (useRenderGraph)
@@ -687,7 +693,10 @@ namespace UnityEngine.Rendering.Universal
                         renderer.Setup(context, ref renderingData);
 
                     // Timing scope inside
-                    renderer.Execute(context, ref renderingData);
+                    if (fastRendering)
+                        renderer.ExecuteFast(context, ref renderingData);
+                    else
+                        renderer.Execute(context, ref renderingData);
                 }
             } // When ProfilingSample goes out of scope, an "EndSample" command is enqueued into CommandBuffer cmd
 
@@ -696,7 +705,7 @@ namespace UnityEngine.Rendering.Universal
 
             using (new ProfilingScope(null, Profiling.Pipeline.Context.submit))
             {
-                if (renderer.useRenderPassEnabled && !context.SubmitForRenderPassValidation())
+                if (!context.SubmitForRenderPassValidation())
                 {
                     renderer.useRenderPassEnabled = false;
                     CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.RenderPassEnabled, false);
@@ -714,6 +723,24 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         /// <param name="context">Render context used to record commands during execution.</param>
         /// <param name="camera">Camera to render.</param>
+        static void RenderCameraStackFast(ScriptableRenderContext context, Camera baseCamera)
+        {
+            using var profScope = new ProfilingScope(null, ProfilingSampler.Get(URPProfileId.RenderCameraStack));
+            baseCamera.TryGetComponent<UniversalAdditionalCameraData>(out var baseCameraAdditionalData);
+            if (baseCameraAdditionalData != null && baseCameraAdditionalData.renderType == CameraRenderType.Overlay)
+                return;
+
+            using (new ProfilingScope(null, Profiling.Pipeline.beginCameraRendering))
+                BeginCameraRendering(context, baseCamera);
+
+            InitializeCameraData(baseCamera, baseCameraAdditionalData, false, out var cameraData);
+            InitializeAdditionalCameraData(baseCamera, baseCameraAdditionalData, true, ref cameraData);
+            RenderSingleCamera(context, ref cameraData, true);
+
+            using (new ProfilingScope(null, Profiling.Pipeline.endCameraRendering))
+                EndCameraRendering(context, baseCamera);
+        }
+
         static void RenderCameraStack(ScriptableRenderContext context, Camera baseCamera)
         {
             using var profScope = new ProfilingScope(null, ProfilingSampler.Get(URPProfileId.RenderCameraStack));
@@ -844,7 +871,7 @@ namespace UnityEngine.Rendering.Universal
                 // msaa level of cameraTargetDescriptor and XR modifications.
                 InitializeAdditionalCameraData(baseCamera, baseCameraAdditionalData, !isStackedRendering, ref baseCameraData);
 
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
                 //It should be called before culling to prepare material. When there isn't any VisualEffect component, this method has no effect.
                 VFX.VFXManager.PrepareCamera(baseCamera);
 #endif
@@ -904,7 +931,7 @@ namespace UnityEngine.Rendering.Universal
                             {
                                 BeginCameraRendering(context, currCamera);
                             }
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
                             //It should be called before culling to prepare material. When there isn't any VisualEffect component, this method has no effect.
                             VFX.VFXManager.PrepareCamera(currCamera);
 #endif

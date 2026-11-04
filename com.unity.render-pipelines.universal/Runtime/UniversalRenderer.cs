@@ -533,9 +533,13 @@ namespace UnityEngine.Rendering.Universal
         }
 
         /// <inheritdoc />
-        public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
+        public override void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             m_ForwardLights.PreSetup(ref renderingData);
+        }
+
+        public override void Setup(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
 
             ref CameraData cameraData = ref renderingData.cameraData;
             Camera camera = cameraData.camera;

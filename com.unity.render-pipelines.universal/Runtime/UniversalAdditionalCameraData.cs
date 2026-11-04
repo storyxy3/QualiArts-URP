@@ -332,6 +332,14 @@ namespace UnityEngine.Rendering.Universal
         [SerializeField] Vector4 m_ScreenSizeOverride;
         [SerializeField] Vector4 m_ScreenCoordScaleBias;
 
+        [SerializeField, Range(0.1f, 1.0f)] float m_RenderScale = 1.0f;
+        [SerializeField] bool m_FastRendering;
+        [SerializeField] bool m_NeedsAlphaChannel;
+
+        public float renderScale { get => m_RenderScale; set => m_RenderScale = value; }
+        public bool fastRendering { get => m_FastRendering; set => m_FastRendering = value; }
+        public bool needsAlphaChannel { get => m_NeedsAlphaChannel; set => m_NeedsAlphaChannel = value; }
+
         [NonSerialized] Camera m_Camera;
         // Deprecated:
         [FormerlySerializedAs("requiresDepthTexture"), SerializeField]

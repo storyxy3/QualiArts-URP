@@ -1095,6 +1095,60 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         /// <param name="context">Use this render context to issue any draw commands during execution.</param>
         /// <param name="renderingData">Current render state information.</param>
+        public virtual void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData) { }
+
+        public void ExecuteFast(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            bool drawGizmos = UniversalRenderPipelineDebugDisplaySettings.Instance.renderingSettings.sceneOverrideMode == DebugSceneOverrideMode.None;
+            hasReleasedRTs = false;
+            m_IsPipelineExecuting = true;
+            ref CameraData cameraData = ref renderingData.cameraData;
+            Camera camera = cameraData.camera;
+            if (rendererFeatures.Count != 0 && !renderingData.cameraData.isPreviewCamera)
+                SetupRenderPasses(in renderingData);
+
+            CommandBuffer cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, profilingExecute))
+            {
+                InternalStartRendering(context, ref renderingData);
+                float time = ShaderTimeManager.CurrentTime;
+                float deltaTime = Time.deltaTime;
+                float smoothDeltaTime = Time.smoothDeltaTime;
+                SetShaderTimeValues(cmd, time, deltaTime, smoothDeltaTime);
+                context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
+                using (new ProfilingScope(null, Profiling.setupCamera))
+                {
+                    SetPerCameraProperties(context, ref cameraData, camera, cmd);
+                    SetShaderTimeValues(cmd, time, deltaTime, smoothDeltaTime);
+                }
+                context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
+
+                for (int i = 0; i < m_ActiveRenderPassQueue.Count; ++i)
+                {
+                    var pass = m_ActiveRenderPassQueue[i];
+                    if (i == 0)
+                    {
+                        pass.Configure(cmd, cameraData.cameraTargetDescriptor);
+                        SetRenderPassAttachments(cmd, pass, ref cameraData);
+                        context.ExecuteCommandBuffer(cmd);
+                        cmd.Clear();
+                    }
+                    pass.Execute(context, ref renderingData);
+                }
+
+                InternalFinishRendering(context, cameraData.resolveFinalTarget, renderingData);
+                for (int i = 0; i < m_ActiveRenderPassQueue.Count; ++i)
+                {
+                    m_ActiveRenderPassQueue[i].m_ColorAttachmentIndices.Dispose();
+                    m_ActiveRenderPassQueue[i].m_InputAttachmentIndices.Dispose();
+                }
+            }
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
         public void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             // Disable Gizmos when using scene overrides. Gizmos break some effects like Overdraw debug.
@@ -1124,9 +1178,9 @@ namespace UnityEngine.Rendering.Universal
                 // Setting the time per frame would take API changes to pass the variable to each camera render.
                 // Once `SetupCameraProperties` is gone, the variable should be set higher in the call-stack.
 #if UNITY_EDITOR
-                float time = Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
+                float time = Application.isPlaying ? ShaderTimeManager.CurrentTime : Time.realtimeSinceStartup;
 #else
-                float time = Time.time;
+                float time = ShaderTimeManager.CurrentTime;
 #endif
                 float deltaTime = Time.deltaTime;
                 float smoothDeltaTime = Time.smoothDeltaTime;
@@ -1161,7 +1215,7 @@ namespace UnityEngine.Rendering.Universal
                     SetupLights(context, ref renderingData);
                 }
 
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
                 using (new ProfilingScope(null, Profiling.setupCamera))
                 {
                     //Camera variables need to be setup for the VFXManager.ProcessCameraCommand to work properly.
