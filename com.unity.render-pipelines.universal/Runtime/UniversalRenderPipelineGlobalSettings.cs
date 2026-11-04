@@ -13,6 +13,9 @@ namespace UnityEngine.Rendering.Universal
     [URPHelpURL("urp-global-settings")]
     partial class UniversalRenderPipelineGlobalSettings : RenderPipelineGlobalSettings, ISerializationCallbackReceiver
     {
+        [SerializeField] private RenderPipelineGraphicsSettingsContainer m_Settings = new RenderPipelineGraphicsSettingsContainer();
+        protected override List<IRenderPipelineGraphicsSettings> settingsList => m_Settings.settingsList;
+
         #region Version system
 
 #pragma warning disable CS0414
@@ -107,6 +110,26 @@ namespace UnityEngine.Rendering.Universal
 
         /// <summary>Default name when creating an URP Global Settings asset.</summary>
         public static readonly string defaultAssetName = "UniversalRenderPipelineGlobalSettings";
+        public static readonly string[] ShaderLayerNames = { "Lit", "Simple Lit", "Actor" };
+        public static readonly string[] LightLayerNames = { "Light Layer 1", "Light Layer 2", "Light Layer 3", "Light Layer 4" };
+        public const int LitShaderLayerIndex = 0;
+        public const int SimpleLitShaderLayerIndex = 1;
+        public const int ActorShaderLayerIndex = 2;
+        public const uint LitShaderLayerMask = 1;
+        public const uint SimpleLitShaderLayerMask = 2;
+        public const uint ActorShaderLayerMask = 4;
+        public const uint PlanarDepthLayerMask = 65536;
+        public const uint PlanarEmissionLayerMask = 131072;
+        public const uint PlanarObjectLayerMask = 262144;
+        public const uint ShaderLayerMask = 7;
+        public const int MaterialFlagsOffset = 4;
+        public const int LightLayerMaskOffset = 8;
+        public const uint LightLayerBaseMask = 15;
+        public const uint LightLayerMask = 3840;
+
+        public static uint GetLightLayerMaskFromRenderingLayerMask(uint renderingLayerMask) => (renderingLayerMask >> LightLayerMaskOffset) & LightLayerBaseMask;
+        public static uint GetRenderingLayerMaskFromLightLayerMask(uint lightLayerMask) => (lightLayerMask & LightLayerBaseMask) << LightLayerMaskOffset;
+
 
 #if UNITY_EDITOR
         //Making sure there is at least one UniversalRenderPipelineGlobalSettings instance in the project

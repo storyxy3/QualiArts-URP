@@ -15,12 +15,14 @@ namespace UnityEngine.Rendering.Universal
         public CullingGroup cullingGroups;
         public int[] visibleDecalIndexArray;
         public NativeArray<int> visibleDecalIndices;
+        public NativeArray<uint> sortIndices;
         public int visibleDecalCount;
 
         public override void RemoveAtSwapBack(int entityIndex)
         {
             RemoveAtSwapBack(ref visibleDecalIndexArray, entityIndex, count);
             RemoveAtSwapBack(ref visibleDecalIndices, entityIndex, count);
+            RemoveAtSwapBack(ref sortIndices, entityIndex, count);
             count--;
         }
 
@@ -28,6 +30,7 @@ namespace UnityEngine.Rendering.Universal
         {
             ArrayExtensions.ResizeArray(ref visibleDecalIndexArray, newCapacity);
             visibleDecalIndices.ResizeArray(newCapacity);
+            sortIndices.ResizeArray(newCapacity);
             if (cullingGroups == null)
                 cullingGroups = new CullingGroup();
             capacity = newCapacity;
@@ -39,6 +42,7 @@ namespace UnityEngine.Rendering.Universal
                 return;
 
             visibleDecalIndices.Dispose();
+            sortIndices.Dispose();
             visibleDecalIndexArray = null;
             count = 0;
             capacity = 0;
