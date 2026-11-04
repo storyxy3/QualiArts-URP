@@ -244,6 +244,9 @@ namespace UnityEngine.Rendering.Universal
             [NonSerialized] public int resetHistoryFrames;      // Number of frames the history is reset. 0 no reset, 1 normal reset, 2 XR reset, -1 infinite (toggle on)
             [NonSerialized] internal int jitterFrameCountOffset;  // Jitter "seed" == Time.frameCount + jitterFrameCountOffset. Used for testing determinism.
 
+            /// <summary>Contribution of the current frame to the temporal history.</summary>
+            public float frameInfluence => m_FrameInfluence;
+
             /// <summary>
             /// The quality level to use for the temporal anti-aliasing.
             /// </summary>
@@ -476,7 +479,7 @@ namespace UnityEngine.Rendering.Universal
                 taaMaterial.SetTexture(ShaderConstants._TaaMotionVectorTex, isNewFrame ? motionVectors : Texture2D.blackTexture);
 
                 ref var taa = ref cameraData.taaSettings;
-                float taaInfluence = taa.resetHistoryFrames == 0 ? taa.m_FrameInfluence : 1.0f;
+                float taaInfluence = taa.resetHistoryFrames == 0 ? taa.frameInfluence : 1.0f;
                 taaMaterial.SetFloat(ShaderConstants._TaaFrameInfluence, taaInfluence);
                 taaMaterial.SetFloat(ShaderConstants._TaaVarianceClampScale, taa.varianceClampScale);
                 int width = cameraData.cameraTargetDescriptor.width;
@@ -539,7 +542,7 @@ namespace UnityEngine.Rendering.Universal
             ref var taa = ref cameraData.taaSettings;
 
             bool isNewFrame = cameraData.taaPersistentData.GetLastAccumFrameIndex(multipassId) != Time.frameCount;
-            float taaInfluence = taa.resetHistoryFrames == 0 ? taa.m_FrameInfluence : 1.0f;
+            float taaInfluence = taa.resetHistoryFrames == 0 ? taa.frameInfluence : 1.0f;
 
             RTHandle accumulationTexture = cameraData.taaPersistentData.accumulationTexture(multipassId);
             TextureHandle srcAccumulation = renderGraph.ImportTexture(accumulationTexture);
