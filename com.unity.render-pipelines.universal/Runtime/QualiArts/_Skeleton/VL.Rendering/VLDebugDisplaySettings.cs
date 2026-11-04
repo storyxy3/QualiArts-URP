@@ -8,25 +8,8 @@ public class VLDebugDisplaySettings : DebugDisplaySettings<VLDebugDisplaySetting
 {
 
 
-	[CompilerGenerated]
-	private VLDebugDisplaySettingsData _003Cdata_003Ek__BackingField;
 
-	public VLDebugDisplaySettingsData data
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return null;
-		}
-
-
-		[CompilerGenerated]
-		set
-		{
-		}
-	}
+	public VLDebugDisplaySettingsData data { get; set; }
 
 
 	public VLDebugDisplaySettings()

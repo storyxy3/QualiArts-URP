@@ -8,25 +8,8 @@ public class CampusDebugDisplaySettings : DebugDisplaySettings<CampusDebugDispla
 {
 
 
-	[CompilerGenerated]
-	private CampusDebugDisplaySettingsCommonData _003CcommonData_003Ek__BackingField;
 
-	public CampusDebugDisplaySettingsCommonData commonData
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return null;
-		}
-
-
-		[CompilerGenerated]
-		set
-		{
-		}
-	}
+	public CampusDebugDisplaySettingsCommonData commonData { get; set; }
 
 
 	public CampusDebugDisplaySettings()

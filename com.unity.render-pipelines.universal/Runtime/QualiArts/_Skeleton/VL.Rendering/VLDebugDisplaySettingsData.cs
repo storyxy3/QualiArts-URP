@@ -308,145 +308,32 @@ public class VLDebugDisplaySettingsData : IDebugDisplaySettingsData, IDebugDispl
 	}
 
 
-	[CompilerGenerated]
-	private bool _003CdisableRenderPass_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private Vector2 _003CdynamicResolution_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private bool _003CdisableDeferredLight_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private bool _003CdisableDeferredReflection_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private bool _003CdisableActor_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private bool _003CdisableDeferredFog_003Ek__BackingField;
 
 
-	[CompilerGenerated]
-	private VLDebugDisplaySettingsPreviewRenderPass _003CpreviewRenderPass_003Ek__BackingField;
 
-	public bool disableRenderPass
-	{
+	public bool disableRenderPass { get; private set; }
 
+	public Vector2 dynamicResolution { get; private set; }
 
-		[CompilerGenerated]
-		get
-		{
-			return default(bool);
-		}
+	public bool disableDeferredLight { get; private set; }
 
+	public bool disableDeferredReflection { get; private set; }
 
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
+	public bool disableActor { get; private set; }
 
-	public Vector2 dynamicResolution
-	{
+	public bool disableDeferredFog { get; private set; }
 
-
-		[CompilerGenerated]
-		get
-		{
-			return default(Vector2);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
-
-	public bool disableDeferredLight
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return default(bool);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
-
-	public bool disableDeferredReflection
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return default(bool);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
-
-	public bool disableActor
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return default(bool);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
-
-	public bool disableDeferredFog
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return default(bool);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
-
-	public VLDebugDisplaySettingsPreviewRenderPass previewRenderPass
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return null;
-		}
-	}
+	public VLDebugDisplaySettingsPreviewRenderPass previewRenderPass { get; }
 
 	public bool AreAnySettingsActive
 	{

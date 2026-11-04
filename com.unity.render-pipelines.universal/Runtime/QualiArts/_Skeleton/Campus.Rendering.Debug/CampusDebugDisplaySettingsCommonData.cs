@@ -82,25 +82,8 @@ public class CampusDebugDisplaySettingsCommonData : IDebugDisplaySettingsData, I
 	}
 
 
-	[CompilerGenerated]
-	private ActorDebugMaterialMode _003CactorDebugMaterialMode_003Ek__BackingField;
 
-	internal ActorDebugMaterialMode actorDebugMaterialMode
-	{
-
-
-		[CompilerGenerated]
-		get
-		{
-			return default(ActorDebugMaterialMode);
-		}
-
-
-		[CompilerGenerated]
-		private set
-		{
-		}
-	}
+	internal ActorDebugMaterialMode actorDebugMaterialMode { get; private set; }
 
 	public bool AreAnySettingsActive
 	{
