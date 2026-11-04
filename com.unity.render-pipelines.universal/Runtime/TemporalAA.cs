@@ -58,6 +58,9 @@ namespace UnityEngine.Rendering.Universal
         RTHandle m_AccumulationTexture2;
         int m_LastAccumUpdateFrameIndex;
         int m_LastAccumUpdateFrameIndex2;
+        RTHandle m_cocPing;
+        RTHandle m_cocPong;
+        bool m_cocPingPong;
 
         public RenderTextureDescriptor rtd => m_RtDesc;
         public RTHandle accumulationTexture(int index) => index != 0 ? m_AccumulationTexture2 : m_AccumulationTexture;
@@ -68,6 +71,13 @@ namespace UnityEngine.Rendering.Universal
                 m_LastAccumUpdateFrameIndex2 = value;
             else
                 m_LastAccumUpdateFrameIndex = value;
+        }
+
+        public void GrapCocTexture(out RTHandle prevCoc, out RTHandle nextCoc)
+        {
+            prevCoc = m_cocPingPong ? m_cocPong : m_cocPing;
+            nextCoc = m_cocPingPong ? m_cocPing : m_cocPong;
+            m_cocPingPong = !m_cocPingPong;
         }
 
         public TaaPersistentData()
@@ -146,6 +156,20 @@ namespace UnityEngine.Rendering.Universal
                 didAlloc = true;
             }
 
+            var format = m_RtDesc.graphicsFormat;
+            m_RtDesc.graphicsFormat = RenderingUtils.SupportsGraphicsFormat(GraphicsFormat.R16_UNorm, FormatUsage.Blend)
+                ? GraphicsFormat.R16_UNorm : GraphicsFormat.R8_UNorm;
+            if (m_cocPing == null)
+            {
+                m_cocPing = RTHandles.Alloc(m_RtDesc, FilterMode.Point, TextureWrapMode.Clamp, name: "_HistoryCocPingTex");
+                didAlloc = true;
+            }
+            if (m_cocPong == null)
+            {
+                m_cocPong = RTHandles.Alloc(m_RtDesc, FilterMode.Point, TextureWrapMode.Clamp, name: "_HistoryCocPongTex");
+                didAlloc = true;
+            }
+            m_RtDesc.graphicsFormat = format;
             return didAlloc;
         }
 
@@ -157,6 +181,10 @@ namespace UnityEngine.Rendering.Universal
             m_AccumulationTexture2 = null;
             m_LastAccumUpdateFrameIndex = -1;
             m_LastAccumUpdateFrameIndex2 = -1;
+            m_cocPing?.Release();
+            m_cocPong?.Release();
+            m_cocPing = null;
+            m_cocPong = null;
         }
 
     };
@@ -176,6 +204,8 @@ namespace UnityEngine.Rendering.Universal
 
             public static readonly int _TaaFrameInfluence     = Shader.PropertyToID("_TaaFrameInfluence");
             public static readonly int _TaaVarianceClampScale = Shader.PropertyToID("_TaaVarianceClampScale");
+
+            public static readonly int _TaaJitterStrength = Shader.PropertyToID("_TaaJitterStrength");
 
             public static readonly int _CameraDepthTexture = Shader.PropertyToID("_CameraDepthTexture");
         }
@@ -449,6 +479,10 @@ namespace UnityEngine.Rendering.Universal
                 float taaInfluence = taa.resetHistoryFrames == 0 ? taa.m_FrameInfluence : 1.0f;
                 taaMaterial.SetFloat(ShaderConstants._TaaFrameInfluence, taaInfluence);
                 taaMaterial.SetFloat(ShaderConstants._TaaVarianceClampScale, taa.varianceClampScale);
+                int width = cameraData.cameraTargetDescriptor.width;
+                int height = cameraData.cameraTargetDescriptor.height;
+                Vector2 jitter = CalculateJitter(Time.frameCount) * taa.jitterScale;
+                taaMaterial.SetVector(ShaderConstants._TaaJitterStrength, new Vector4(jitter.x, jitter.y, jitter.x / width, jitter.y / height));
 
                 if (taa.quality == TemporalAAQuality.VeryHigh)
                     taaMaterial.SetFloatArray(ShaderConstants._TaaFilterWeights, CalculateFilterWeights(taa.jitterScale));
