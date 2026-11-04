@@ -212,6 +212,7 @@ namespace UnityEngine.Rendering.Universal
             m_JitterMatrix = Matrix4x4.identity;
         }
 
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.AggressiveInlining)]
         internal void SetViewProjectionAndJitterMatrix(Matrix4x4 viewMatrix, Matrix4x4 projectionMatrix, Matrix4x4 jitterMatrix)
         {
             m_ViewMatrix = viewMatrix;

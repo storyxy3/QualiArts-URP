@@ -616,7 +616,7 @@ namespace UnityEngine.Rendering.Universal
 
             ScriptableRenderer.current = renderer;
 #if UNITY_EDITOR
-            bool isSceneViewCamera = cameraData.isSceneViewCamera;
+            bool isSceneViewCamera = cameraData.cameraType == CameraType.SceneView;
 #endif
 
             // NOTE: Do NOT mix ProfilingScope with named CommandBuffers i.e. CommandBufferPool.Get("name").
@@ -1153,7 +1153,7 @@ namespace UnityEngine.Rendering.Universal
             else if (baseCamera.TryGetComponent<VL.Rendering.VLSRPAdditionalCameraData>(out var vlAdditionalCameraData) && vlAdditionalCameraData.targetTexture != null)
                 cameraData.targetTexture = vlAdditionalCameraData.targetTexture;
             cameraData.cameraType = baseCamera.cameraType;
-            bool isSceneViewCamera = cameraData.isSceneViewCamera;
+            bool isSceneViewCamera = cameraData.cameraType == CameraType.SceneView;
 
             ///////////////////////////////////////////////////////////////////
             // Environment and Post-processing settings                       /
@@ -1271,7 +1271,7 @@ namespace UnityEngine.Rendering.Universal
             cameraData.maxShadowDistance = Mathf.Min(settings.shadowDistance, camera.farClipPlane);
             cameraData.maxShadowDistance = (anyShadowsEnabled && cameraData.maxShadowDistance >= camera.nearClipPlane) ? cameraData.maxShadowDistance : 0.0f;
 
-            bool isSceneViewCamera = cameraData.isSceneViewCamera;
+            bool isSceneViewCamera = cameraData.cameraType == CameraType.SceneView;
             if (isSceneViewCamera)
             {
                 cameraData.renderType = CameraRenderType.Base;
@@ -1742,7 +1742,7 @@ namespace UnityEngine.Rendering.Universal
             var debugDisplaySettings = UniversalRenderPipelineDebugDisplaySettings.Instance;
             ref CameraData cameraData = ref renderingData.cameraData;
 
-            if (debugDisplaySettings.AreAnySettingsActive && !cameraData.isPreviewCamera)
+            if (debugDisplaySettings.AreAnySettingsActive && cameraData.cameraType != CameraType.Preview)
             {
                 DebugDisplaySettingsRendering renderingSettings = debugDisplaySettings.renderingSettings;
                 int msaaSamples = cameraData.cameraTargetDescriptor.msaaSamples;

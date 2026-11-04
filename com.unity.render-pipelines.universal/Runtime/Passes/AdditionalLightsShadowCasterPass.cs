@@ -501,6 +501,11 @@ namespace UnityEngine.Rendering.Universal.Internal
         /// <returns></returns>
         public bool Setup(ref RenderingData renderingData)
         {
+            return Setup(ref renderingData, renderingData.cameraData.maxShadowDistance, renderingData.shadowData.mainLightShadowCascadeBorder);
+        }
+
+        public bool Setup(ref RenderingData renderingData, float maxShadowDistance, float shadowBorder)
+        {
             using var profScope = new ProfilingScope(null, m_ProfilingSetupSampler);
 
             if (!renderingData.shadowData.additionalLightShadowsEnabled)
@@ -832,8 +837,8 @@ namespace UnityEngine.Rendering.Universal.Internal
 
             ShadowUtils.ShadowRTReAllocateIfNeeded(ref m_AdditionalLightsShadowmapHandle, renderTargetWidth, renderTargetHeight, k_ShadowmapBufferBits, name: k_AdditionalLightShadowMapTextureName);
 
-            m_MaxShadowDistanceSq = renderingData.cameraData.maxShadowDistance * renderingData.cameraData.maxShadowDistance;
-            m_CascadeBorder = renderingData.shadowData.mainLightShadowCascadeBorder;
+            m_MaxShadowDistanceSq = maxShadowDistance * maxShadowDistance;
+            m_CascadeBorder = shadowBorder;
             m_CreateEmptyShadowmap = false;
             useNativeRenderPass = true;
 
@@ -1051,6 +1056,9 @@ namespace UnityEngine.Rendering.Universal.Internal
 
             // Directional and light shadows are not supported in the shadow map atlas
             if (shadowLight.lightType == LightType.Directional)
+                return false;
+
+            if (shadowLight.light.bakingOutput.lightmapBakeType != LightmapBakeType.Realtime || shadowLight.lightType != LightType.Spot)
                 return false;
 
             Light light = shadowLight.light;
