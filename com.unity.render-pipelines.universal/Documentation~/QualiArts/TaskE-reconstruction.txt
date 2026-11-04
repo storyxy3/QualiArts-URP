@@ -1,0 +1,776 @@
+Task E reconstruction report — APK 3.5.3 — 2026-11-04
+
+Implemented the VL post-process chain, SubWorldPass, generic chunked entity manager,
+Campus/VL debug panels and preview passes, Core volume-debug UI and Game View Only control.
+Native parity retains the raw flags and un-emitted specializations listed below.
+
+Build and comparison
+  Unity 6000.0.77f1, ref14_round.sh 20, zero C# errors and regenerated ARM64 IL2CPP output.
+  REF_BUILD Failed errors=3 is the existing Gradle packaging failure.
+  The final package filter selects the URP and Core assembly types and their nested methods.
+  TaskE-start.txt records the requested broader initial namespace filter, which includes other assemblies.
+  Final raw totals — 3956 same, 144 [layout], 100 [semantic], 74 only-in-game, 0 re-signed.
+  The per-class table groups nested types and generic specializations under their declaring class.
+  same means identical normalized instructions. [layout] and [semantic] preserve the comparator labels.
+  not done is the raw only-in-game count and includes renamed compiler-generated methods.
+
+Finished source batches
+  VLPostProcessPass — resource lifetime, shader IDs, render orchestration, FSR/final output,
+    color grading, bloom/diffusion/paraffin, virtual effects, DOF/bokeh, motion blur and outline.
+  MipChainBuffer — audited existing implementation and local-function name shifts.
+  SubWorldPass — configuration, target lifetime, forward drawing and stencil handling.
+    The Default-mode NotImplementedException and its Japanese message also occur in the game.
+  EntityManager<TChunkKey,TEntityComponent,TEntityChunk,TCombinedChunks> — chunk creation,
+    key fallback, entity membership, swap-back removal, updates and disposal.
+  Campus debug — display state, actor-material panel, debug feature and outline draw pass.
+  VL debug — settings, widgets, dynamic resolution, camera selection and capture requests.
+  VLSRPRendererData — renderer creation and base OnEnable.
+  Core volume debug — component/volume table, reflection-backed parameter widgets,
+    volume influence visibility, default values, object rows and 0.2-second refresh callback.
+  URP rendering debug — Game View Only widget and panel placement.
+  PlatformAutoDetect — game GetSubsystems call.
+  TemporalAA.Settings — game frameInfluence getter and normal rendering consumers.
+
+Remaining flags and TODOs
+  SubWorldPass retains one TODO(qa-recon). The discarded SubWorldVolume member load
+    survives as a null check in native code, so its original source member is indeterminate.
+  EntityManager object/int concrete instantiations and some ConstantBuffer, ListPool,
+    VolumeParameter, Chunk and rendering-request instantiations are absent from the reference build.
+    Their generic source exists. Native parity of those specializations remains unverified.
+  Core volume-table lambdas and local functions have different generated ordinals.
+    AddParameterRows |0 maps to |1 and AddRow |8 maps to |2 in this build.
+    The timer callback b__1 maps to b__0, volume-info b__4 maps to b__5,
+    volume-object b__5 maps to b__6, and override-state b__10 maps to b__11.
+    Consequently the raw b__5 comparison pairs two different lambdas.
+  VLPostProcessPass Render locals |29 map to |69. MipChainBuffer locals |39 map to |36.
+    Renderer/RenderGraph/deferred lambda ordinals also differ after stripping.
+  Core volume selectors/table use different IVolumeDebugSettings interface slots.
+    Parameter-widget closures differ at empty constructor aliases. The table has a protected trampoline.
+  Campus panel constructor retains a missing MethodInfo-load token with matching widget logic.
+  Post-process remaining flags were inspected for scheduling, bounds checks, vector packing,
+    method inlining and metadata initialization. Exact RenderFinalPass and FSR bodies compare same.
+  EntityManager CreateEntity/Update retain generic initialization and scheduling differences.
+  SubWorldPass RenderSubWorld retains an inlined filteringSettings accessor difference.
+  PlanarReflectionResultSystem.CameraSpacePlane is a comparison-boundary artifact.
+    The game body ends at 0xD7D08A8, and subsequent unnamed matrix helpers bleed into the comparison.
+  ScriptableRenderer, UniversalRenderPipeline, UniversalRenderer and VLDeferredPass static
+    constructors also include adjacent unnamed functions in the tool range.
+  Planar reflection, RenderGraph and texture helpers retain inlining/class-initialization differences.
+  PixelPerfectCamera uses linker-shifted interface slots. Empty UI/chunk constructors share aliases.
+  ColorGradingComputePass and VLPostProcessPasses were kept as requested. The former retains
+    branch-tail merging around repeated neutral-tonemap keyword calls and scheduling differences.
+  Remaining raw flags are recorded below for reproducible follow-up. They are not relabeled as same.
+
+Repository changes
+  The stray root Documentation~ folder was removed after retaining the needed baseline in the package.
+  Completed QualiArts types and their file GUIDs now live under namespace-based Runtime/QualiArts paths.
+
+Implementation commits
+  47196c8 Record Task E baseline native comparison in package documentation
+  c032053 Reconstruct VL post-process resources and effect helpers from 3.5.3
+  46ad2c0 Complete VL post-process orchestration, DOF, motion and outline passes
+  26ad1bd Reconstruct SubWorldPass and generic chunked entity manager
+  1f36617 Restore Campus and VL rendering debug settings, widgets and preview passes
+  2761e5d Reconstruct Core volume debug table and restore Game View Only control
+  2cdd5f2 Restore temporal frame-influence API and game XR subsystem lookup
+
+Per-class native status
+Class	same	[layout]	[semantic]	not done
+Campus.Rendering.Debug.CampusDebugDisplaySettings	4	0	0	0
+Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData	16	0	1	0
+Campus.Rendering.Debug.CampusRenderingDebug	4	0	0	0
+Campus.Rendering.Debug.CampusRenderingDebugPass	3	0	0	0
+Campus.Rendering.Debug.CampusRenderingOutlineDebugPass	4	1	0	0
+UnityEngine.Rendering.AdditionalPropertyAttribute	1	0	0	0
+UnityEngine.Rendering.ArrayExtensions	23	0	0	1
+UnityEngine.Rendering.AtlasAllocator	10	0	0	0
+UnityEngine.Rendering.Blitter	23	0	0	0
+UnityEngine.Rendering.BoolParameter	1	0	0	0
+UnityEngine.Rendering.BottleneckHistory	1	0	0	0
+UnityEngine.Rendering.CameraCaptureBridge	3	0	0	0
+UnityEngine.Rendering.ClampedFloatParameter	3	0	0	0
+UnityEngine.Rendering.ClampedIntParameter	3	0	0	0
+UnityEngine.Rendering.ColorParameter	2	0	0	0
+UnityEngine.Rendering.ColorSpaceUtils	1	0	0	0
+UnityEngine.Rendering.ColorUtils	8	0	0	0
+UnityEngine.Rendering.CommandBufferPool	6	0	0	0
+UnityEngine.Rendering.ConstantBuffer	16	0	0	12
+UnityEngine.Rendering.ConstantBufferBase	1	0	0	0
+UnityEngine.Rendering.ConstantBufferSingleton	6	0	0	6
+UnityEngine.Rendering.CoreMatrixUtils	3	0	0	0
+UnityEngine.Rendering.CoreUnsafeUtils	1	0	0	0
+UnityEngine.Rendering.CoreUtils	33	0	0	0
+UnityEngine.Rendering.DebugActionState	10	0	0	0
+UnityEngine.Rendering.DebugDisplaySettings	26	0	0	0
+UnityEngine.Rendering.DebugDisplaySettingsPanel	12	0	0	0
+UnityEngine.Rendering.DebugDisplaySettingsUI	3	3	1	0
+UnityEngine.Rendering.DebugDisplaySettingsVolume	38	4	7	8
+UnityEngine.Rendering.DebugFrameTiming	25	1	0	0
+UnityEngine.Rendering.DebugManager	43	0	0	0
+UnityEngine.Rendering.DebugUI	203	13	2	0
+UnityEngine.Rendering.DebugUpdater	22	1	2	0
+UnityEngine.Rendering.DisplayInfoAttribute	1	0	0	0
+UnityEngine.Rendering.DynamicArray	45	0	0	0
+UnityEngine.Rendering.DynamicResolutionHandler	9	0	1	0
+UnityEngine.Rendering.FSRUtils	5	0	0	0
+UnityEngine.Rendering.FloatParameter	2	0	0	0
+UnityEngine.Rendering.FrameTimeSampleHistory	10	0	0	0
+UnityEngine.Rendering.GenerateHLSL	1	0	0	0
+UnityEngine.Rendering.GenericPool	6	0	0	0
+UnityEngine.Rendering.GlobalDynamicResolutionSettings	1	0	0	0
+UnityEngine.Rendering.HDROutputUtils	6	0	0	0
+UnityEngine.Rendering.HLSLArray	1	0	0	0
+UnityEngine.Rendering.HableCurve	23	0	0	0
+UnityEngine.Rendering.HaltonSequence	1	0	0	0
+UnityEngine.Rendering.HashFNV1A32	5	0	0	0
+UnityEngine.Rendering.IntParameter	2	0	0	0
+UnityEngine.Rendering.LensFlareCommonSRP	32	0	0	0
+UnityEngine.Rendering.LensFlareComponentSRP	8	0	0	0
+UnityEngine.Rendering.LensFlareDataElementSRP	15	0	0	0
+UnityEngine.Rendering.LensFlareDataSRP	1	0	0	0
+UnityEngine.Rendering.ListChangedEventArgs	2	0	0	0
+UnityEngine.Rendering.ListChangedEventHandler	4	0	0	0
+UnityEngine.Rendering.ListPool	18	0	0	12
+UnityEngine.Rendering.MinFloatParameter	3	0	0	0
+UnityEngine.Rendering.NoInterpCubemapParameter	1	1	0	0
+UnityEngine.Rendering.NoInterpTextureParameter	1	1	0	0
+UnityEngine.Rendering.NoInterpVector3Parameter	1	0	0	0
+UnityEngine.Rendering.ObjectPool	14	0	0	0
+UnityEngine.Rendering.ObservableList	40	0	0	0
+UnityEngine.Rendering.PerformDynamicRes	2	0	0	0
+UnityEngine.Rendering.PowerOfTwoTextureAtlas	5	3	1	0
+UnityEngine.Rendering.ProfilingSampler	9	0	0	0
+UnityEngine.Rendering.ProfilingScope	2	0	0	0
+UnityEngine.Rendering.RTHandle	17	0	1	0
+UnityEngine.Rendering.RTHandleStaticHelpers	1	0	1	0
+UnityEngine.Rendering.RTHandleSystem	14	0	0	0
+UnityEngine.Rendering.RTHandles	1	5	1	0
+UnityEngine.Rendering.ReloadAttribute	1	0	0	0
+UnityEngine.Rendering.ReloadGroupAttribute	1	0	0	0
+UnityEngine.Rendering.RenderPipelineGraphicsSettingsContainer	4	0	0	0
+UnityEngine.Rendering.ScaleFunc	2	0	0	0
+UnityEngine.Rendering.TProfilingSampler	4	0	0	0
+UnityEngine.Rendering.Texture2DAtlas	13	4	2	0
+UnityEngine.Rendering.TextureCurve	9	1	0	0
+UnityEngine.Rendering.TextureCurveParameter	2	0	0	0
+UnityEngine.Rendering.TextureParameter	1	1	0	0
+UnityEngine.Rendering.TextureXR	12	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerBitField	9	1	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerButton	5	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerCanvas	20	4	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerColor	22	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerContainer	7	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerEnumField	4	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerEnumHistory	10	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerField	6	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerFloatField	8	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerFoldout	9	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerGroup	4	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerHBox	4	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerIndirectFloatField	8	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerIndirectToggle	7	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerIntField	8	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerMessageBox	4	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerObject	4	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerObjectList	5	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerObjectPopupField	6	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerPanel	9	3	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerPersistentCanvas	8	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerProgressBar	6	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerRow	4	1	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerToggle	6	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerToggleHistory	9	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerUIntField	7	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerVBox	1	2	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerValue	6	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerValueTuple	7	0	1	0
+UnityEngine.Rendering.UI.DebugUIHandlerVector2	13	2	2	0
+UnityEngine.Rendering.UI.DebugUIHandlerVector3	19	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerVector4	21	0	0	0
+UnityEngine.Rendering.UI.DebugUIHandlerWidget	18	0	0	0
+UnityEngine.Rendering.UI.DebugUIPrefabBundle	1	0	0	0
+UnityEngine.Rendering.UI.UIFoldout	4	0	0	0
+UnityEngine.Rendering.Universal.Bloom	3	0	0	0
+UnityEngine.Rendering.Universal.BuddyAllocation	1	0	0	0
+UnityEngine.Rendering.Universal.BuddyAllocator	24	0	0	0
+UnityEngine.Rendering.Universal.CameraData	23	2	0	0
+UnityEngine.Rendering.Universal.CameraExtensions	4	0	0	0
+UnityEngine.Rendering.Universal.CapturePass	3	0	0	0
+UnityEngine.Rendering.Universal.ChannelMixer	3	0	0	0
+UnityEngine.Rendering.Universal.ChromaticAberration	3	0	0	0
+UnityEngine.Rendering.Universal.ClearTargetsPass	6	0	0	0
+UnityEngine.Rendering.Universal.ColorAdjustments	3	0	0	0
+UnityEngine.Rendering.Universal.ColorCurves	3	0	0	0
+UnityEngine.Rendering.Universal.ColorLookup	4	0	0	0
+UnityEngine.Rendering.Universal.DBufferRenderPass	3	0	0	0
+UnityEngine.Rendering.Universal.DBufferSettings	1	0	0	0
+UnityEngine.Rendering.Universal.DebugDisplaySettingsCommon	14	0	0	0
+UnityEngine.Rendering.Universal.DebugDisplaySettingsLighting	30	0	0	0
+UnityEngine.Rendering.Universal.DebugDisplaySettingsMaterial	92	0	0	0
+UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering	125	0	0	0
+UnityEngine.Rendering.Universal.DebugDisplayStats	8	0	0	0
+UnityEngine.Rendering.Universal.DebugHandler	37	0	0	0
+UnityEngine.Rendering.Universal.DebugRenderSetup	7	0	1	0
+UnityEngine.Rendering.Universal.DecalCachedChunk	3	1	0	0
+UnityEngine.Rendering.Universal.DecalChunk	29	0	0	0
+UnityEngine.Rendering.Universal.DecalCreateDrawCallSystem	3	0	0	0
+UnityEngine.Rendering.Universal.DecalCulledChunk	3	1	0	0
+UnityEngine.Rendering.Universal.DecalDrawCallChunk	4	0	1	0
+UnityEngine.Rendering.Universal.DecalDrawDBufferSystem	1	0	0	0
+UnityEngine.Rendering.Universal.DecalDrawSystem	3	1	1	0
+UnityEngine.Rendering.Universal.DecalEntityChunk	5	2	0	0
+UnityEngine.Rendering.Universal.DecalEntityIndexer	8	0	0	0
+UnityEngine.Rendering.Universal.DecalEntityManager	12	1	1	0
+UnityEngine.Rendering.Universal.DecalPreviewPass	0	1	1	0
+UnityEngine.Rendering.Universal.DecalPrioritySystem	2	1	0	0
+UnityEngine.Rendering.Universal.DecalProjector	58	0	0	0
+UnityEngine.Rendering.Universal.DecalSubDrawCall	1	0	0	0
+UnityEngine.Rendering.Universal.DecalUpdateCachedSystem	6	0	0	0
+UnityEngine.Rendering.Universal.DecalUpdateCulledSystem	2	0	0	0
+UnityEngine.Rendering.Universal.DecalUpdateCullingGroupSystem	2	0	0	0
+UnityEngine.Rendering.Universal.DepthOfField	3	0	0	0
+UnityEngine.Rendering.Universal.DepthOfFieldModeParameter	1	0	0	0
+UnityEngine.Rendering.Universal.DisallowMultipleRendererFeature	2	0	0	0
+UnityEngine.Rendering.Universal.DownscaleParameter	1	0	0	0
+UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass	8	0	0	0
+UnityEngine.Rendering.Universal.DrawSkyboxPass	8	0	0	0
+UnityEngine.Rendering.Universal.FilmGrain	3	0	0	0
+UnityEngine.Rendering.Universal.FilmGrainLookupParameter	1	0	0	0
+UnityEngine.Rendering.Universal.Fixed2	8	0	0	0
+UnityEngine.Rendering.Universal.HDRACESPresetParameter	1	0	0	0
+UnityEngine.Rendering.Universal.HDRDebugViewPass	10	0	0	0
+UnityEngine.Rendering.Universal.InclusiveRange	8	0	0	0
+UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass	25	0	3	0
+UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass	12	0	1	0
+UnityEngine.Rendering.Universal.Internal.CopyColorPass	16	0	2	0
+UnityEngine.Rendering.Universal.Internal.CopyDepthPass	18	0	3	0
+UnityEngine.Rendering.Universal.Internal.DeferredConfig	4	0	0	0
+UnityEngine.Rendering.Universal.Internal.DeferredLights	95	2	1	0
+UnityEngine.Rendering.Universal.Internal.DeferredPass	9	0	0	0
+UnityEngine.Rendering.Universal.Internal.DepthNormalOnlyPass	23	0	0	0
+UnityEngine.Rendering.Universal.Internal.DepthOnlyPass	15	0	0	0
+UnityEngine.Rendering.Universal.Internal.DrawObjectsPass	9	1	2	0
+UnityEngine.Rendering.Universal.Internal.DrawObjectsWithRenderingLayersPass	3	0	1	0
+UnityEngine.Rendering.Universal.Internal.FinalBlitPass	10	1	2	0
+UnityEngine.Rendering.Universal.Internal.ForwardLights	16	1	0	0
+UnityEngine.Rendering.Universal.Internal.GBufferPass	11	0	1	0
+UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass	17	0	2	0
+UnityEngine.Rendering.Universal.Internal.NormalReconstruction	2	0	0	0
+UnityEngine.Rendering.Universal.Internal.RenderTargetBufferSystem	13	0	0	0
+UnityEngine.Rendering.Universal.InvokeOnRenderObjectCallbackPass	7	0	0	0
+UnityEngine.Rendering.Universal.LensDistortion	3	0	0	0
+UnityEngine.Rendering.Universal.LiftGammaGain	3	0	0	0
+UnityEngine.Rendering.Universal.LightCookieManager	79	2	0	0
+UnityEngine.Rendering.Universal.LightExtensions	1	0	0	0
+UnityEngine.Rendering.Universal.LightMinMaxZJob	1	0	0	0
+UnityEngine.Rendering.Universal.MotionBlur	3	0	0	0
+UnityEngine.Rendering.Universal.MotionBlurModeParameter	1	0	0	0
+UnityEngine.Rendering.Universal.MotionBlurQualityParameter	1	0	0	0
+UnityEngine.Rendering.Universal.MotionVectorRenderPass	13	0	1	0
+UnityEngine.Rendering.Universal.MotionVectorsPersistentData	9	0	0	0
+UnityEngine.Rendering.Universal.NativeArrayExtensions	4	0	0	0
+UnityEngine.Rendering.Universal.NeutralRangeReductionModeParameter	1	0	0	0
+UnityEngine.Rendering.Universal.PaniniProjection	3	0	0	0
+UnityEngine.Rendering.Universal.PixelPerfectCameraInternal	3	0	3	0
+UnityEngine.Rendering.Universal.PlatformAutoDetect	10	0	0	0
+UnityEngine.Rendering.Universal.PostProcessData	3	0	0	0
+UnityEngine.Rendering.Universal.PostProcessParams	1	0	0	0
+UnityEngine.Rendering.Universal.PostProcessPass	45	0	1	0
+UnityEngine.Rendering.Universal.PostProcessPasses	9	0	0	0
+UnityEngine.Rendering.Universal.PostProcessUtils	4	0	0	0
+UnityEngine.Rendering.Universal.RTHandleResourcePool	9	0	0	0
+UnityEngine.Rendering.Universal.ReflectionProbeManager	7	0	0	0
+UnityEngine.Rendering.Universal.ReflectionProbeMinMaxZJob	1	0	0	0
+UnityEngine.Rendering.Universal.RenderPassEventsEnumValues	1	0	0	0
+UnityEngine.Rendering.Universal.RenderingLayerUtils	6	1	0	0
+UnityEngine.Rendering.Universal.RenderingUtils	22	0	0	0
+UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion	15	2	0	0
+UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusionSettings	1	0	0	0
+UnityEngine.Rendering.Universal.ScriptableRenderPass	47	0	0	0
+UnityEngine.Rendering.Universal.ScriptableRenderer	115	0	1	6
+UnityEngine.Rendering.Universal.ScriptableRendererData	12	0	0	0
+UnityEngine.Rendering.Universal.ScriptableRendererFeature	10	0	0	0
+UnityEngine.Rendering.Universal.ShaderData	13	0	0	0
+UnityEngine.Rendering.Universal.ShaderPropertyId	1	0	0	0
+UnityEngine.Rendering.Universal.ShaderTimeManager	2	1	1	0
+UnityEngine.Rendering.Universal.ShaderUtils	2	0	0	0
+UnityEngine.Rendering.Universal.ShadowSliceData	1	0	0	0
+UnityEngine.Rendering.Universal.ShadowUtils	24	0	0	0
+UnityEngine.Rendering.Universal.ShadowsMidtonesHighlights	3	0	0	0
+UnityEngine.Rendering.Universal.SharedDecalEntityManager	9	0	0	0
+UnityEngine.Rendering.Universal.SpaceFillingCurves	2	0	0	0
+UnityEngine.Rendering.Universal.SplitToning	3	0	0	0
+UnityEngine.Rendering.Universal.StencilStateData	1	0	0	0
+UnityEngine.Rendering.Universal.TaaPersistentData	11	0	0	0
+UnityEngine.Rendering.Universal.TemporalAA	16	1	0	0
+UnityEngine.Rendering.Universal.TileRangeExpansionJob	1	0	0	0
+UnityEngine.Rendering.Universal.TilingJob	18	6	0	0
+UnityEngine.Rendering.Universal.Tonemapping	3	0	0	0
+UnityEngine.Rendering.Universal.TonemappingModeParameter	1	0	0	0
+UnityEngine.Rendering.Universal.TransparentSettingsPass	5	0	0	0
+UnityEngine.Rendering.Universal.UniversalAdditionalCameraData	69	0	0	1
+UnityEngine.Rendering.Universal.UniversalAdditionalLightData	36	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderPipeline	57	11	1	1
+UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset	139	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderPipelineDebugDisplaySettings	12	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderPipelineEditorResources	3	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderPipelineGlobalSettings	33	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderPipelineVolumeDebugSettings	5	0	0	0
+UnityEngine.Rendering.Universal.UniversalRenderer	41	3	3	2
+UnityEngine.Rendering.Universal.UniversalRendererData	24	1	0	0
+UnityEngine.Rendering.Universal.Vignette	3	0	0	0
+UnityEngine.Rendering.Universal.WhiteBalance	3	0	0	0
+UnityEngine.Rendering.Universal.XROcclusionMeshPass	8	0	0	0
+UnityEngine.Rendering.Universal.XRPassUniversal	9	0	0	0
+UnityEngine.Rendering.Universal.XRSystemData	2	0	0	0
+UnityEngine.Rendering.Universal.XRSystemUniversal	5	0	0	0
+UnityEngine.Rendering.Universal.ZBinningJob	4	0	0	0
+UnityEngine.Rendering.Vector2Parameter	2	0	0	0
+UnityEngine.Rendering.Vector3Parameter	2	0	0	0
+UnityEngine.Rendering.Vector4Parameter	2	0	0	0
+UnityEngine.Rendering.Volume	12	0	0	0
+UnityEngine.Rendering.VolumeComponent	16	1	0	0
+UnityEngine.Rendering.VolumeComponentMenu	1	0	0	0
+UnityEngine.Rendering.VolumeComponentMenuForRenderPipeline	2	0	0	0
+UnityEngine.Rendering.VolumeDebugSettings	21	0	0	0
+UnityEngine.Rendering.VolumeManager	28	1	0	0
+UnityEngine.Rendering.VolumeParameter	176	0	0	0
+UnityEngine.Rendering.VolumeProfile	20	0	0	0
+UnityEngine.Rendering.VolumeStack	5	1	0	0
+UnityEngine.Rendering.XRGraphicsAutomatedTests	4	0	0	0
+VL.CustomRenderAction	2	0	0	0
+VL.CustomRenderPassData	1	0	0	0
+VL.CustomRenderPassUtility	0	1	0	0
+VL.CustomSubPassData	1	0	0	0
+VL.EntitySystem.Chunk	24	0	0	1
+VL.EntitySystem.EntityChunk	11	0	0	1
+VL.EntitySystem.EntityComponentEvent	25	0	0	3
+VL.EntitySystem.EntityIndexer	8	0	0	0
+VL.EntitySystem.EntityManager	9	1	2	12
+VL.EntitySystem.SharedEntityManager	7	0	0	0
+VL.EntitySystem.SingleEntityManager	17	1	0	0
+VL.Rendering.AABBUtility	3	0	0	0
+VL.Rendering.AOQualityOptionParameter	1	0	0	0
+VL.Rendering.CameraPlanes	5	0	0	0
+VL.Rendering.CameraUtility	2	0	0	0
+VL.Rendering.CloudData	1	0	0	0
+VL.Rendering.CloudDataParameter	1	0	0	0
+VL.Rendering.ColorGradingComputePass	6	1	1	0
+VL.Rendering.ConvolutionBlur	5	1	1	0
+VL.Rendering.DepthFog	1	0	0	0
+VL.Rendering.DepthOfFieldData	4	0	0	0
+VL.Rendering.Dof34QualitySettingParameter	1	0	0	0
+VL.Rendering.DofBokehQualitySettingParameter	1	0	0	0
+VL.Rendering.DownsampleBlur	6	1	0	0
+VL.Rendering.FlareParameter	1	1	0	0
+VL.Rendering.FogUtility	2	0	1	0
+VL.Rendering.Internal.VLPostProcessPass	39	6	12	3
+VL.Rendering.Internal.VLPostProcessPasses	9	0	1	0
+VL.Rendering.IntervalTypeParameter	1	0	0	0
+VL.Rendering.LightSpaceTypeParameter	1	0	0	0
+VL.Rendering.MipChainBuffer	9	2	3	2
+VL.Rendering.MirrorBoundsParameter	1	0	0	0
+VL.Rendering.MirrorMeshParameter	1	0	0	0
+VL.Rendering.MirrorQuaternionParameter	1	0	0	0
+VL.Rendering.NoiseTypeParameter	1	0	0	0
+VL.Rendering.PlanarReflection	11	0	0	0
+VL.Rendering.PlanarReflectionCachedChunk	4	0	0	0
+VL.Rendering.PlanarReflectionCombinedChunks	14	0	1	0
+VL.Rendering.PlanarReflectionCulledChunk	3	0	1	0
+VL.Rendering.PlanarReflectionCullingSystem	2	1	0	0
+VL.Rendering.PlanarReflectionDrawSystem	5	1	0	0
+VL.Rendering.PlanarReflectionEntityChunk	1	0	0	0
+VL.Rendering.PlanarReflectionEntityManager	4	0	0	0
+VL.Rendering.PlanarReflectionResultChunk	3	0	1	0
+VL.Rendering.PlanarReflectionResultSystem	5	0	1	0
+VL.Rendering.PlanarReflectionUpdateCachedSystem	2	1	0	0
+VL.Rendering.PlanarReflectionUtility	2	0	1	0
+VL.Rendering.PlanarReflectionVolumeComponent	1	0	0	0
+VL.Rendering.RenderingBridge	5	0	1	0
+VL.Rendering.RenderingUtility	5	1	0	0
+VL.Rendering.Shaders.ShaderVariablesScreenSpaceReflection	1	0	0	0
+VL.Rendering.Shaders.ShaderVariablesVLDOFBokeh	1	0	0	0
+VL.Rendering.SharedPlanarReflectionEntityManager	1	0	0	0
+VL.Rendering.SphereFog	1	0	0	0
+VL.Rendering.StarStreakTypeParameter	5	0	0	0
+VL.Rendering.SubWorld	1	0	0	0
+VL.Rendering.SubWorldPass	5	1	1	0
+VL.Rendering.SubWorldUtility	1	0	1	0
+VL.Rendering.SubWorldVolume	12	1	0	0
+VL.Rendering.SubWorldVolumeParameter	1	0	0	0
+VL.Rendering.Texture3DParameter	1	0	0	0
+VL.Rendering.TonemappingModeParameter	1	0	0	0
+VL.Rendering.VLActorForward	5	0	0	0
+VL.Rendering.VLActorGBuffer	6	0	0	0
+VL.Rendering.VLActorParameter	3	0	0	0
+VL.Rendering.VLActorParameterPass	3	1	0	0
+VL.Rendering.VLActorTransparentPass	5	0	0	0
+VL.Rendering.VLBloom	3	0	0	0
+VL.Rendering.VLCameraBufferSystem	13	0	0	0
+VL.Rendering.VLCapturePass	2	0	0	0
+VL.Rendering.VLChromaticAberration	3	0	0	0
+VL.Rendering.VLCloud	1	0	0	0
+VL.Rendering.VLDOF	3	0	0	0
+VL.Rendering.VLDOFBokehQuality	1	0	0	0
+VL.Rendering.VLDebugDisplaySettings	4	0	0	0
+VL.Rendering.VLDebugDisplaySettingsData	56	0	0	0
+VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass	5	1	0	0
+VL.Rendering.VLDecalDrawSystem	3	1	0	0
+VL.Rendering.VLDecalPass	5	0	0	0
+VL.Rendering.VLDecalRendererFeature	8	0	0	0
+VL.Rendering.VLDeferredPass	12	3	3	1
+VL.Rendering.VLDensityFogVolume	1	0	0	0
+VL.Rendering.VLDiffusion	3	0	0	0
+VL.Rendering.VLGlobalLightProbe	1	0	0	0
+VL.Rendering.VLJumpFloodOutline	3	0	0	0
+VL.Rendering.VLLightProbeUtility	2	0	0	0
+VL.Rendering.VLLightmapVolume	1	0	0	0
+VL.Rendering.VLMirrorVolumeComponent	3	0	1	0
+VL.Rendering.VLMotionBlur	2	0	0	0
+VL.Rendering.VLMotionVectorRenderPass	4	1	0	0
+VL.Rendering.VLParaffin	3	1	0	0
+VL.Rendering.VLPostProcessData	1	0	0	0
+VL.Rendering.VLPreDepthIDPass	3	2	1	0
+VL.Rendering.VLRGBBlockNoise	3	0	0	0
+VL.Rendering.VLSRPAdditionalCameraData	3	0	0	0
+VL.Rendering.VLSRPCapture	10	0	0	0
+VL.Rendering.VLSRPRenderer	11	10	0	2
+VL.Rendering.VLSRPRendererData	3	0	0	0
+VL.Rendering.VLSSRQualitySettingParameter	1	0	0	0
+VL.Rendering.VLScreenSpaceAmbientOcclusion	1	1	0	0
+VL.Rendering.VLScreenSpaceReflection	1	0	0	0
+VL.Rendering.VLSimpleRenderer	10	0	0	0
+VL.Rendering.VLSimpleRendererData	2	0	0	0
+VL.Rendering.VLSkyPass	5	0	1	0
+VL.Rendering.VLStarStreak	1	1	1	0
+VL.Rendering.VLTextureBlur	2	0	0	0
+VL.Rendering.VLTonemapping	3	1	0	0
+VL.Rendering.VLVirtualEffect	5	1	0	0
+VL.Rendering.VLVirtualEffectGBuffer	9	0	0	0
+VL.Rendering.VLWaveJitterGlitch	2	1	0	0
+VL.VLRenderQueue	4	0	0	0
+
+Raw changed methods
+[semantic]	Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel$$.ctor
+[layout]	Campus.Rendering.Debug.CampusRenderingOutlineDebugPass$$Execute
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsUI$$RegisterDebug
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsUI$$Reset
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsUI$$UnregisterDebug
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsUI.<>c__DisplayClass3_0$$<RegisterDebug>b__0
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsVolume$$CreatePanel
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsVolume.SettingsPanel$$.ctor
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsVolume.SettingsPanel$$Refresh
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateCameraSelector
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateComponentSelector
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateVolumeParameterWidget
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateVolumeTable
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass0_0$$<CreateComponentSelector>b__3
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass1_0$$<CreateCameraSelector>b__1
+[layout]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_0$$<CreateVolumeParameterWidget>b__8
+[semantic]	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_1$$<CreateVolumeTable>b__5
+[layout]	UnityEngine.Rendering.DebugFrameTiming$$.ctor
+[layout]	UnityEngine.Rendering.DebugUI.EnumField$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.EnumField<__Il2CppFullySharedGenericType>$$AutoFillFromType
+[layout]	UnityEngine.Rendering.DebugUI.EnumField<int>$$AutoFillFromType
+[layout]	UnityEngine.Rendering.DebugUI.EnumField<object>$$AutoFillFromType
+[layout]	UnityEngine.Rendering.DebugUI.Field<Color>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<Vector2>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<Vector3>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<Vector4>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<__Il2CppFullySharedGenericType>$$GetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<bool>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<float>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<int>$$SetValue
+[semantic]	UnityEngine.Rendering.DebugUI.Field<object>$$SetValue
+[layout]	UnityEngine.Rendering.DebugUI.Field<uint>$$SetValue
+[semantic]	UnityEngine.Rendering.DebugUI.Widget$$GenerateQueryPath
+[semantic]	UnityEngine.Rendering.DebugUpdater$$DoAfterInputModuleUpdated
+[semantic]	UnityEngine.Rendering.DebugUpdater$$RefreshRuntimeUINextFrame
+[layout]	UnityEngine.Rendering.DebugUpdater.<RefreshRuntimeUINextFrame>d__14$$MoveNext
+[semantic]	UnityEngine.Rendering.DynamicResolutionHandler$$.ctor
+[layout]	UnityEngine.Rendering.NoInterpCubemapParameter$$GetHashCode
+[layout]	UnityEngine.Rendering.NoInterpTextureParameter$$GetHashCode
+[layout]	UnityEngine.Rendering.PowerOfTwoTextureAtlas$$.ctor
+[layout]	UnityEngine.Rendering.PowerOfTwoTextureAtlas$$AllocateTexture
+[semantic]	UnityEngine.Rendering.PowerOfTwoTextureAtlas$$Blit2DTexture
+[layout]	UnityEngine.Rendering.PowerOfTwoTextureAtlas$$BlitTexture
+[semantic]	UnityEngine.Rendering.RTHandle$$op_Implicit
+[semantic]	UnityEngine.Rendering.RTHandleStaticHelpers$$SetRTHandleStaticWrapper
+[layout]	UnityEngine.Rendering.RTHandles$$.cctor
+[layout]	UnityEngine.Rendering.RTHandles$$Alloc
+[layout]	UnityEngine.Rendering.RTHandles$$Initialize
+[semantic]	UnityEngine.Rendering.RTHandles$$Release
+[layout]	UnityEngine.Rendering.RTHandles$$SetHardwareDynamicResolutionState
+[layout]	UnityEngine.Rendering.RTHandles$$SetReferenceSize
+[semantic]	UnityEngine.Rendering.Texture2DAtlas$$.ctor
+[layout]	UnityEngine.Rendering.Texture2DAtlas$$AllocateTexture
+[semantic]	UnityEngine.Rendering.Texture2DAtlas$$Blit2DTexture
+[layout]	UnityEngine.Rendering.Texture2DAtlas$$BlitCubeTexture2D
+[layout]	UnityEngine.Rendering.Texture2DAtlas$$BlitTexture
+[layout]	UnityEngine.Rendering.Texture2DAtlas$$NeedsUpdate
+[layout]	UnityEngine.Rendering.TextureCurve$$Release
+[layout]	UnityEngine.Rendering.TextureParameter$$GetHashCode
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerBitField$$SetWidget
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$ActivatePanel
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$Rebuild
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$ResetAllHierarchy
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$Update
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerPanel$$GetFirstItem
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerPanel$$SelectNextItem
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerPanel$$SelectPreviousItem
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerProgressBar$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerRow$$.ctor
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerRow$$Update
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerToggle$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerToggleHistory$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerUIntField$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerVBox$$.ctor
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerVBox$$Next
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerVBox$$OnSelection
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerValue$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerValueTuple$$.ctor
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerVector2$$.ctor
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerVector2$$Next
+[layout]	UnityEngine.Rendering.UI.DebugUIHandlerVector2$$OnSelection
+[semantic]	UnityEngine.Rendering.UI.DebugUIHandlerVector2$$SetupSettings
+[layout]	UnityEngine.Rendering.Universal.CameraData$$IsTemporalAAEnabled
+[layout]	UnityEngine.Rendering.Universal.CameraData$$get_isHDROutputActive
+[semantic]	UnityEngine.Rendering.Universal.DebugRenderSetup$$GetRenderStateBlock
+[layout]	UnityEngine.Rendering.Universal.DecalCachedChunk$$.ctor
+[layout]	UnityEngine.Rendering.Universal.DecalCulledChunk$$.ctor
+[semantic]	UnityEngine.Rendering.Universal.DecalDrawCallChunk$$.ctor
+[layout]	UnityEngine.Rendering.Universal.DecalDrawSystem$$Draw
+[semantic]	UnityEngine.Rendering.Universal.DecalDrawSystem$$DrawInstanced
+[layout]	UnityEngine.Rendering.Universal.DecalEntityChunk$$.ctor
+[layout]	UnityEngine.Rendering.Universal.DecalEntityChunk$$SetCapacity
+[layout]	UnityEngine.Rendering.Universal.DecalEntityManager$$CreateChunkIndex
+[semantic]	UnityEngine.Rendering.Universal.DecalEntityManager$$UpdateDecalEntityData
+[layout]	UnityEngine.Rendering.Universal.DecalPreviewPass$$.ctor
+[semantic]	UnityEngine.Rendering.Universal.DecalPreviewPass$$Execute
+[layout]	UnityEngine.Rendering.Universal.DecalPrioritySystem$$Execute
+[semantic]	UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$Render
+[semantic]	UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$SetEmptyAdditionalShadowmapAtlas
+[semantic]	UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass.<>c$$<Render>b__63_1
+[semantic]	UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass.<>c$$<Render>b__13_0
+[semantic]	UnityEngine.Rendering.Universal.Internal.CopyColorPass.<>c$$<Render>b__25_0
+[semantic]	UnityEngine.Rendering.Universal.Internal.CopyColorPass.<>c$$<Render>b__25_1
+[semantic]	UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_0
+[semantic]	UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_1
+[semantic]	UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_2
+[layout]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilDirectionalLights
+[layout]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilLights
+[semantic]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupMainLightConstants
+[layout]	UnityEngine.Rendering.Universal.Internal.DrawObjectsPass$$.ctor
+[semantic]	UnityEngine.Rendering.Universal.Internal.DrawObjectsPass$$Render
+[semantic]	UnityEngine.Rendering.Universal.Internal.DrawObjectsPass.<>c$$<Render>b__18_0
+[semantic]	UnityEngine.Rendering.Universal.Internal.DrawObjectsWithRenderingLayersPass$$.ctor
+[layout]	UnityEngine.Rendering.Universal.Internal.FinalBlitPass$$Execute
+[semantic]	UnityEngine.Rendering.Universal.Internal.FinalBlitPass$$Render
+[semantic]	UnityEngine.Rendering.Universal.Internal.FinalBlitPass.<>c$$<Render>b__16_0
+[layout]	UnityEngine.Rendering.Universal.Internal.ForwardLights$$InitializeLightConstants
+[semantic]	UnityEngine.Rendering.Universal.Internal.GBufferPass.<>c$$<Render>b__20_1
+[semantic]	UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass$$Render
+[semantic]	UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass.<>c$$<Render>b__33_1
+[layout]	UnityEngine.Rendering.Universal.LightCookieManager$$Fetch2D
+[layout]	UnityEngine.Rendering.Universal.LightCookieManager$$FetchCube
+[semantic]	UnityEngine.Rendering.Universal.MotionVectorRenderPass.<>c$$<Render>b__21_0
+[semantic]	UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CalculateCameraProperties
+[semantic]	UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CalculateFinalBlitPixelRect
+[semantic]	UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CorrectCinemachineOrthoSize
+[semantic]	UnityEngine.Rendering.Universal.PostProcessPass$$Setup
+[layout]	UnityEngine.Rendering.Universal.RenderingLayerUtils$$Combine
+[layout]	UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion$$AddRenderPasses
+[layout]	UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion.ScreenSpaceAmbientOcclusionPass$$Execute
+[semantic]	UnityEngine.Rendering.Universal.ScriptableRenderer$$.cctor
+[semantic]	UnityEngine.Rendering.Universal.ShaderTimeManager$$.cctor
+[layout]	UnityEngine.Rendering.Universal.ShaderTimeManager$$get_CurrentTime
+[layout]	UnityEngine.Rendering.Universal.TemporalAA$$ExecutePass
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$ExpandOrthographic
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$ExpandRangeOrthographic
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$ExpandY
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$TileLight
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$TileLightOrthographic
+[layout]	UnityEngine.Rendering.Universal.TilingJob$$TileReflectionProbe
+[semantic]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$.cctor
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$.ctor
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$CheckPostProcessForDepth
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$CreateRenderTextureDescriptor
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeAdditionalCameraData
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeRenderingData
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeShadowData
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeStackedCameraData
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RecordAndExecuteRenderGraph
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RenderCameraStack
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RenderSingleCamera
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$UpdateTemporalAATargets
+[semantic]	UnityEngine.Rendering.Universal.UniversalRenderer$$.cctor
+[semantic]	UnityEngine.Rendering.Universal.UniversalRenderer$$.ctor
+[semantic]	UnityEngine.Rendering.Universal.UniversalRenderer$$CreateRenderGraphCameraRenderTargets
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderer$$OnMainRendering
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderer$$Setup
+[layout]	UnityEngine.Rendering.Universal.UniversalRenderer$$SetupCullingParameters
+[layout]	UnityEngine.Rendering.Universal.UniversalRendererData$$Create
+[layout]	UnityEngine.Rendering.VolumeComponent$$OnEnable
+[layout]	UnityEngine.Rendering.VolumeManager$$FilterVolumeComponentTypes
+[layout]	UnityEngine.Rendering.VolumeStack$$Clear
+[layout]	VL.CustomRenderPassUtility$$Execute
+[semantic]	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateEntity
+[semantic]	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Update
+[layout]	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData
+[layout]	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData
+[semantic]	VL.Rendering.ColorGradingComputePass$$ExecutePass
+[layout]	VL.Rendering.ColorGradingComputePass$$IsAvailable
+[semantic]	VL.Rendering.ConvolutionBlur$$.cctor
+[layout]	VL.Rendering.ConvolutionBlur$$Execute
+[layout]	VL.Rendering.DownsampleBlur$$ApplyBlur
+[layout]	VL.Rendering.FlareParameter$$Interp
+[semantic]	VL.Rendering.FogUtility$$UpdateProperties
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$.ctor
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DoJumpFloodOutline
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DoVLAdditive
+[layout]	VL.Rendering.Internal.VLPostProcessPass$$DoVLMotionBlur
+[layout]	VL.Rendering.Internal.VLPostProcessPass$$DoVLTextureBlur
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectAdditiveTextureToAdd
+[layout]	VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectAdditiveTextureToBloom
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DrawFlare
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DrawStarStreak
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DrawVLDOFBokeh
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$DrawVLDOFMRT
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$Render
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$SetDOFCurveProperty
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$SetupVLBloom
+[layout]	VL.Rendering.Internal.VLPostProcessPass$$SetupVLDiffusion
+[semantic]	VL.Rendering.Internal.VLPostProcessPass$$SetupVLVirtualEffect
+[layout]	VL.Rendering.Internal.VLPostProcessPass$$VLDOFBlurMRT
+[layout]	VL.Rendering.Internal.VLPostProcessPass.VLMaterialLibrary$$Load
+[semantic]	VL.Rendering.Internal.VLPostProcessPasses$$.ctor
+[layout]	VL.Rendering.MipChainBuffer$$CopyToMipMinMax
+[semantic]	VL.Rendering.MipChainBuffer$$Execute
+[semantic]	VL.Rendering.MipChainBuffer$$SetComputeOffsetParams
+[semantic]	VL.Rendering.MipChainBuffer$$UpdateMipChainParams
+[layout]	VL.Rendering.MipChainBuffer$$get_nameID
+[semantic]	VL.Rendering.PlanarReflectionCombinedChunks$$Create
+[semantic]	VL.Rendering.PlanarReflectionCulledChunk$$.ctor
+[layout]	VL.Rendering.PlanarReflectionCullingSystem.CullingJob$$Execute
+[layout]	VL.Rendering.PlanarReflectionDrawSystem$$DrawPlanarReflections
+[semantic]	VL.Rendering.PlanarReflectionResultChunk$$.ctor
+[semantic]	VL.Rendering.PlanarReflectionResultSystem.ResultJob$$CameraSpacePlane
+[layout]	VL.Rendering.PlanarReflectionUpdateCachedSystem$$Execute
+[semantic]	VL.Rendering.PlanarReflectionUtility$$RenderPlanarReflection
+[semantic]	VL.Rendering.RenderingBridge$$AddRenderEvent
+[layout]	VL.Rendering.RenderingUtility$$SetGlobalMipBias
+[semantic]	VL.Rendering.SubWorldPass$$.ctor
+[layout]	VL.Rendering.SubWorldPass$$Execute
+[semantic]	VL.Rendering.SubWorldUtility$$UpdateReflectionStencilState
+[layout]	VL.Rendering.SubWorldVolume$$UpdateMeshParameter
+[layout]	VL.Rendering.VLActorParameterPass$$ProcessCommand
+[layout]	VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$get_cameras
+[layout]	VL.Rendering.VLDecalDrawSystem$$Execute
+[semantic]	VL.Rendering.VLDeferredPass$$.ctor
+[semantic]	VL.Rendering.VLDeferredPass$$Execute
+[semantic]	VL.Rendering.VLDeferredPass$$ExecuteGBuffer
+[layout]	VL.Rendering.VLDeferredPass$$RenderActor
+[layout]	VL.Rendering.VLDeferredPass$$RenderEmission
+[layout]	VL.Rendering.VLDeferredPass$$RenderFog
+[semantic]	VL.Rendering.VLMirrorVolumeComponent$$.ctor
+[layout]	VL.Rendering.VLMotionVectorRenderPass$$DrawObjectMotionVectors
+[layout]	VL.Rendering.VLParaffin$$.ctor
+[semantic]	VL.Rendering.VLPreDepthIDPass$$.ctor
+[layout]	VL.Rendering.VLPreDepthIDPass$$Execute
+[layout]	VL.Rendering.VLPreDepthIDPass$$OnRenderDepthAndNormal
+[layout]	VL.Rendering.VLSRPRenderer$$.ctor
+[layout]	VL.Rendering.VLSRPRenderer$$Dispose
+[layout]	VL.Rendering.VLSRPRenderer$$EnqueueDeferred
+[layout]	VL.Rendering.VLSRPRenderer$$FinishRendering
+[layout]	VL.Rendering.VLSRPRenderer$$GetLitColorTexture
+[layout]	VL.Rendering.VLSRPRenderer$$IsLitColorRendered
+[layout]	VL.Rendering.VLSRPRenderer$$MarkLitColorTextureAsRendered
+[layout]	VL.Rendering.VLSRPRenderer$$ReleaseRenderTargets
+[layout]	VL.Rendering.VLSRPRenderer$$Setup
+[layout]	VL.Rendering.VLSRPRenderer$$SetupCullingParameters
+[layout]	VL.Rendering.VLScreenSpaceAmbientOcclusion$$.ctor
+[semantic]	VL.Rendering.VLSkyPass$$DrawClouds
+[layout]	VL.Rendering.VLStarStreak$$.ctor
+[semantic]	VL.Rendering.VLStarStreak$$IsActive
+[layout]	VL.Rendering.VLTonemapping$$.ctor
+[layout]	VL.Rendering.VLVirtualEffect$$.ctor
+[layout]	VL.Rendering.VLWaveJitterGlitch$$.ctor
+
+Raw only-in-game methods
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ArrayExtensions$$ResizeArray<Color>
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer$$Push<ShaderVariablesScreenSpaceReflection>
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer$$PushGlobal<ShaderVariablesActorLighting>
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$Set
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$SetGlobal
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$UpdateData
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$Set
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$SetGlobal
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$UpdateData
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$get_instance
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$get_instance
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_11
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_2
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_6
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>b__1
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>g__AddParameterRows|0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>g__AddRow|8
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_1$$<CreateVolumeTable>b__4
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_3$$<CreateVolumeTable>b__10
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$.cctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$<.cctor>b__4_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$.cctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$.ctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$<.cctor>b__4_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<BoneWeight>$$.cctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<BoneWeight>$$Get
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<BoneWeight>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$.cctor
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$Get
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$Release
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<BeginRenderGraphXRRendering>b__143_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<DrawRenderGraphGizmos>b__141_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<EndRenderGraphXRRendering>b__145_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<InitRenderGraphFrame>b__136_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<ProcessVFXCameraCommand>b__138_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<SetupRenderGraphCameraProperties>b__139_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.UniversalAdditionalCameraData.<>c$$<UpdateCameraStack>b__55_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.UniversalRenderPipeline$$IsRenderRequestSupported<object>
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__93_0
+not done / ordinal or specialization unpaired	UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__93_1
+not done / ordinal or specialization unpaired	VL.EntitySystem.Chunk$$RemoveAtSwapBack<Color>
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityChunk<object, int>$$.ctor
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityComponentEvent<object>$$InvokeAdd<int>
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityComponentEvent<object>$$InvokePropertyChange<int>
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityComponentEvent<object>$$InvokeRemove<int>
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$.ctor
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$ChunkSort
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$CreateChunkIndex
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$CreateEntity
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$DestroyEntity
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$Dispose
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$IsValidEntity
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$Update
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateAllEntityData
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateChunk
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateEntityData
+not done / ordinal or specialization unpaired	VL.EntitySystem.EntityManager<object, int, object, object>$$get_defaultChunkKey
+not done / ordinal or specialization unpaired	VL.Rendering.Internal.VLPostProcessPass$$<Render>g__GetDestination|29_1
+not done / ordinal or specialization unpaired	VL.Rendering.Internal.VLPostProcessPass$$<Render>g__GetSource|29_0
+not done / ordinal or specialization unpaired	VL.Rendering.Internal.VLPostProcessPass$$<Render>g__Swap|29_2
+not done / ordinal or specialization unpaired	VL.Rendering.MipChainBuffer$$<Execute>g__DivRoundUp|39_1
+not done / ordinal or specialization unpaired	VL.Rendering.MipChainBuffer$$<Execute>g__GetExtraPixel|39_0
+not done / ordinal or specialization unpaired	VL.Rendering.VLDeferredPass.<>c$$<.cctor>b__55_0
+not done / ordinal or specialization unpaired	VL.Rendering.VLSRPRenderer.<>c$$<Setup>b__27_0
+not done / ordinal or specialization unpaired	VL.Rendering.VLSRPRenderer.<>c$$<Setup>b__27_1
+
+Open source TODO
+  Runtime/QualiArts/VL/Rendering/SubWorldPass.cs — discarded member identity described above.
