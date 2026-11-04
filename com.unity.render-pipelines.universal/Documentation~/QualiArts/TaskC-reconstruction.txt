@@ -1,0 +1,427 @@
+Task C: URP / Core and embedded VL reconstruction — 2026-11-04
+
+STATUS: PARTIAL. The requested complete reconstruction and native parity are not achieved.
+The main VLSRPRenderer/VLDeferredPass and VL custom post-processing chain remain unimplemented.
+No replacement behavior was invented for these missing classes. Task B methods were left unchanged.
+
+Scope and evidence
+  Brief: /data/xy/gakumas/work/codex/TASK_C_urp_rest.md; rules: COMMON.md and Task B comparison loop.
+  Binary: APK 3.5.3 libil2cpp.so; Unity 6000.0.77f1; embedded URP 14 fork.
+  Baseline was rebuilt and regenerated before editing; task_c/current_remaining.txt lists 85 affected package classes.
+  Decompilation/disassembly and intermediate comparisons: /data/xy/gakumas/work/urp14-decomp/task_c/.
+  Final raw result: TaskC-native-comparison.json beside this report.
+  Final filter selects class roots from the URP/Core assembly TypeDefIndex ranges, including nested/generic methods.
+  It excludes engine modules and unrelated VL/Campus assemblies. It includes Task B types as unchanged context.
+
+Validation
+  ref14_round.sh 20: 0 C# errors; IL2CPP native output generated.
+  REF_BUILD Failed errors=3 remains the Gradle packaging failure; this is not a successful APK build.
+  No tests, test assemblies, test scripts, or verification harnesses were written.
+  No push, deployment, Windows access, or old-player edits.
+  Native result: 3729 same; 113 [layout]; 81 [semantic]; 351 only-in-game entries; 1 re-signed entries.
+  Counts are raw tool results, not a claim that all missing entries represent missing source.
+
+Implemented batches
+  Fast camera stack / RenderSingleCamera signatures, renderer PreSetup/ExecuteFast, camera output and debug paths.
+  Screen-to-world upload, forward custom lighting buffers, realtime additional spot-shadow selection and cascade extraction.
+  Motion camera position history, temporal CoC history, jitter upload, volume influence weighting, queued probe-atlas updates.
+  Decal tint/priority storage and draw data, layer-mask mapping, virtual post-processing extensibility.
+  VL shader variable declarations, volume parameter types/defaults, fog, mirror visibility, global SH/occlusion upload.
+  Native custom render/subpass helpers, decals, downsample/convolution blur, packed mip buffers, rendering events.
+  Actor forward/G-buffer/virtual/transparent passes, parameter upload, pre-depth IDs, VL motion vectors, capture requests.
+  Simple renderer and final blit, subworld volume lifecycle/filtering and reflection stencil configuration.
+
+Interpretation of remaining native flags
+  same = normalized instructions match. [layout] = tool reports matching semantic tokens with different layout.
+  [semantic] is retained verbatim even when manual review identifies an inlining, trampoline, or scheduling difference.
+  not done = some native entry points are missing/re-signed or the type has no reconstructed implementation.
+  only-in-game also includes compiler-generated local functions, stripped generic instantiations, and empty constructors.
+  ConstantBuffer/ConstantBufferSingleton and VolumeParameter generic source already exists; absent native specializations
+  are not evidence that those generic methods need replacement stubs. Their missing instantiations remain unverified.
+  RTHandle.op_Implicit overloads share argument signatures but differ in return types; the comparison tool can pair them ambiguously.
+  Empty constructor aliases (e.g. DebugUIHandlerWidget/Object) and RenderGraph lambda/metadata layout cause additional flags.
+  CoreUtils.CreateCubeMesh, ShadowUtils.ExtractDirectionalLightMatrix, lighting debug post-process gate, and
+  DrawObjectsPass.ExecutePass matched after restoring actual behavioral differences.
+  UniversalRenderer constructor differs at an empty RenderGraphFrameResources/Object constructor alias.
+  InitializeRenderingData has a renderingModeActual inlining/call-token difference; the game decompilation has the same check.
+  FogUtility.UpdateProperties, MipChainBuffer and RenderingBridge retain compiler scheduling/bounds-check/inlining flags.
+  MipChainBuffer local functions are implemented as |36_0/|36_1; game names are |39_0/|39_1, so raw inventory still lists them.
+  ConvolutionBlur..cctor includes a game metadata trampoline that the normalizer cannot resolve to ToArray<int>.
+  SubWorldUtility.UpdateReflectionStencilState retains conditional constant-selection scheduling after two formulations.
+  Task B DeferredLights/planar flags are documented in TaskB-reconstruction.txt and were not altered here.
+  FogUtility has no deferred-draw method in the supplied assembly dump; its retained samplers/dictionaries are fields only.
+
+Open reconstruction TODOs
+  // TODO(qa-recon): Recover VLSRPRenderer setup/targets/pass ordering and VLSRPRendererData; no complete VL renderer exists yet.
+  // TODO(qa-recon): Recover VLDeferredPass native attachment/subpass orchestration and SubWorldPass rendering.
+  // TODO(qa-recon): Recover Internal.VLPostProcessPass/Passes, DOFHandles/material library, and ColorGradingComputePass.
+  // TODO(qa-recon): Recover VLSkyPass including its pixel-to-world matrix construction and cloud draws.
+  // TODO(qa-recon): Recover Campus.Rendering.Debug classes and VL debug-display/preview classes.
+  // TODO(qa-recon): Reconcile remaining Core debug-volume UI signature/widgets and audit every remaining semantic flag.
+  // TODO(qa-recon): Verify currently un-emitted generic specializations after their actual renderer consumers are restored.
+  Several large pass bodies fail Hex-Rays call analysis; their disassembly and declaration skeletons are available in task_c.
+  These are remaining tasks, not external approval blockers or completed implementations.
+
+Implementation commits
+  155a7e3 Reconstruct fast camera rendering and renderer pre-setup from 3.5.3
+  8e1dc35 Match camera output, screen-to-world matrices and deferred debug paths
+  d195313 Match forward custom light buffers and realtime spot shadow setup
+  f80266e Restore motion camera history, volume weighting and VL shader layouts
+  4696bf5 Restore temporal CoC history, jitter upload and queued probe atlas updates
+  f66e78a Restore decal tint and priority data, rendering layers and virtual post-processing
+  407653b Reconstruct VL volume parameters, fog and camera history settings
+  89a673b Reconstruct native subpasses, decal feature, fog and blur helpers
+  d22266a Match cascade extraction, debug gating and immutable cube meshes
+  ef544cb Restore actor, depth-ID, motion-vector and capture rendering passes
+  db07aa9 Reconstruct simple renderer, subworld volumes and convolution mip blur
+  a732ecf Restore packed-mip dispatch and padding local functions
+
+Per-class status for the regenerated task scope and embedded VL/Campus type inventory
+  Nested types and generic specializations are grouped under their declared class.
+  When several labels appear, all apply; a missing specialization does not erase matching methods.
+  "declaration only" means no named game method is emitted; it does not claim native binary parity.
+
+Campus.Rendering.Debug.CampusDebugDisplaySettings: not done
+  only-in-game: .ctor, Reset, get_commonData, set_commonData
+Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData: not done
+  only-in-game: .ctor, CreatePanel, TryGetScreenClearColor, get_AreAnySettingsActive, get_IsLightingActive, get_IsPostProcessingAllowed, get_actorDebugMaterialMode, set_actorDebugMaterialMode, .ctor, get_Flags, .cctor, .ctor, <.ctor>b__2_1, .ctor, <.ctor>b__0, <.ctor>b__2, <.ctor>b__3
+Campus.Rendering.Debug.CampusRenderingDebug: not done
+  only-in-game: .ctor, AddRenderPasses, Create, Dispose
+Campus.Rendering.Debug.CampusRenderingDebugPass: not done
+  only-in-game: .cctor, .ctor, Execute
+Campus.Rendering.Debug.CampusRenderingOutlineDebugPass: not done
+  only-in-game: .ctor, Execute, .cctor, .ctor, <Execute>b__4_0
+UnityEngine.Rendering.ArrayExtensions: same (emitted methods), not done
+  only-in-game: ResizeArray<Color>
+UnityEngine.Rendering.ConstantBuffer: same (emitted methods), not done
+  only-in-game: Push<ShaderVariablesScreenSpaceReflection>, Push<ShaderVariablesVLDOFBokeh>, PushGlobal<ShaderVariablesActorLighting>, .ctor, Release, Set, SetGlobal, UpdateData, .ctor, Release, Set, SetGlobal, UpdateData, .ctor, Release, Set, SetGlobal, UpdateData
+UnityEngine.Rendering.ConstantBufferSingleton: same (emitted methods), not done
+  only-in-game: .ctor, Release, get_instance, .ctor, Release, get_instance, .ctor, Release, get_instance
+UnityEngine.Rendering.CoreUtils: same
+UnityEngine.Rendering.DebugDisplaySettingsUI: [semantic], [layout]
+  [semantic]: Reset
+  [layout]: RegisterDebug, UnregisterDebug, <RegisterDebug>b__0
+UnityEngine.Rendering.DebugDisplaySettingsVolume: [semantic], [layout], not done
+  [semantic]: .ctor, Refresh, .cctor, CreateCameraSelector, CreateComponentSelector, CreateVolumeTable, <CreateComponentSelector>b__3, <CreateCameraSelector>b__1
+  [layout]: CreatePanel, CreateVolumeParameterWidget
+  only-in-game: <CreateVolumeParameterWidget>b__2_0, <CreateVolumeParameterWidget>b__2_6, <CreateVolumeTable>b__3_11, <CreateVolumeTable>b__3_2, <CreateVolumeTable>b__3_3, <CreateVolumeTable>b__3_6, <CreateVolumeTable>b__3_7, <CreateVolumeTable>b__3_9, .ctor, <CreateVolumeParameterWidget>b__5, <CreateVolumeParameterWidget>b__8, .ctor, <CreateVolumeParameterWidget>b__1, <CreateVolumeParameterWidget>b__2, .ctor, <CreateVolumeParameterWidget>b__3, <CreateVolumeParameterWidget>b__4, .ctor, <CreateVolumeParameterWidget>b__7, .ctor, <CreateVolumeTable>b__1, <CreateVolumeTable>g__AddParameterRows|0, <CreateVolumeTable>g__AddRow|8, .ctor, <CreateVolumeTable>b__4, <CreateVolumeTable>b__5, .ctor, .ctor, <CreateVolumeTable>b__10
+  re-signed: CreateVolumeParameterWidget (System_String_o* name, UnityEngine_Rendering_VolumeParameter_o* param, System_Func_bool__o* isHiddenCallback);
+UnityEngine.Rendering.DebugFrameTiming: [layout]
+  [layout]: .ctor
+UnityEngine.Rendering.DynamicResolutionHandler: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.ListPool: same (emitted methods), not done
+  only-in-game: .cctor, .ctor, <.cctor>b__4_0, .cctor, .ctor, <.cctor>b__4_0, .cctor, Get, Release, .cctor, Get, Release
+UnityEngine.Rendering.NoInterpCubemapParameter: [layout]
+  [layout]: GetHashCode
+UnityEngine.Rendering.NoInterpTextureParameter: [layout]
+  [layout]: GetHashCode
+UnityEngine.Rendering.ObjectPool: [semantic]
+  [semantic]: Get
+UnityEngine.Rendering.PowerOfTwoTextureAtlas: [semantic], [layout]
+  [semantic]: Blit2DTexture
+  [layout]: .ctor, AllocateTexture, BlitTexture
+UnityEngine.Rendering.RTHandle: [semantic]
+  [semantic]: op_Implicit
+UnityEngine.Rendering.RTHandleStaticHelpers: [semantic]
+  [semantic]: SetRTHandleStaticWrapper
+UnityEngine.Rendering.RTHandles: [semantic], [layout]
+  [semantic]: Release
+  [layout]: .cctor, Alloc, Initialize, SetHardwareDynamicResolutionState, SetReferenceSize
+UnityEngine.Rendering.RenderPipelineGraphicsSettingsContainer: same
+UnityEngine.Rendering.Texture2DAtlas: [semantic], [layout]
+  [semantic]: .ctor, Blit2DTexture
+  [layout]: AllocateTexture, BlitCubeTexture2D, BlitTexture, NeedsUpdate
+UnityEngine.Rendering.TextureCurve: [layout]
+  [layout]: Release
+UnityEngine.Rendering.TextureParameter: [layout]
+  [layout]: GetHashCode
+UnityEngine.Rendering.TextureXR: same
+UnityEngine.Rendering.UI.DebugUIHandlerBitField: [layout]
+  [layout]: SetWidget
+UnityEngine.Rendering.UI.DebugUIHandlerCanvas: [layout]
+  [layout]: ActivatePanel, Rebuild, ResetAllHierarchy, Update
+UnityEngine.Rendering.UI.DebugUIHandlerPanel: [layout]
+  [layout]: GetFirstItem, SelectNextItem, SelectPreviousItem
+UnityEngine.Rendering.UI.DebugUIHandlerProgressBar: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerRow: [semantic], [layout]
+  [semantic]: .ctor
+  [layout]: Update
+UnityEngine.Rendering.UI.DebugUIHandlerToggle: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerToggleHistory: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerUIntField: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerVBox: [semantic], [layout]
+  [semantic]: .ctor
+  [layout]: Next, OnSelection
+UnityEngine.Rendering.UI.DebugUIHandlerValue: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerValueTuple: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.UI.DebugUIHandlerVector2: [semantic], [layout]
+  [semantic]: .ctor, SetupSettings
+  [layout]: Next, OnSelection
+UnityEngine.Rendering.Universal.CameraData: [layout]
+  [layout]: IsTemporalAAEnabled, get_isHDROutputActive
+UnityEngine.Rendering.Universal.DebugDisplaySettingsLighting: same
+UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering: [semantic], not done
+  [semantic]: .ctor, .cctor
+  only-in-game: CreateGameViewOnly, .ctor, <CreateGameViewOnly>b__0, <CreateGameViewOnly>b__1
+UnityEngine.Rendering.Universal.DebugHandler: same
+UnityEngine.Rendering.Universal.DebugRenderSetup: [semantic]
+  [semantic]: GetRenderStateBlock
+UnityEngine.Rendering.Universal.DecalCachedChunk: [layout]
+  [layout]: .ctor
+UnityEngine.Rendering.Universal.DecalChunk: same
+UnityEngine.Rendering.Universal.DecalCreateDrawCallSystem: same
+UnityEngine.Rendering.Universal.DecalCulledChunk: [layout]
+  [layout]: .ctor
+UnityEngine.Rendering.Universal.DecalDrawCallChunk: [semantic]
+  [semantic]: .ctor
+UnityEngine.Rendering.Universal.DecalDrawSystem: [semantic], [layout]
+  [semantic]: DrawInstanced
+  [layout]: Draw
+UnityEngine.Rendering.Universal.DecalEntityChunk: [layout]
+  [layout]: .ctor, SetCapacity
+UnityEngine.Rendering.Universal.DecalEntityManager: [semantic], [layout]
+  [semantic]: UpdateDecalEntityData
+  [layout]: CreateChunkIndex
+UnityEngine.Rendering.Universal.DecalPrioritySystem: [layout]
+  [layout]: Execute
+UnityEngine.Rendering.Universal.DecalProjector: same
+UnityEngine.Rendering.Universal.DecalUpdateCachedSystem: same
+UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass: [semantic]
+  [semantic]: Render, SetEmptyAdditionalShadowmapAtlas, <Render>b__63_1
+UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass: [semantic]
+  [semantic]: Cleanup, <Render>b__13_0
+UnityEngine.Rendering.Universal.Internal.CopyDepthPass: [semantic]
+  [semantic]: <Render>b__27_0, <Render>b__27_1, <Render>b__27_2
+UnityEngine.Rendering.Universal.Internal.DeferredLights: [semantic], [layout]
+  [semantic]: SetupMainLightConstants
+  [layout]: RenderStencilDirectionalLights, RenderStencilLights
+UnityEngine.Rendering.Universal.Internal.DrawObjectsPass: [semantic], [layout]
+  [semantic]: Render, <Render>b__18_0
+  [layout]: .ctor
+UnityEngine.Rendering.Universal.Internal.FinalBlitPass: [semantic], [layout]
+  [semantic]: Render, <Render>b__16_0
+  [layout]: Execute
+UnityEngine.Rendering.Universal.Internal.ForwardLights: [layout]
+  [layout]: InitializeLightConstants
+UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass: [semantic]
+  [semantic]: Render, <Render>b__33_1
+UnityEngine.Rendering.Universal.LightCookieManager: [layout]
+  [layout]: Fetch2D, FetchCube
+UnityEngine.Rendering.Universal.MotionVectorRenderPass: [semantic]
+  [semantic]: <Render>b__21_0
+UnityEngine.Rendering.Universal.MotionVectorsPersistentData: same
+UnityEngine.Rendering.Universal.PixelPerfectCameraInternal: [semantic]
+  [semantic]: CalculateCameraProperties, CalculateFinalBlitPixelRect, CorrectCinemachineOrthoSize
+UnityEngine.Rendering.Universal.PlatformAutoDetect: [semantic]
+  [semantic]: IsRunningXRMobile
+UnityEngine.Rendering.Universal.PostProcessPass: [semantic]
+  [semantic]: Setup
+UnityEngine.Rendering.Universal.PostProcessPasses: same
+UnityEngine.Rendering.Universal.ReflectionProbeManager: same
+UnityEngine.Rendering.Universal.RenderingLayerUtils: [layout]
+  [layout]: Combine
+UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion: [semantic], [layout]
+  [semantic]: get_isRendererDeferred
+  [layout]: AddRenderPasses, Execute
+UnityEngine.Rendering.Universal.ScriptableRenderer: [semantic], not done
+  [semantic]: .cctor
+  only-in-game: <BeginRenderGraphXRRendering>b__143_0, <DrawRenderGraphGizmos>b__141_0, <EndRenderGraphXRRendering>b__145_0, <InitRenderGraphFrame>b__136_0, <ProcessVFXCameraCommand>b__138_0, <SetupRenderGraphCameraProperties>b__139_0
+UnityEngine.Rendering.Universal.ShaderTimeManager: [semantic], [layout]
+  [semantic]: .cctor
+  [layout]: get_CurrentTime
+UnityEngine.Rendering.Universal.ShadowUtils: same
+UnityEngine.Rendering.Universal.SharedDecalEntityManager: same
+UnityEngine.Rendering.Universal.TaaPersistentData: same
+UnityEngine.Rendering.Universal.TemporalAA: [layout], not done
+  [layout]: ExecutePass
+  only-in-game: get_frameInfluence
+UnityEngine.Rendering.Universal.TileRangeExpansionJob: same
+UnityEngine.Rendering.Universal.TilingJob: [layout]
+  [layout]: ExpandOrthographic, ExpandRangeOrthographic, ExpandY, TileLight, TileLightOrthographic, TileReflectionProbe
+UnityEngine.Rendering.Universal.UniversalAdditionalCameraData: same (emitted methods), not done
+  only-in-game: <UpdateCameraStack>b__55_0
+UnityEngine.Rendering.Universal.UniversalRenderPipeline: [semantic], [layout], not done
+  [semantic]: .cctor, InitializeRenderingData
+  [layout]: .ctor, CheckPostProcessForDepth, CreateRenderTextureDescriptor, InitializeAdditionalCameraData, InitializeShadowData, InitializeStackedCameraData, RecordAndExecuteRenderGraph, RenderCameraStack, RenderSingleCamera, UpdateTemporalAATargets
+  only-in-game: IsRenderRequestSupported<object>
+UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset: same
+UnityEngine.Rendering.Universal.UniversalRenderPipelineGlobalSettings: same
+UnityEngine.Rendering.Universal.UniversalRenderer: [semantic], [layout], not done
+  [semantic]: .cctor, .ctor, CreateRenderGraphCameraRenderTargets
+  [layout]: OnMainRendering, Setup, SetupCullingParameters
+  only-in-game: <Setup>b__93_0, <Setup>b__93_1
+UnityEngine.Rendering.Universal.UniversalRendererData: [layout]
+  [layout]: Create
+UnityEngine.Rendering.VolumeComponent: [layout]
+  [layout]: OnEnable
+UnityEngine.Rendering.VolumeDebugSettings: same
+UnityEngine.Rendering.VolumeManager: [layout]
+  [layout]: FilterVolumeComponentTypes
+UnityEngine.Rendering.VolumeParameter: same
+UnityEngine.Rendering.VolumeStack: [layout]
+  [layout]: Clear
+VL.CustomRenderAction: same
+VL.CustomRenderPassData: same
+VL.CustomRenderPassUtility: [layout]
+  [layout]: Execute
+VL.CustomSubPassData: same
+VL.EntitySystem.Chunk: same (emitted methods), not done
+  only-in-game: RemoveAtSwapBack<Color>
+VL.EntitySystem.EntityChunk: same (emitted methods), not done
+  only-in-game: .ctor, .ctor
+VL.EntitySystem.EntityComponentEvent: same (emitted methods), not done
+  only-in-game: InvokeAdd<int>, InvokePropertyChange<int>, InvokeRemove<int>
+VL.EntitySystem.EntityIndexer: same
+VL.EntitySystem.EntityManager: not done
+  only-in-game: .ctor, ChunkSort, CreateChunkIndex, CreateEntity, DestroyEntity, Dispose, IsValidEntity, Update, UpdateAllEntityData, UpdateChunk, UpdateEntityData, get_defaultChunkKey, .ctor, ChunkSort, CreateChunkIndex, CreateEntity, DestroyEntity, Dispose, IsValidEntity, Update, UpdateAllEntityData, UpdateChunk, UpdateEntityData, get_defaultChunkKey
+VL.EntitySystem.SharedEntityManager: same
+VL.EntitySystem.SingleEntityManager: [layout]
+  [layout]: UpdateAllEntityData
+VL.Rendering.AABBUtility: same
+VL.Rendering.AOQualityOptionParameter: same
+VL.Rendering.CameraPlanes: same
+VL.Rendering.CameraUtility: same
+VL.Rendering.CloudData: same
+VL.Rendering.CloudDataParameter: same
+VL.Rendering.ColorGradingComputePass: not done
+  only-in-game: .ctor, ConfigureDescriptor, Execute, ExecutePass, IsAvailable, Setup, .ctor, .cctor
+VL.Rendering.ConvolutionBlur: [semantic], [layout]
+  [semantic]: .cctor
+  [layout]: Execute
+VL.Rendering.DepthFog: same
+VL.Rendering.DepthOfFieldData: same
+VL.Rendering.Dof34QualitySettingParameter: same
+VL.Rendering.DofBokehQualitySettingParameter: same
+VL.Rendering.DownsampleBlur: [layout]
+  [layout]: ApplyBlur
+VL.Rendering.FlareParameter: [layout]
+  [layout]: Interp
+VL.Rendering.FogUtility: [semantic]
+  [semantic]: UpdateProperties
+VL.Rendering.Internal.VLPostProcessPass: not done
+  only-in-game: .cctor, .ctor, <Render>g__GetDestination|29_1, <Render>g__GetSource|29_0, <Render>g__Swap|29_2, Cleanup, Dispose, DisposeJumpFloodOutline, DisposeVirtualEffect, DoChromaticAberration, DoJumpFloodOutline, DoRGBBlockNoise, DoVLAdditive, DoVLDOF, DoVLMotionBlur, DoVLTextureBlur, DoVLVirtualEffectAdditiveTextureToAdd, DoVLVirtualEffectAdditiveTextureToBloom, DoVLVirtualEffectChromaticAberration, DoVLVirtualEffectNoise, DoWaveJitterGlitch, DrawFlare, DrawStarStreak, DrawVLDOFBokeh, DrawVLDOFMRT, Exp2, GrapDistanceFieldTexture, InitializeVirtualEffect, PrepareBokehKernel, Render, RenderFinalPass, RenderFinalPassWithFSR, SetBokehRenderTarget, SetDOFCurveProperty, SetDefaultColorFormat, Setup, SetupColorGrading, SetupVLBloom, SetupVLDiffusion, SetupVLParaffin, SetupVLVirtualEffect, VLDOFBlurMRT, VLDOFDownsampleMRT, get_UseComputeGrading, .ctor, ReAllocateIfNeeded, Release, get_far, get_near, .cctor, .cctor, .cctor, .ctor, Cleanup, Load, .cctor, .cctor, .cctor, .cctor, .cctor
+VL.Rendering.Internal.VLPostProcessPasses: not done
+  only-in-game: .ctor, Dispose, Recreate, ReleaseRenderTargets, get_colorGradingComputePass, get_colorGradingLut, get_colorGradingLutPass, get_finalPostProcessPass, get_isCreated, get_postProcessPass
+VL.Rendering.IntervalTypeParameter: same
+VL.Rendering.LightSpaceTypeParameter: same
+VL.Rendering.MipChainBuffer: [semantic], [layout], not done
+  [semantic]: Execute, SetComputeOffsetParams, UpdateMipChainParams
+  [layout]: CopyToMipMinMax, get_nameID
+  only-in-game: <Execute>g__DivRoundUp|39_1, <Execute>g__GetExtraPixel|39_0
+VL.Rendering.MirrorBoundsParameter: same
+VL.Rendering.MirrorMeshParameter: same
+VL.Rendering.MirrorQuaternionParameter: same
+VL.Rendering.NoiseTypeParameter: same
+VL.Rendering.PlanarReflection: same
+VL.Rendering.PlanarReflectionCachedChunk: same
+VL.Rendering.PlanarReflectionCombinedChunks: [semantic]
+  [semantic]: Create
+VL.Rendering.PlanarReflectionCulledChunk: [semantic]
+  [semantic]: .ctor
+VL.Rendering.PlanarReflectionCullingSystem: [layout]
+  [layout]: Execute
+VL.Rendering.PlanarReflectionDrawSystem: [layout]
+  [layout]: DrawPlanarReflections
+VL.Rendering.PlanarReflectionEntityChunk: same
+VL.Rendering.PlanarReflectionEntityManager: same
+VL.Rendering.PlanarReflectionResultChunk: [semantic]
+  [semantic]: .ctor
+VL.Rendering.PlanarReflectionResultSystem: [semantic]
+  [semantic]: CameraSpacePlane
+VL.Rendering.PlanarReflectionUpdateCachedSystem: [layout]
+  [layout]: Execute
+VL.Rendering.PlanarReflectionUtility: [semantic]
+  [semantic]: RenderPlanarReflection
+VL.Rendering.PlanarReflectionVolumeComponent: same
+VL.Rendering.RenderingBridge: [semantic]
+  [semantic]: AddRenderEvent
+VL.Rendering.RenderingUtility: [layout]
+  [layout]: SetGlobalMipBias
+VL.Rendering.Shaders.ShaderVariablesScreenSpaceReflection: same
+VL.Rendering.Shaders.ShaderVariablesVLDOFBokeh: same
+VL.Rendering.SharedPlanarReflectionEntityManager: same
+VL.Rendering.SphereFog: same
+VL.Rendering.StarStreakTypeParameter: same
+VL.Rendering.SubWorld: same
+VL.Rendering.SubWorldPass: not done
+  only-in-game: .cctor, .ctor, Dispose, Execute, OnCameraSetup, RenderSubWorld, Setup
+VL.Rendering.SubWorldUtility: [semantic]
+  [semantic]: UpdateReflectionStencilState
+VL.Rendering.SubWorldVolume: [layout]
+  [layout]: UpdateMeshParameter
+VL.Rendering.SubWorldVolumeParameter: same
+VL.Rendering.Texture3DParameter: same
+VL.Rendering.TonemappingModeParameter: same
+VL.Rendering.VLActorForward: same
+VL.Rendering.VLActorGBuffer: same
+VL.Rendering.VLActorParameter: same
+VL.Rendering.VLActorParameterPass: [layout]
+  [layout]: ProcessCommand
+VL.Rendering.VLActorTransparentPass: same
+VL.Rendering.VLBloom: same
+VL.Rendering.VLCameraBufferSystem: same
+VL.Rendering.VLCapturePass: same
+VL.Rendering.VLChromaticAberration: same
+VL.Rendering.VLCloud: same
+VL.Rendering.VLDOF: same
+VL.Rendering.VLDOFBokehQuality: same
+VL.Rendering.VLDebugDisplaySettings: not done
+  only-in-game: .ctor, Reset, get_data, set_data
+VL.Rendering.VLDebugDisplaySettingsData: not done
+  only-in-game: .ctor, CreatePanel, TryGetScreenClearColor, get_AreAnySettingsActive, get_IsLightingActive, get_IsPostProcessingAllowed, get_disableActor, get_disableDeferredFog, get_disableDeferredLight, get_disableDeferredReflection, get_disableRenderPass, get_dynamicResolution, get_previewRenderPass, set_disableActor, set_disableDeferredFog, set_disableDeferredLight, set_disableDeferredReflection, set_disableRenderPass, set_dynamicResolution, .cctor, .ctor, <.ctor>b__2_0, Refresh, get_Flags, CreateCameraSelector, CreateCaptureRenderPassButton, CreateDisableActor, CreateDisableDeferredFog, CreateDisableDeferredLight, CreateDisableDeferredReflection, CreateDisableRenderPass, CreateDynamicResolution, .ctor, <CreateDisableRenderPass>b__0, <CreateDisableRenderPass>b__1, .ctor, <CreateDynamicResolution>b__0, <CreateDynamicResolution>b__1, .ctor, <CreateDisableDeferredLight>b__0, <CreateDisableDeferredLight>b__1, .ctor, <CreateDisableDeferredReflection>b__0, <CreateDisableDeferredReflection>b__1, .ctor, <CreateDisableActor>b__0, <CreateDisableActor>b__1, .ctor, <CreateDisableDeferredFog>b__0, <CreateDisableDeferredFog>b__1, .ctor, <CreateCameraSelector>b__0, <CreateCameraSelector>b__1, <CreateCameraSelector>b__2, .ctor, <CreateCaptureRenderPassButton>b__0
+VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass: not done
+  only-in-game: .ctor, <get_cameras>g__AddCamera|10_0, CaptureRequest, get_cameras, get_selectedCamera, set_selectedCameraIndex
+VL.Rendering.VLDecalDrawSystem: [layout]
+  [layout]: Execute
+VL.Rendering.VLDecalPass: [layout]
+  [layout]: .ctor, Execute
+VL.Rendering.VLDecalRendererFeature: same
+VL.Rendering.VLDeferredPass: not done
+  only-in-game: .cctor, .ctor, Configure, DrawObjectMotionVectors, Execute, ExecuteGBuffer, OnCameraCleanup, RenderActor, RenderAdditionalInfo, RenderEmission, RenderFog, RenderGeometry, RenderPreEmission, RenderVirtualActor, Setup, SetupMotionVector, .cctor, .ctor, <.cctor>b__55_0
+VL.Rendering.VLDensityFogVolume: same
+VL.Rendering.VLDiffusion: same
+VL.Rendering.VLGlobalLightProbe: same
+VL.Rendering.VLJumpFloodOutline: same
+VL.Rendering.VLLightProbeUtility: same
+VL.Rendering.VLLightmapVolume: same
+VL.Rendering.VLMirrorVolumeComponent: same
+VL.Rendering.VLMotionBlur: same
+VL.Rendering.VLMotionVectorRenderPass: [layout]
+  [layout]: DrawObjectMotionVectors, ExecutePass
+VL.Rendering.VLParaffin: same
+VL.Rendering.VLPostProcessData: same
+VL.Rendering.VLPreDepthIDPass: [layout]
+  [layout]: OnRenderDepthAndNormal
+VL.Rendering.VLRGBBlockNoise: same
+VL.Rendering.VLSRPAdditionalCameraData: same
+VL.Rendering.VLSRPCapture: same
+VL.Rendering.VLSRPRenderer: not done
+  only-in-game: .ctor, Dispose, EnqueueDeferred, FinishRendering, GetLightCookieShaderDataIndex, GetLitColorTexture, IsLitColorRendered, MarkLitColorTextureAsRendered, ReleaseRenderTargets, Setup, SetupCullingParameters, SetupLights, SetupVLSRPFinalPassDebug, get_colorGradingComputePass, get_colorGradingLut, get_colorGradingLutPass, get_finalPostProcessPass, get_forwardLights, get_postProcessPass, .cctor, .ctor, <Setup>b__27_0, <Setup>b__27_1
+VL.Rendering.VLSRPRendererData: not done
+  only-in-game: .ctor, Create, OnEnable
+VL.Rendering.VLSSRQualitySettingParameter: same
+VL.Rendering.VLScreenSpaceAmbientOcclusion: same
+VL.Rendering.VLScreenSpaceReflection: same
+VL.Rendering.VLSimpleRenderer: same
+VL.Rendering.VLSimpleRendererData: same
+VL.Rendering.VLSkyPass: not done
+  only-in-game: .cctor, .ctor, ComputePixelCoordToWorldSpaceViewDirectionMatrix, DrawClouds, Execute, GetScaledScreenSize
+VL.Rendering.VLStarStreak: same
+VL.Rendering.VLTextureBlur: same
+VL.Rendering.VLTonemapping: [semantic]
+  [semantic]: .ctor
+VL.Rendering.VLVirtualEffect: [layout]
+  [layout]: .ctor
+VL.Rendering.VLVirtualEffectGBuffer: same
+VL.Rendering.VLWaveJitterGlitch: [layout]
+  [layout]: .ctor
+VL.VLRenderQueue: same
+
+End of report.
