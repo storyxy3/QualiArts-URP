@@ -41,55 +41,15 @@ internal struct VLPostProcessPasses : IDisposable
 
 	private bool m_ComputeGradingAvailable;
 
-	public ColorGradingLutPass colorGradingLutPass
-	{
+	public ColorGradingLutPass colorGradingLutPass => m_ColorGradingLutPass;
 
+	public ColorGradingComputePass colorGradingComputePass => m_ColorGradingComputePass;
 
-		get
-		{
-			return null;
-		}
-	}
+	public VLPostProcessPass postProcessPass => m_PostProcessPass;
 
-	public ColorGradingComputePass colorGradingComputePass
-	{
+	public VLPostProcessPass finalPostProcessPass => m_FinalPostProcessPass;
 
-
-		get
-		{
-			return null;
-		}
-	}
-
-	public VLPostProcessPass postProcessPass
-	{
-
-
-		get
-		{
-			return null;
-		}
-	}
-
-	public VLPostProcessPass finalPostProcessPass
-	{
-
-
-		get
-		{
-			return null;
-		}
-	}
-
-	public RTHandle colorGradingLut
-	{
-
-
-		get
-		{
-			return null;
-		}
-	}
+	public RTHandle colorGradingLut => m_ColorGradingLut;
 
 	public bool isCreated
 	{

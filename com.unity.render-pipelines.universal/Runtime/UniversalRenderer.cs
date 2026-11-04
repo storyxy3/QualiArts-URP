@@ -42,16 +42,16 @@ namespace UnityEngine.Rendering.Universal
         // Don't use 24 bit format in the editor, because it leads to unnecessary depth buffer re-allocations
         #if (UNITY_SWITCH || UNITY_ANDROID) && !UNITY_EDITOR
         const GraphicsFormat k_DepthStencilFormat = GraphicsFormat.D24_UNorm_S8_UInt;
-        const int k_DepthBufferBits = 24;
+        internal const int k_DepthBufferBits = 24;
         #else
         const GraphicsFormat k_DepthStencilFormat = GraphicsFormat.D32_SFloat_S8_UInt;
-        const int k_DepthBufferBits = 32;
+        internal const int k_DepthBufferBits = 32;
         #endif
 
         const int k_FinalBlitPassQueueOffset = 1;
         const int k_AfterFinalBlitPassQueueOffset = k_FinalBlitPassQueueOffset + 1;
 
-        static readonly List<ShaderTagId> k_DepthNormalsOnly = new List<ShaderTagId> { new ShaderTagId("DepthNormalsOnly") };
+        internal static readonly List<ShaderTagId> k_DepthNormalsOnly = new List<ShaderTagId> { new ShaderTagId("DepthNormalsOnly") };
 
         private static class Profiling
         {
@@ -82,7 +82,7 @@ namespace UnityEngine.Rendering.Universal
         ? RenderingMode.Forward
         : this.renderingModeRequested;
 
-        bool m_Clustering;
+        internal bool m_Clustering;
 
         internal bool accurateGbufferNormals => m_DeferredLights != null ? m_DeferredLights.AccurateGbufferNormals : false;
 
@@ -91,35 +91,35 @@ namespace UnityEngine.Rendering.Universal
 #endif
         /// <summary>Property to control the depth priming behavior of the forward rendering path.</summary>
         public DepthPrimingMode depthPrimingMode { get { return m_DepthPrimingMode; } set { m_DepthPrimingMode = value; } }
-        DepthOnlyPass m_DepthPrepass;
-        DepthNormalOnlyPass m_DepthNormalPrepass;
-        CopyDepthPass m_PrimedDepthCopyPass;
+        internal DepthOnlyPass m_DepthPrepass;
+        internal DepthNormalOnlyPass m_DepthNormalPrepass;
+        internal CopyDepthPass m_PrimedDepthCopyPass;
         MotionVectorRenderPass m_MotionVectorPass;
-        MainLightShadowCasterPass m_MainLightShadowCasterPass;
-        AdditionalLightsShadowCasterPass m_AdditionalLightsShadowCasterPass;
-        GBufferPass m_GBufferPass;
+        internal MainLightShadowCasterPass m_MainLightShadowCasterPass;
+        internal AdditionalLightsShadowCasterPass m_AdditionalLightsShadowCasterPass;
+        internal GBufferPass m_GBufferPass;
         CopyDepthPass m_GBufferCopyDepthPass;
-        DeferredPass m_DeferredPass;
-        DrawObjectsPass m_RenderOpaqueForwardOnlyPass;
-        DrawObjectsPass m_RenderOpaqueForwardPass;
-        DrawObjectsWithRenderingLayersPass m_RenderOpaqueForwardWithRenderingLayersPass;
+        internal DeferredPass m_DeferredPass;
+        internal DrawObjectsPass m_RenderOpaqueForwardOnlyPass;
+        internal DrawObjectsPass m_RenderOpaqueForwardPass;
+        internal DrawObjectsWithRenderingLayersPass m_RenderOpaqueForwardWithRenderingLayersPass;
         DrawSkyboxPass m_DrawSkyboxPass;
-        CopyDepthPass m_CopyDepthPass;
+        internal CopyDepthPass m_CopyDepthPass;
         CopyColorPass m_CopyColorPass;
-        TransparentSettingsPass m_TransparentSettingsPass;
-        DrawObjectsPass m_RenderTransparentForwardPass;
-        InvokeOnRenderObjectCallbackPass m_OnRenderObjectCallbackPass;
-        FinalBlitPass m_FinalBlitPass;
-        CapturePass m_CapturePass;
+        internal TransparentSettingsPass m_TransparentSettingsPass;
+        internal DrawObjectsPass m_RenderTransparentForwardPass;
+        internal InvokeOnRenderObjectCallbackPass m_OnRenderObjectCallbackPass;
+        internal FinalBlitPass m_FinalBlitPass;
+        internal CapturePass m_CapturePass;
 #if ENABLE_VR && ENABLE_XR_MODULE
-        XROcclusionMeshPass m_XROcclusionMeshPass;
-        CopyDepthPass m_XRCopyDepthPass;
+        internal XROcclusionMeshPass m_XROcclusionMeshPass;
+        internal CopyDepthPass m_XRCopyDepthPass;
 #endif
 #if UNITY_EDITOR
         CopyDepthPass m_FinalDepthCopyPass;
 #endif
-        DrawScreenSpaceUIPass m_DrawOffscreenUIPass;
-        DrawScreenSpaceUIPass m_DrawOverlayUIPass;
+        internal DrawScreenSpaceUIPass m_DrawOffscreenUIPass;
+        internal DrawScreenSpaceUIPass m_DrawOverlayUIPass;
 
         internal RenderTargetBufferSystem m_ColorBufferSystem;
 
@@ -127,34 +127,34 @@ namespace UnityEngine.Rendering.Universal
         RTHandle m_ColorFrontBuffer;
         internal RTHandle m_ActiveCameraDepthAttachment;
         internal RTHandle m_CameraDepthAttachment;
-        RTHandle m_XRTargetHandleAlias;
+        internal RTHandle m_XRTargetHandleAlias;
         internal RTHandle m_CameraDepthAttachment_D3d_11;
         internal RTHandle m_DepthTexture;
-        RTHandle m_NormalsTexture;
-        RTHandle m_DecalLayersTexture;
+        internal RTHandle m_NormalsTexture;
+        internal RTHandle m_DecalLayersTexture;
         RTHandle m_OpaqueColor;
-        RTHandle m_MotionVectorColor;
-        RTHandle m_MotionVectorDepth;
+        internal RTHandle m_MotionVectorColor;
+        internal RTHandle m_MotionVectorDepth;
 
-        ForwardLights m_ForwardLights;
-        DeferredLights m_DeferredLights;
+        internal ForwardLights m_ForwardLights;
+        internal DeferredLights m_DeferredLights;
         RenderingMode m_RenderingMode;
-        DepthPrimingMode m_DepthPrimingMode;
-        CopyDepthMode m_CopyDepthMode;
+        internal DepthPrimingMode m_DepthPrimingMode;
+        internal CopyDepthMode m_CopyDepthMode;
         bool m_DepthPrimingRecommended;
-        StencilState m_DefaultStencilState;
-        LightCookieManager m_LightCookieManager;
-        IntermediateTextureMode m_IntermediateTextureMode;
-        bool m_VulkanEnablePreTransform;
+        internal StencilState m_DefaultStencilState;
+        internal LightCookieManager m_LightCookieManager;
+        internal IntermediateTextureMode m_IntermediateTextureMode;
+        internal bool m_VulkanEnablePreTransform;
 
         // Materials used in URP Scriptable Render Passes
-        Material m_BlitMaterial = null;
-        Material m_BlitHDRMaterial = null;
-        Material m_CopyDepthMaterial = null;
-        Material m_SamplingMaterial = null;
+        internal Material m_BlitMaterial = null;
+        internal Material m_BlitHDRMaterial = null;
+        internal Material m_CopyDepthMaterial = null;
+        internal Material m_SamplingMaterial = null;
         Material m_StencilDeferredMaterial = null;
-        Material m_CameraMotionVecMaterial = null;
-        Material m_ObjectMotionVecMaterial = null;
+        internal Material m_CameraMotionVecMaterial = null;
+        internal Material m_ObjectMotionVecMaterial = null;
 
         PostProcessPasses m_PostProcessPasses;
         internal ColorGradingLutPass colorGradingLutPass { get => m_PostProcessPasses.colorGradingLutPass; }
@@ -479,7 +479,7 @@ namespace UnityEngine.Rendering.Universal
         /// <returns>Returns true if the camera renders to depth without any color buffer. It will return false otherwise.</returns>
         public static bool IsOffscreenDepthTexture(in CameraData cameraData) => cameraData.targetTexture != null && cameraData.targetTexture.format == RenderTextureFormat.Depth;
 
-        bool IsDepthPrimingEnabled(ref CameraData cameraData)
+        internal bool IsDepthPrimingEnabled(ref CameraData cameraData)
         {
 #if UNITY_EDITOR
             // We need to disable depth-priming for DrawCameraMode.Wireframe, since depth-priming forces ZTest to Equal
@@ -526,7 +526,7 @@ namespace UnityEngine.Rendering.Universal
             return SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES2 || SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLES3;
         }
 
-        bool IsGLDevice()
+        internal bool IsGLDevice()
         {
             return IsGLESDevice() || SystemInfo.graphicsDeviceType == GraphicsDeviceType.OpenGLCore;
         }
@@ -1449,7 +1449,7 @@ namespace UnityEngine.Rendering.Universal
             internal RenderPassEvent requiresDepthTextureEarliestEvent;
         }
 
-        private RenderPassInputSummary GetRenderPassInputs(ref RenderingData renderingData)
+        internal RenderPassInputSummary GetRenderPassInputs(ref RenderingData renderingData)
         {
             RenderPassEvent beforeMainRenderingEvent = m_RenderingMode == RenderingMode.Deferred ? RenderPassEvent.BeforeRenderingGbuffer : RenderPassEvent.BeforeRenderingOpaques;
 
@@ -1498,7 +1498,7 @@ namespace UnityEngine.Rendering.Universal
             return inputSummary;
         }
 
-        void CreateCameraRenderTarget(ScriptableRenderContext context, ref RenderTextureDescriptor descriptor, bool primedDepth, CommandBuffer cmd, ref CameraData cameraData)
+        internal void CreateCameraRenderTarget(ScriptableRenderContext context, ref RenderTextureDescriptor descriptor, bool primedDepth, CommandBuffer cmd, ref CameraData cameraData)
         {
             using (new ProfilingScope(null, Profiling.createCameraRenderTarget))
             {
@@ -1581,7 +1581,7 @@ namespace UnityEngine.Rendering.Universal
         /// <param name="cameraData">CameraData contains all relevant render target information for the camera.</param>
         /// <seealso cref="CameraData"/>
         /// <returns>Return true if pipeline needs to render to a intermediate render texture.</returns>
-        bool RequiresIntermediateColorTexture(ref CameraData cameraData)
+        internal bool RequiresIntermediateColorTexture(ref CameraData cameraData)
         {
             // When rendering a camera stack we always create an intermediate render texture to composite camera results.
             // We create it upon rendering the Base camera.
@@ -1622,7 +1622,7 @@ namespace UnityEngine.Rendering.Universal
                 !isCompatibleBackbufferTextureDimension || isCapturing || cameraData.requireSrgbConversion;
         }
 
-        bool CanCopyDepth(ref CameraData cameraData)
+        internal bool CanCopyDepth(ref CameraData cameraData)
         {
             bool msaaEnabledForCamera = cameraData.cameraTargetDescriptor.msaaSamples > 1;
             bool supportsTextureCopy = SystemInfo.copyTextureSupport != CopyTextureSupport.None;
