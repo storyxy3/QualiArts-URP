@@ -192,6 +192,7 @@ namespace UnityEngine.Rendering.Universal
             public static readonly NameAndTooltip Channels = new() { name = "Channels", tooltip = "Choose the texture channel used to validate the scene." };
             public static readonly NameAndTooltip ValueRangeMin = new() { name = "Value Range Min", tooltip = "Any values set below this field will be considered invalid and will appear red on screen." };
             public static readonly NameAndTooltip ValueRangeMax = new() { name = "Value Range Max", tooltip = "Any values set above this field will be considered invalid and will appear blue on screen." };
+            public static readonly NameAndTooltip GameViewOnly = new() { name = "Game View Only", tooltip = "This setting only applies to the Game View." };
         }
 
         #endregion
@@ -355,6 +356,13 @@ namespace UnityEngine.Rendering.Universal
                 setter = (value) => panel.data.validationRangeMax = value,
                 incStep = 0.01f
             };
+            internal static DebugUI.Widget CreateGameViewOnly(SettingsPanel panel) => new DebugUI.BoolField
+            {
+                nameAndTooltip = Strings.GameViewOnly,
+                getter = () => panel.data.gameViewOnly,
+                setter = value => panel.data.gameViewOnly = value
+            };
+
         }
 
         [DisplayInfo(name = "Rendering", order = 1)]
@@ -377,6 +385,7 @@ namespace UnityEngine.Rendering.Universal
                         WidgetFactory.CreateMapOverlaySize(this),
                         WidgetFactory.CreateHDR(this),
                         WidgetFactory.CreateMSAA(this),
+                        WidgetFactory.CreateGameViewOnly(this),
                         WidgetFactory.CreateTaaDebugMode(this),
                         WidgetFactory.CreatePostProcessing(this),
                         WidgetFactory.CreateAdditionalWireframeShaderViews(this),
