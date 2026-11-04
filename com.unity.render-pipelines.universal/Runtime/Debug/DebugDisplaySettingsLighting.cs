@@ -92,7 +92,7 @@ namespace UnityEngine.Rendering.Universal
         public bool AreAnySettingsActive => (lightingDebugMode != DebugLightingMode.None) || (lightingFeatureFlags != DebugLightingFeatureFlags.None) || (hdrDebugMode != HDRDebugMode.None);
 
         /// <inheritdoc/>
-        public bool IsPostProcessingAllowed => (lightingDebugMode != DebugLightingMode.Reflections && lightingDebugMode != DebugLightingMode.ReflectionsWithSmoothness);
+        public bool IsPostProcessingAllowed => lightingDebugMode == DebugLightingMode.None;
 
         /// <inheritdoc/>
         public bool IsLightingActive => true;

@@ -245,9 +245,9 @@ namespace UnityEngine.Rendering.Universal.Internal
 
                 // Clean up
                 CoreUtils.SetKeyword(cmd, ShaderKeywordStrings.WriteRenderingLayers, false);
-                context.ExecuteCommandBuffer(cmd);
-                cmd.Clear();
             }
+            context.ExecuteCommandBuffer(cmd);
+            cmd.Clear();
         }
 
         private class PassData

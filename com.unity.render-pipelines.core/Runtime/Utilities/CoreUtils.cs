@@ -1254,6 +1254,7 @@ namespace UnityEngine.Rendering
             triangles[33] = 4; triangles[34] = 0; triangles[35] = 1;
 
             mesh.triangles = triangles;
+            mesh.UploadMeshData(true);
             return mesh;
         }
 
