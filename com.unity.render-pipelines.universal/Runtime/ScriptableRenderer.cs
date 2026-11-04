@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System;
 using System.Diagnostics;
 using System.Collections.Generic;
@@ -125,11 +124,9 @@ namespace UnityEngine.Rendering.Universal
         /// Similar to https://docs.unity3d.com/ScriptReference/Camera-current.html
         /// </summary>
         internal static ScriptableRenderer current = null;
-
-        // Game declaration order, including constants and static storage.
         public const int ScreenToWorldDownsampleCount = 3;
-        private Matrix4x4[] _screenToWorld;
-        public static readonly int _ScreenToWorld;
+        private Matrix4x4[] _screenToWorld = new Matrix4x4[ScreenToWorldDownsampleCount];
+        public static readonly int _ScreenToWorld = Shader.PropertyToID("_ScreenToWorld");
 
         /// <summary>
         /// Set camera matrices. This method will set <c>UNITY_MATRIX_V</c>, <c>UNITY_MATRIX_P</c>, <c>UNITY_MATRIX_VP</c> to camera matrices.
@@ -285,6 +282,24 @@ namespace UnityEngine.Rendering.Universal
 
             //Set per camera matrices.
             SetCameraMatrices(cmd, ref cameraData, true, isTargetFlipped);
+
+            Matrix4x4 projection = cameraData.GetProjectionMatrix();
+            Matrix4x4 view = cameraData.GetViewMatrix();
+            Matrix4x4 gpuProjection = GL.GetGPUProjectionMatrix(projection, false);
+            Matrix4x4 toScreen = new Matrix4x4(
+                new Vector4(scaledCameraWidth * 0.5f, 0, 0, 0),
+                new Vector4(0, scaledCameraHeight * 0.5f, 0, 0),
+                new Vector4(0, 0, 1, 0),
+                new Vector4(scaledCameraWidth * 0.5f, scaledCameraHeight * 0.5f, 0, 1));
+            for (int i = 0; i < ScreenToWorldDownsampleCount; ++i)
+            {
+                _screenToWorld[i] = Matrix4x4.Inverse(toScreen * gpuProjection * view);
+                toScreen.m00 *= 0.5f;
+                toScreen.m11 *= 0.5f;
+                toScreen.m03 *= 0.5f;
+                toScreen.m13 *= 0.5f;
+            }
+            cmd.SetGlobalMatrixArray(_ScreenToWorld, _screenToWorld);
         }
 
         /// <summary>
@@ -519,7 +534,6 @@ namespace UnityEngine.Rendering.Universal
         /// Supported rendering features by this renderer.
         /// <see cref="SupportedRenderingFeatures"/>
         /// </summary>
-
         public RenderingFeatures supportedRenderingFeatures { get; set; } = new RenderingFeatures();
 
         /// <summary>
@@ -542,9 +556,6 @@ namespace UnityEngine.Rendering.Universal
             // Execute after Post-processing.
             public static readonly int AfterRendering = 3;
         }
-
-
-
 
         private StoreActionsOptimization m_StoreActionsOptimizationSetting = StoreActionsOptimization.Auto;
         private static bool m_UseOptimizedStoreActions = false;
@@ -1105,6 +1116,60 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         /// <param name="context">Use this render context to issue any draw commands during execution.</param>
         /// <param name="renderingData">Current render state information.</param>
+        public virtual void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData) { }
+
+        public void ExecuteFast(ScriptableRenderContext context, ref RenderingData renderingData)
+        {
+            bool drawGizmos = UniversalRenderPipelineDebugDisplaySettings.Instance.renderingSettings.sceneOverrideMode == DebugSceneOverrideMode.None;
+            hasReleasedRTs = false;
+            m_IsPipelineExecuting = true;
+            ref CameraData cameraData = ref renderingData.cameraData;
+            Camera camera = cameraData.camera;
+            if (rendererFeatures.Count != 0 && !renderingData.cameraData.isPreviewCamera)
+                SetupRenderPasses(in renderingData);
+
+            CommandBuffer cmd = CommandBufferPool.Get();
+            using (new ProfilingScope(cmd, profilingExecute))
+            {
+                InternalStartRendering(context, ref renderingData);
+                float time = ShaderTimeManager.CurrentTime;
+                float deltaTime = Time.deltaTime;
+                float smoothDeltaTime = Time.smoothDeltaTime;
+                SetShaderTimeValues(cmd, time, deltaTime, smoothDeltaTime);
+                context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
+                using (new ProfilingScope(null, Profiling.setupCamera))
+                {
+                    SetPerCameraProperties(context, ref cameraData, camera, cmd);
+                    SetShaderTimeValues(cmd, time, deltaTime, smoothDeltaTime);
+                }
+                context.ExecuteCommandBuffer(cmd);
+                cmd.Clear();
+
+                for (int i = 0; i < m_ActiveRenderPassQueue.Count; ++i)
+                {
+                    var pass = m_ActiveRenderPassQueue[i];
+                    if (i == 0)
+                    {
+                        pass.Configure(cmd, cameraData.cameraTargetDescriptor);
+                        SetRenderPassAttachments(cmd, pass, ref cameraData);
+                        context.ExecuteCommandBuffer(cmd);
+                        cmd.Clear();
+                    }
+                    pass.Execute(context, ref renderingData);
+                }
+
+                InternalFinishRendering(context, cameraData.resolveFinalTarget, renderingData);
+                for (int i = 0; i < m_ActiveRenderPassQueue.Count; ++i)
+                {
+                    m_ActiveRenderPassQueue[i].m_ColorAttachmentIndices.Dispose();
+                    m_ActiveRenderPassQueue[i].m_InputAttachmentIndices.Dispose();
+                }
+            }
+            context.ExecuteCommandBuffer(cmd);
+            CommandBufferPool.Release(cmd);
+        }
+
         public void Execute(ScriptableRenderContext context, ref RenderingData renderingData)
         {
             // Disable Gizmos when using scene overrides. Gizmos break some effects like Overdraw debug.
@@ -1134,9 +1199,9 @@ namespace UnityEngine.Rendering.Universal
                 // Setting the time per frame would take API changes to pass the variable to each camera render.
                 // Once `SetupCameraProperties` is gone, the variable should be set higher in the call-stack.
 #if UNITY_EDITOR
-                float time = Application.isPlaying ? Time.time : Time.realtimeSinceStartup;
+                float time = Application.isPlaying ? ShaderTimeManager.CurrentTime : Time.realtimeSinceStartup;
 #else
-                float time = Time.time;
+                float time = ShaderTimeManager.CurrentTime;
 #endif
                 float deltaTime = Time.deltaTime;
                 float smoothDeltaTime = Time.smoothDeltaTime;
@@ -1171,7 +1236,7 @@ namespace UnityEngine.Rendering.Universal
                     SetupLights(context, ref renderingData);
                 }
 
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
                 using (new ProfilingScope(null, Profiling.setupCamera))
                 {
                     //Camera variables need to be setup for the VFXManager.ProcessCameraCommand to work properly.
@@ -2242,15 +2307,5 @@ namespace UnityEngine.Rendering.Universal
                 return new BlockRange(m_BlockRanges[index], m_BlockRanges[index + 1]);
             }
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public virtual void PreSetup(ScriptableRenderContext context, ref RenderingData renderingData)
-{
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public void ExecuteFast(ScriptableRenderContext context, ref RenderingData renderingData)
-{
-}
     }
 }

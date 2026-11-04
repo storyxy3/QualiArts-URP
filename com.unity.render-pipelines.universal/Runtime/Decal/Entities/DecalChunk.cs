@@ -8,6 +8,9 @@ namespace UnityEngine.Rendering.Universal
 {
     internal abstract class DecalChunk : IDisposable
     {
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        protected DecalChunk() { }
+
         public int count { get; protected set; }
         public int capacity { get; protected set; }
 

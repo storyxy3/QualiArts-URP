@@ -1,6 +1,3 @@
-using System.Runtime.CompilerServices;
-using System.Runtime.CompilerServices;
-using System.Runtime.CompilerServices;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -175,9 +172,7 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public float validationRangeMax { get; set; } = 1.0f;
 
-        // TODO(qa-recon): escaped metadata field; original name <gameViewOnly>k__BackingField.
-        [System.Runtime.CompilerServices.CompilerGenerated]
-        private bool _003CgameViewOnly_003Ek__BackingField;
+        public bool gameViewOnly { get; set; }
 
         static class Strings
         {
@@ -197,9 +192,6 @@ namespace UnityEngine.Rendering.Universal
             public static readonly NameAndTooltip Channels = new() { name = "Channels", tooltip = "Choose the texture channel used to validate the scene." };
             public static readonly NameAndTooltip ValueRangeMin = new() { name = "Value Range Min", tooltip = "Any values set below this field will be considered invalid and will appear red on screen." };
             public static readonly NameAndTooltip ValueRangeMax = new() { name = "Value Range Max", tooltip = "Any values set above this field will be considered invalid and will appear blue on screen." };
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly DebugUI.Widget.NameAndTooltip GameViewOnly;
         }
 
         #endregion
@@ -363,12 +355,6 @@ public static readonly DebugUI.Widget.NameAndTooltip GameViewOnly;
                 setter = (value) => panel.data.validationRangeMax = value,
                 incStep = 0.01f
             };
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-internal static DebugUI.Widget CreateGameViewOnly(SettingsPanel panel)
-{
-    return null;
-}
         }
 
         [DisplayInfo(name = "Rendering", order = 1)]
@@ -473,21 +459,6 @@ internal static DebugUI.Widget CreateGameViewOnly(SettingsPanel panel)
         {
             return new SettingsPanel(this);
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public bool gameViewOnly
-{
-    [CompilerGenerated]
-    get
-    {
-        return default(bool);
-    }
-
-    [CompilerGenerated]
-    set
-    {
-    }
-}
 
         #endregion
     }

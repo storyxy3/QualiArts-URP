@@ -86,10 +86,7 @@ namespace UnityEngine.Rendering.Universal
         /// <summary>
         /// Use this for 4096x4096 shadow resolution.
         /// </summary>
-        _4096 = 4096,
-
-        /// <summary>Game 3.5.3 shadow-map resolution.</summary>
-        _8192 = 8192
+        _4096 = 4096
     }
 
     /// <summary>
@@ -348,9 +345,6 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         [InspectorName("Use Pipeline Settings")]
         UsePipelineSettings = 2,
-
-        [InspectorName("Use MainCamera")]
-        UseMainCamera = 10,
     }
 
     /// <summary>

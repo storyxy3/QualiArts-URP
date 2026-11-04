@@ -1,0 +1,2471 @@
+{
+  "addedOverloads": [
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateVolumeParameterWidget (System_String_o* name, UnityEngine_Rendering_VolumeParameter_o* param, System_Func_bool__o* isHiddenCallback);"
+  ],
+  "same": 3729,
+  "changed": [
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsUI$$RegisterDebug",
+      "similarity": 0.935,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsUI$$Reset",
+      "similarity": 0.84,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsUI$$UnregisterDebug",
+      "similarity": 0.841,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsUI.<>c__DisplayClass3_0$$<RegisterDebug>b__0",
+      "similarity": 0.923,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume$$CreatePanel",
+      "similarity": 0.978,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.SettingsPanel$$.ctor",
+      "similarity": 0.777,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.SettingsPanel$$Refresh",
+      "similarity": 0.801,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.Strings$$.cctor",
+      "similarity": 0.56,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateCameraSelector",
+      "similarity": 0.966,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateComponentSelector",
+      "similarity": 0.973,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateVolumeParameterWidget",
+      "similarity": 0.0,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$CreateVolumeTable",
+      "similarity": 0.101,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass0_0$$<CreateComponentSelector>b__3",
+      "similarity": 0.656,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass1_0$$<CreateCameraSelector>b__1",
+      "similarity": 0.981,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugFrameTiming$$.ctor",
+      "similarity": 0.992,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.EnumField$$SetValue",
+      "similarity": 0.885,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.EnumField<__Il2CppFullySharedGenericType>$$AutoFillFromType",
+      "similarity": 0.925,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.EnumField<int>$$AutoFillFromType",
+      "similarity": 0.925,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.EnumField<object>$$AutoFillFromType",
+      "similarity": 0.925,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<Color>$$SetValue",
+      "similarity": 0.852,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<Vector2>$$SetValue",
+      "similarity": 0.85,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<Vector3>$$SetValue",
+      "similarity": 0.863,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<Vector4>$$SetValue",
+      "similarity": 0.869,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<__Il2CppFullySharedGenericType>$$GetValue",
+      "similarity": 0.905,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<bool>$$SetValue",
+      "similarity": 0.889,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<float>$$SetValue",
+      "similarity": 0.882,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<int>$$SetValue",
+      "similarity": 0.884,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<object>$$SetValue",
+      "similarity": 0.171,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Field<uint>$$SetValue",
+      "similarity": 0.884,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.DebugUI.Widget$$GenerateQueryPath",
+      "similarity": 0.969,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.DynamicResolutionHandler$$.ctor",
+      "similarity": 0.916,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.NoInterpCubemapParameter$$GetHashCode",
+      "similarity": 0.977,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.NoInterpTextureParameter$$GetHashCode",
+      "similarity": 0.977,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.ObjectPool<object>$$Get",
+      "similarity": 0.276,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$.ctor",
+      "similarity": 0.885,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$AllocateTexture",
+      "similarity": 0.911,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$Blit2DTexture",
+      "similarity": 0.668,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$BlitTexture",
+      "similarity": 0.908,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandle$$op_Implicit",
+      "similarity": 0.045,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandleStaticHelpers$$SetRTHandleStaticWrapper",
+      "similarity": 0.733,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$.cctor",
+      "similarity": 0.984,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$Alloc",
+      "similarity": 0.349,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$Initialize",
+      "similarity": 0.949,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$Release",
+      "similarity": 0.764,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$SetHardwareDynamicResolutionState",
+      "similarity": 0.941,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.RTHandles$$SetReferenceSize",
+      "similarity": 0.967,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$.ctor",
+      "similarity": 0.954,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$AllocateTexture",
+      "similarity": 0.97,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$Blit2DTexture",
+      "similarity": 0.679,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$BlitCubeTexture2D",
+      "similarity": 0.952,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$BlitTexture",
+      "similarity": 0.956,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Texture2DAtlas$$NeedsUpdate",
+      "similarity": 0.868,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.TextureCurve$$Release",
+      "similarity": 0.981,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.TextureParameter$$GetHashCode",
+      "similarity": 0.977,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerBitField$$SetWidget",
+      "similarity": 0.924,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$ActivatePanel",
+      "similarity": 0.934,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$Rebuild",
+      "similarity": 0.939,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$ResetAllHierarchy",
+      "similarity": 0.914,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerCanvas$$Update",
+      "similarity": 0.912,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerPanel$$GetFirstItem",
+      "similarity": 0.927,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerPanel$$SelectNextItem",
+      "similarity": 0.571,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerPanel$$SelectPreviousItem",
+      "similarity": 0.571,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerProgressBar$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerRow$$.ctor",
+      "similarity": 0.5,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerRow$$Update",
+      "similarity": 0.879,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerToggle$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerToggleHistory$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerUIntField$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVBox$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVBox$$Next",
+      "similarity": 0.935,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVBox$$OnSelection",
+      "similarity": 0.826,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerValue$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerValueTuple$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVector2$$.ctor",
+      "similarity": 0.222,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVector2$$Next",
+      "similarity": 0.92,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVector2$$OnSelection",
+      "similarity": 0.827,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.UI.DebugUIHandlerVector2$$SetupSettings",
+      "similarity": 0.967,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.CameraData$$IsTemporalAAEnabled",
+      "similarity": 0.788,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.CameraData$$get_isHDROutputActive",
+      "similarity": 0.824,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DebugDisplaySettingsMaterial.WidgetFactory.<>c$$<CreateMaterialValidationMode>b__2_4",
+      "similarity": 0.913,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.SettingsPanel$$.ctor",
+      "similarity": 0.914,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.Strings$$.cctor",
+      "similarity": 0.896,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DebugRenderSetup$$GetRenderStateBlock",
+      "similarity": 0.924,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalCachedChunk$$.ctor",
+      "similarity": 0.667,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalCulledChunk$$.ctor",
+      "similarity": 0.667,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalDrawCallChunk$$.ctor",
+      "similarity": 0.0,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalDrawSystem$$Draw",
+      "similarity": 0.918,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalDrawSystem$$DrawInstanced",
+      "similarity": 0.711,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalEntityChunk$$.ctor",
+      "similarity": 0.667,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalEntityChunk$$SetCapacity",
+      "similarity": 0.753,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalEntityManager$$CreateChunkIndex",
+      "similarity": 0.907,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalEntityManager$$UpdateDecalEntityData",
+      "similarity": 0.898,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.DecalPrioritySystem$$Execute",
+      "similarity": 0.955,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$Render",
+      "similarity": 0.907,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$SetEmptyAdditionalShadowmapAtlas",
+      "similarity": 0.97,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass.<>c$$<Render>b__63_1",
+      "similarity": 0.531,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass$$Cleanup",
+      "similarity": 0.605,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass.<>c$$<Render>b__13_0",
+      "similarity": 0.462,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.CopyColorPass.<>c$$<Render>b__25_0",
+      "similarity": 0.667,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.CopyColorPass.<>c$$<Render>b__25_1",
+      "similarity": 0.775,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_0",
+      "similarity": 0.762,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_1",
+      "similarity": 0.552,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c$$<Render>b__27_2",
+      "similarity": 0.769,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilDirectionalLights",
+      "similarity": 0.624,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilLights",
+      "similarity": 0.904,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupMainLightConstants",
+      "similarity": 0.914,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DrawObjectsPass$$.ctor",
+      "similarity": 0.962,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DrawObjectsPass$$Render",
+      "similarity": 0.89,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.DrawObjectsPass.<>c$$<Render>b__18_0",
+      "similarity": 0.759,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.FinalBlitPass$$Execute",
+      "similarity": 0.875,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.FinalBlitPass$$Render",
+      "similarity": 0.891,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.FinalBlitPass.<>c$$<Render>b__16_0",
+      "similarity": 0.665,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.ForwardLights$$InitializeLightConstants",
+      "similarity": 0.993,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.GBufferPass.<>c$$<Render>b__20_1",
+      "similarity": 0.532,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass$$Render",
+      "similarity": 0.907,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass.<>c$$<Render>b__33_1",
+      "similarity": 0.531,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.LightCookieManager$$Fetch2D",
+      "similarity": 0.912,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.LightCookieManager$$FetchCube",
+      "similarity": 0.914,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.MotionVectorRenderPass.<>c$$<Render>b__21_0",
+      "similarity": 0.786,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CalculateCameraProperties",
+      "similarity": 0.965,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CalculateFinalBlitPixelRect",
+      "similarity": 0.956,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.PixelPerfectCameraInternal$$CorrectCinemachineOrthoSize",
+      "similarity": 0.977,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.PlatformAutoDetect$$IsRunningXRMobile",
+      "similarity": 0.967,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.PostProcessPass$$Setup",
+      "similarity": 0.963,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.RenderingLayerUtils$$Combine",
+      "similarity": 0.667,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion$$AddRenderPasses",
+      "similarity": 0.896,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion.ScreenSpaceAmbientOcclusionPass$$Execute",
+      "similarity": 0.87,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion.ScreenSpaceAmbientOcclusionPass$$get_isRendererDeferred",
+      "similarity": 0.737,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ScriptableRenderer$$.cctor",
+      "similarity": 0.889,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ShaderTimeManager$$.cctor",
+      "similarity": 0.895,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.ShaderTimeManager$$get_CurrentTime",
+      "similarity": 0.971,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TemporalAA$$ExecutePass",
+      "similarity": 0.723,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$ExpandOrthographic",
+      "similarity": 0.931,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$ExpandRangeOrthographic",
+      "similarity": 0.991,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$ExpandY",
+      "similarity": 0.931,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$TileLight",
+      "similarity": 0.928,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$TileLightOrthographic",
+      "similarity": 0.822,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.TilingJob$$TileReflectionProbe",
+      "similarity": 0.927,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$.cctor",
+      "similarity": 0.934,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$.ctor",
+      "similarity": 0.941,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$CheckPostProcessForDepth",
+      "similarity": 0.822,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$CreateRenderTextureDescriptor",
+      "similarity": 0.938,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeAdditionalCameraData",
+      "similarity": 0.986,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeRenderingData",
+      "similarity": 0.807,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeShadowData",
+      "similarity": 0.945,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$InitializeStackedCameraData",
+      "similarity": 0.888,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RecordAndExecuteRenderGraph",
+      "similarity": 0.954,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RenderCameraStack",
+      "similarity": 0.886,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$RenderSingleCamera",
+      "similarity": 0.926,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$UpdateTemporalAATargets",
+      "similarity": 0.779,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$.cctor",
+      "similarity": 0.903,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$.ctor",
+      "similarity": 0.954,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$CreateRenderGraphCameraRenderTargets",
+      "similarity": 0.849,
+      "note": "semantic"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$OnMainRendering",
+      "similarity": 0.843,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$Setup",
+      "similarity": 0.974,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRenderer$$SetupCullingParameters",
+      "similarity": 0.865,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.Universal.UniversalRendererData$$Create",
+      "similarity": 0.985,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.VolumeComponent$$OnEnable",
+      "similarity": 0.942,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.VolumeManager$$FilterVolumeComponentTypes",
+      "similarity": 0.934,
+      "note": "layout"
+    },
+    {
+      "method": "UnityEngine.Rendering.VolumeStack$$Clear",
+      "similarity": 0.916,
+      "note": "layout"
+    },
+    {
+      "method": "VL.CustomRenderPassUtility$$Execute",
+      "similarity": 0.997,
+      "note": "layout"
+    },
+    {
+      "method": "VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData",
+      "similarity": 0.683,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.ConvolutionBlur$$.cctor",
+      "similarity": 0.987,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.ConvolutionBlur$$Execute",
+      "similarity": 0.874,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.DownsampleBlur$$ApplyBlur",
+      "similarity": 0.908,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.FlareParameter$$Interp",
+      "similarity": 0.789,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.FogUtility$$UpdateProperties",
+      "similarity": 0.704,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.MipChainBuffer$$CopyToMipMinMax",
+      "similarity": 0.364,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.MipChainBuffer$$Execute",
+      "similarity": 0.712,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.MipChainBuffer$$SetComputeOffsetParams",
+      "similarity": 0.712,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.MipChainBuffer$$UpdateMipChainParams",
+      "similarity": 0.606,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.MipChainBuffer$$get_nameID",
+      "similarity": 0.8,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionCombinedChunks$$Create",
+      "similarity": 0.962,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionCulledChunk$$.ctor",
+      "similarity": 0.967,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionCullingSystem.CullingJob$$Execute",
+      "similarity": 0.979,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionDrawSystem$$DrawPlanarReflections",
+      "similarity": 0.923,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionResultChunk$$.ctor",
+      "similarity": 0.5,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionResultSystem.ResultJob$$CameraSpacePlane",
+      "similarity": 0.367,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionUpdateCachedSystem$$Execute",
+      "similarity": 0.939,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.PlanarReflectionUtility$$RenderPlanarReflection",
+      "similarity": 0.619,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.RenderingBridge$$AddRenderEvent",
+      "similarity": 0.788,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.RenderingUtility$$SetGlobalMipBias",
+      "similarity": 0.919,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.SubWorldUtility$$UpdateReflectionStencilState",
+      "similarity": 0.972,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.SubWorldVolume$$UpdateMeshParameter",
+      "similarity": 0.867,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLActorParameterPass$$ProcessCommand",
+      "similarity": 0.831,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLDecalDrawSystem$$Execute",
+      "similarity": 0.988,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLDecalPass$$.ctor",
+      "similarity": 0.994,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLDecalPass$$Execute",
+      "similarity": 0.98,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLMotionVectorRenderPass$$DrawObjectMotionVectors",
+      "similarity": 0.817,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLMotionVectorRenderPass$$ExecutePass",
+      "similarity": 0.912,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLPreDepthIDPass$$OnRenderDepthAndNormal",
+      "similarity": 0.673,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLTonemapping$$.ctor",
+      "similarity": 0.492,
+      "note": "semantic"
+    },
+    {
+      "method": "VL.Rendering.VLVirtualEffect$$.ctor",
+      "similarity": 0.997,
+      "note": "layout"
+    },
+    {
+      "method": "VL.Rendering.VLWaveJitterGlitch$$.ctor",
+      "similarity": 0.995,
+      "note": "layout"
+    }
+  ],
+  "onlyGame": [
+    "Campus.Rendering.Debug.CampusDebugDisplaySettings$$.ctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettings$$Reset",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettings$$get_commonData",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettings$$set_commonData",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$.ctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$CreatePanel",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$TryGetScreenClearColor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$get_AreAnySettingsActive",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$get_IsLightingActive",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$get_IsPostProcessingAllowed",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$get_actorDebugMaterialMode",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData$$set_actorDebugMaterialMode",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel$$.ctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel$$get_Flags",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c$$.cctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c$$.ctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c$$<.ctor>b__2_1",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c__DisplayClass2_0$$.ctor",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c__DisplayClass2_0$$<.ctor>b__0",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c__DisplayClass2_0$$<.ctor>b__2",
+    "Campus.Rendering.Debug.CampusDebugDisplaySettingsCommonData.RenderingPanel.<>c__DisplayClass2_0$$<.ctor>b__3",
+    "Campus.Rendering.Debug.CampusRenderingDebug$$.ctor",
+    "Campus.Rendering.Debug.CampusRenderingDebug$$AddRenderPasses",
+    "Campus.Rendering.Debug.CampusRenderingDebug$$Create",
+    "Campus.Rendering.Debug.CampusRenderingDebug$$Dispose",
+    "Campus.Rendering.Debug.CampusRenderingDebugPass$$.cctor",
+    "Campus.Rendering.Debug.CampusRenderingDebugPass$$.ctor",
+    "Campus.Rendering.Debug.CampusRenderingDebugPass$$Execute",
+    "Campus.Rendering.Debug.CampusRenderingOutlineDebugPass$$.ctor",
+    "Campus.Rendering.Debug.CampusRenderingOutlineDebugPass$$Execute",
+    "Campus.Rendering.Debug.CampusRenderingOutlineDebugPass.<>c$$.cctor",
+    "Campus.Rendering.Debug.CampusRenderingOutlineDebugPass.<>c$$.ctor",
+    "Campus.Rendering.Debug.CampusRenderingOutlineDebugPass.<>c$$<Execute>b__4_0",
+    "UnityEngine.Rendering.ArrayExtensions$$ResizeArray<Color>",
+    "UnityEngine.Rendering.ConstantBuffer$$Push<ShaderVariablesScreenSpaceReflection>",
+    "UnityEngine.Rendering.ConstantBuffer$$Push<ShaderVariablesVLDOFBokeh>",
+    "UnityEngine.Rendering.ConstantBuffer$$PushGlobal<ShaderVariablesActorLighting>",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesActorLighting>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesScreenSpaceReflection>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesVLDOFBokeh>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesVLDOFBokeh>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesVLDOFBokeh>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesVLDOFBokeh>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesVLDOFBokeh>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesActorLighting>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesScreenSpaceReflection>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesVLDOFBokeh>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesVLDOFBokeh>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesVLDOFBokeh>$$get_instance",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeParameterWidget>b__2_0",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeParameterWidget>b__2_6",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_11",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_2",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_3",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_6",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_7",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<CreateVolumeTable>b__3_9",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_0$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_0$$<CreateVolumeParameterWidget>b__5",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_0$$<CreateVolumeParameterWidget>b__8",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_1$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_1$$<CreateVolumeParameterWidget>b__1",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_1$$<CreateVolumeParameterWidget>b__2",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_2$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_2$$<CreateVolumeParameterWidget>b__3",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_2$$<CreateVolumeParameterWidget>b__4",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_3$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass2_3$$<CreateVolumeParameterWidget>b__7",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>b__1",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>g__AddParameterRows|0",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_0$$<CreateVolumeTable>g__AddRow|8",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_1$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_1$$<CreateVolumeTable>b__4",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_1$$<CreateVolumeTable>b__5",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_2$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_3$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass3_3$$<CreateVolumeTable>b__10",
+    "UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$.cctor",
+    "UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$.ctor",
+    "UnityEngine.Rendering.ListPool.<>c<BoneWeight>$$<.cctor>b__4_0",
+    "UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$.cctor",
+    "UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$.ctor",
+    "UnityEngine.Rendering.ListPool.<>c<SubMeshDescriptor>$$<.cctor>b__4_0",
+    "UnityEngine.Rendering.ListPool<BoneWeight>$$.cctor",
+    "UnityEngine.Rendering.ListPool<BoneWeight>$$Get",
+    "UnityEngine.Rendering.ListPool<BoneWeight>$$Release",
+    "UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$.cctor",
+    "UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$Get",
+    "UnityEngine.Rendering.ListPool<SubMeshDescriptor>$$Release",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.WidgetFactory$$CreateGameViewOnly",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.WidgetFactory.<>c__DisplayClass14_0$$.ctor",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.WidgetFactory.<>c__DisplayClass14_0$$<CreateGameViewOnly>b__0",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.WidgetFactory.<>c__DisplayClass14_0$$<CreateGameViewOnly>b__1",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<BeginRenderGraphXRRendering>b__143_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<DrawRenderGraphGizmos>b__141_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<EndRenderGraphXRRendering>b__145_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<InitRenderGraphFrame>b__136_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<ProcessVFXCameraCommand>b__138_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<SetupRenderGraphCameraProperties>b__139_0",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$get_frameInfluence",
+    "UnityEngine.Rendering.Universal.UniversalAdditionalCameraData.<>c$$<UpdateCameraStack>b__55_0",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$IsRenderRequestSupported<object>",
+    "UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__93_0",
+    "UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__93_1",
+    "VL.EntitySystem.Chunk$$RemoveAtSwapBack<Color>",
+    "VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType>$$.ctor",
+    "VL.EntitySystem.EntityChunk<object, int>$$.ctor",
+    "VL.EntitySystem.EntityComponentEvent<object>$$InvokeAdd<int>",
+    "VL.EntitySystem.EntityComponentEvent<object>$$InvokePropertyChange<int>",
+    "VL.EntitySystem.EntityComponentEvent<object>$$InvokeRemove<int>",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$.ctor",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$ChunkSort",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateChunkIndex",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateEntity",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$DestroyEntity",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Dispose",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$IsValidEntity",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Update",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateChunk",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateEntityData",
+    "VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$get_defaultChunkKey",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$.ctor",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$ChunkSort",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$CreateChunkIndex",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$CreateEntity",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$DestroyEntity",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$Dispose",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$IsValidEntity",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$Update",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateAllEntityData",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateChunk",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateEntityData",
+    "VL.EntitySystem.EntityManager<object, int, object, object>$$get_defaultChunkKey",
+    "VL.Rendering.ColorGradingComputePass$$.ctor",
+    "VL.Rendering.ColorGradingComputePass$$ConfigureDescriptor",
+    "VL.Rendering.ColorGradingComputePass$$Execute",
+    "VL.Rendering.ColorGradingComputePass$$ExecutePass",
+    "VL.Rendering.ColorGradingComputePass$$IsAvailable",
+    "VL.Rendering.ColorGradingComputePass$$Setup",
+    "VL.Rendering.ColorGradingComputePass.PassData$$.ctor",
+    "VL.Rendering.ColorGradingComputePass.ShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass$$.ctor",
+    "VL.Rendering.Internal.VLPostProcessPass$$<Render>g__GetDestination|29_1",
+    "VL.Rendering.Internal.VLPostProcessPass$$<Render>g__GetSource|29_0",
+    "VL.Rendering.Internal.VLPostProcessPass$$<Render>g__Swap|29_2",
+    "VL.Rendering.Internal.VLPostProcessPass$$Cleanup",
+    "VL.Rendering.Internal.VLPostProcessPass$$Dispose",
+    "VL.Rendering.Internal.VLPostProcessPass$$DisposeJumpFloodOutline",
+    "VL.Rendering.Internal.VLPostProcessPass$$DisposeVirtualEffect",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoChromaticAberration",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoJumpFloodOutline",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoRGBBlockNoise",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLAdditive",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLDOF",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLMotionBlur",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLTextureBlur",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectAdditiveTextureToAdd",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectAdditiveTextureToBloom",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectChromaticAberration",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoVLVirtualEffectNoise",
+    "VL.Rendering.Internal.VLPostProcessPass$$DoWaveJitterGlitch",
+    "VL.Rendering.Internal.VLPostProcessPass$$DrawFlare",
+    "VL.Rendering.Internal.VLPostProcessPass$$DrawStarStreak",
+    "VL.Rendering.Internal.VLPostProcessPass$$DrawVLDOFBokeh",
+    "VL.Rendering.Internal.VLPostProcessPass$$DrawVLDOFMRT",
+    "VL.Rendering.Internal.VLPostProcessPass$$Exp2",
+    "VL.Rendering.Internal.VLPostProcessPass$$GrapDistanceFieldTexture",
+    "VL.Rendering.Internal.VLPostProcessPass$$InitializeVirtualEffect",
+    "VL.Rendering.Internal.VLPostProcessPass$$PrepareBokehKernel",
+    "VL.Rendering.Internal.VLPostProcessPass$$Render",
+    "VL.Rendering.Internal.VLPostProcessPass$$RenderFinalPass",
+    "VL.Rendering.Internal.VLPostProcessPass$$RenderFinalPassWithFSR",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetBokehRenderTarget",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetDOFCurveProperty",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetDefaultColorFormat",
+    "VL.Rendering.Internal.VLPostProcessPass$$Setup",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetupColorGrading",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetupVLBloom",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetupVLDiffusion",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetupVLParaffin",
+    "VL.Rendering.Internal.VLPostProcessPass$$SetupVLVirtualEffect",
+    "VL.Rendering.Internal.VLPostProcessPass$$VLDOFBlurMRT",
+    "VL.Rendering.Internal.VLPostProcessPass$$VLDOFDownsampleMRT",
+    "VL.Rendering.Internal.VLPostProcessPass$$get_UseComputeGrading",
+    "VL.Rendering.Internal.VLPostProcessPass.DOFHandles$$.ctor",
+    "VL.Rendering.Internal.VLPostProcessPass.DOFHandles$$ReAllocateIfNeeded",
+    "VL.Rendering.Internal.VLPostProcessPass.DOFHandles$$Release",
+    "VL.Rendering.Internal.VLPostProcessPass.DOFHandles$$get_far",
+    "VL.Rendering.Internal.VLPostProcessPass.DOFHandles$$get_near",
+    "VL.Rendering.Internal.VLPostProcessPass.VLChromaticAberrationShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLDOFShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLJumpFloodOutlineShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLMaterialLibrary$$.ctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLMaterialLibrary$$Cleanup",
+    "VL.Rendering.Internal.VLPostProcessPass.VLMaterialLibrary$$Load",
+    "VL.Rendering.Internal.VLPostProcessPass.VLMotionBlurShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLRGBBockNoiseShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLVirtualEffectShaderConstants$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPass.VLWaveJitterGlitchShaderContents$$.cctor",
+    "VL.Rendering.Internal.VLPostProcessPasses$$.ctor",
+    "VL.Rendering.Internal.VLPostProcessPasses$$Dispose",
+    "VL.Rendering.Internal.VLPostProcessPasses$$Recreate",
+    "VL.Rendering.Internal.VLPostProcessPasses$$ReleaseRenderTargets",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_colorGradingComputePass",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_colorGradingLut",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_colorGradingLutPass",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_finalPostProcessPass",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_isCreated",
+    "VL.Rendering.Internal.VLPostProcessPasses$$get_postProcessPass",
+    "VL.Rendering.MipChainBuffer$$<Execute>g__DivRoundUp|39_1",
+    "VL.Rendering.MipChainBuffer$$<Execute>g__GetExtraPixel|39_0",
+    "VL.Rendering.SubWorldPass$$.cctor",
+    "VL.Rendering.SubWorldPass$$.ctor",
+    "VL.Rendering.SubWorldPass$$Dispose",
+    "VL.Rendering.SubWorldPass$$Execute",
+    "VL.Rendering.SubWorldPass$$OnCameraSetup",
+    "VL.Rendering.SubWorldPass$$RenderSubWorld",
+    "VL.Rendering.SubWorldPass$$Setup",
+    "VL.Rendering.VLDebugDisplaySettings$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettings$$Reset",
+    "VL.Rendering.VLDebugDisplaySettings$$get_data",
+    "VL.Rendering.VLDebugDisplaySettings$$set_data",
+    "VL.Rendering.VLDebugDisplaySettingsData$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData$$CreatePanel",
+    "VL.Rendering.VLDebugDisplaySettingsData$$TryGetScreenClearColor",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_AreAnySettingsActive",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_IsLightingActive",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_IsPostProcessingAllowed",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_disableActor",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_disableDeferredFog",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_disableDeferredLight",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_disableDeferredReflection",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_disableRenderPass",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_dynamicResolution",
+    "VL.Rendering.VLDebugDisplaySettingsData$$get_previewRenderPass",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_disableActor",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_disableDeferredFog",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_disableDeferredLight",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_disableDeferredReflection",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_disableRenderPass",
+    "VL.Rendering.VLDebugDisplaySettingsData$$set_dynamicResolution",
+    "VL.Rendering.VLDebugDisplaySettingsData.Strings$$.cctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.VLRenderingPanel$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.VLRenderingPanel$$<.ctor>b__2_0",
+    "VL.Rendering.VLDebugDisplaySettingsData.VLRenderingPanel$$Refresh",
+    "VL.Rendering.VLDebugDisplaySettingsData.VLRenderingPanel$$get_Flags",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateCameraSelector",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateCaptureRenderPassButton",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDisableActor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDisableDeferredFog",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDisableDeferredLight",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDisableDeferredReflection",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDisableRenderPass",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory$$CreateDynamicResolution",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass0_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass0_0$$<CreateDisableRenderPass>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass0_0$$<CreateDisableRenderPass>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass1_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass1_0$$<CreateDynamicResolution>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass1_0$$<CreateDynamicResolution>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass2_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass2_0$$<CreateDisableDeferredLight>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass2_0$$<CreateDisableDeferredLight>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass3_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass3_0$$<CreateDisableDeferredReflection>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass3_0$$<CreateDisableDeferredReflection>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass4_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass4_0$$<CreateDisableActor>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass4_0$$<CreateDisableActor>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass5_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass5_0$$<CreateDisableDeferredFog>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass5_0$$<CreateDisableDeferredFog>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass6_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass6_0$$<CreateCameraSelector>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass6_0$$<CreateCameraSelector>b__1",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass6_0$$<CreateCameraSelector>b__2",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass7_0$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsData.WidgetFactory.<>c__DisplayClass7_0$$<CreateCaptureRenderPassButton>b__0",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$.ctor",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$<get_cameras>g__AddCamera|10_0",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$CaptureRequest",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$get_cameras",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$get_selectedCamera",
+    "VL.Rendering.VLDebugDisplaySettingsPreviewRenderPass$$set_selectedCameraIndex",
+    "VL.Rendering.VLDeferredPass$$.cctor",
+    "VL.Rendering.VLDeferredPass$$.ctor",
+    "VL.Rendering.VLDeferredPass$$Configure",
+    "VL.Rendering.VLDeferredPass$$DrawObjectMotionVectors",
+    "VL.Rendering.VLDeferredPass$$Execute",
+    "VL.Rendering.VLDeferredPass$$ExecuteGBuffer",
+    "VL.Rendering.VLDeferredPass$$OnCameraCleanup",
+    "VL.Rendering.VLDeferredPass$$RenderActor",
+    "VL.Rendering.VLDeferredPass$$RenderAdditionalInfo",
+    "VL.Rendering.VLDeferredPass$$RenderEmission",
+    "VL.Rendering.VLDeferredPass$$RenderFog",
+    "VL.Rendering.VLDeferredPass$$RenderGeometry",
+    "VL.Rendering.VLDeferredPass$$RenderPreEmission",
+    "VL.Rendering.VLDeferredPass$$RenderVirtualActor",
+    "VL.Rendering.VLDeferredPass$$Setup",
+    "VL.Rendering.VLDeferredPass$$SetupMotionVector",
+    "VL.Rendering.VLDeferredPass.<>c$$.cctor",
+    "VL.Rendering.VLDeferredPass.<>c$$.ctor",
+    "VL.Rendering.VLDeferredPass.<>c$$<.cctor>b__55_0",
+    "VL.Rendering.VLSRPRenderer$$.ctor",
+    "VL.Rendering.VLSRPRenderer$$Dispose",
+    "VL.Rendering.VLSRPRenderer$$EnqueueDeferred",
+    "VL.Rendering.VLSRPRenderer$$FinishRendering",
+    "VL.Rendering.VLSRPRenderer$$GetLightCookieShaderDataIndex",
+    "VL.Rendering.VLSRPRenderer$$GetLitColorTexture",
+    "VL.Rendering.VLSRPRenderer$$IsLitColorRendered",
+    "VL.Rendering.VLSRPRenderer$$MarkLitColorTextureAsRendered",
+    "VL.Rendering.VLSRPRenderer$$ReleaseRenderTargets",
+    "VL.Rendering.VLSRPRenderer$$Setup",
+    "VL.Rendering.VLSRPRenderer$$SetupCullingParameters",
+    "VL.Rendering.VLSRPRenderer$$SetupLights",
+    "VL.Rendering.VLSRPRenderer$$SetupVLSRPFinalPassDebug",
+    "VL.Rendering.VLSRPRenderer$$get_colorGradingComputePass",
+    "VL.Rendering.VLSRPRenderer$$get_colorGradingLut",
+    "VL.Rendering.VLSRPRenderer$$get_colorGradingLutPass",
+    "VL.Rendering.VLSRPRenderer$$get_finalPostProcessPass",
+    "VL.Rendering.VLSRPRenderer$$get_forwardLights",
+    "VL.Rendering.VLSRPRenderer$$get_postProcessPass",
+    "VL.Rendering.VLSRPRenderer.<>c$$.cctor",
+    "VL.Rendering.VLSRPRenderer.<>c$$.ctor",
+    "VL.Rendering.VLSRPRenderer.<>c$$<Setup>b__27_0",
+    "VL.Rendering.VLSRPRenderer.<>c$$<Setup>b__27_1",
+    "VL.Rendering.VLSRPRendererData$$.ctor",
+    "VL.Rendering.VLSRPRendererData$$Create",
+    "VL.Rendering.VLSRPRendererData$$OnEnable",
+    "VL.Rendering.VLSkyPass$$.cctor",
+    "VL.Rendering.VLSkyPass$$.ctor",
+    "VL.Rendering.VLSkyPass$$ComputePixelCoordToWorldSpaceViewDirectionMatrix",
+    "VL.Rendering.VLSkyPass$$DrawClouds",
+    "VL.Rendering.VLSkyPass$$Execute",
+    "VL.Rendering.VLSkyPass$$GetScaledScreenSize"
+  ],
+  "onlyRef": [
+    "UnityEngine.Rendering.ArrayExtensions$$ResizeArray",
+    "UnityEngine.Rendering.Blitter$$BlitCameraTexture2D",
+    "UnityEngine.Rendering.Blitter$$BlitColorAndDepth",
+    "UnityEngine.Rendering.BottleneckHistory$$AddBottleneckFromAveragedSample",
+    "UnityEngine.Rendering.BottleneckHistory$$Clear",
+    "UnityEngine.Rendering.BottleneckHistory$$ComputeHistogram",
+    "UnityEngine.Rendering.BottleneckHistory$$DetermineBottleneck",
+    "UnityEngine.Rendering.BottleneckHistory$$DiscardOldSamples",
+    "UnityEngine.Rendering.CameraCaptureBridge$$AddCaptureAction",
+    "UnityEngine.Rendering.CameraCaptureBridge$$RemoveCaptureAction",
+    "UnityEngine.Rendering.CameraCaptureBridge$$get_enabled",
+    "UnityEngine.Rendering.ColorUtils$$ComputeEV100",
+    "UnityEngine.Rendering.ColorUtils$$ComputeEV100FromAvgLuminance",
+    "UnityEngine.Rendering.ColorUtils$$ComputeISO",
+    "UnityEngine.Rendering.ColorUtils$$ConvertEV100ToExposure",
+    "UnityEngine.Rendering.ColorUtils$$ConvertExposureToEV100",
+    "UnityEngine.Rendering.ColorUtils$$ToHex",
+    "UnityEngine.Rendering.ColorUtils$$ToRGBA",
+    "UnityEngine.Rendering.ColorUtils$$get_lensImperfectionExposureScale",
+    "UnityEngine.Rendering.ConstantBuffer$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer$$PushGlobal<ShaderVariablesProbeVolumes>",
+    "UnityEngine.Rendering.ConstantBuffer$$Set<Hammersley.Hammersley2dSeq16>",
+    "UnityEngine.Rendering.ConstantBuffer$$Set<Hammersley.Hammersley2dSeq256>",
+    "UnityEngine.Rendering.ConstantBuffer$$Set<Hammersley.Hammersley2dSeq32>",
+    "UnityEngine.Rendering.ConstantBuffer$$Set<Hammersley.Hammersley2dSeq64>",
+    "UnityEngine.Rendering.ConstantBuffer$$Set<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.ConstantBuffer$$SetGlobal<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.ConstantBuffer$$UpdateData<Hammersley.Hammersley2dSeq16>",
+    "UnityEngine.Rendering.ConstantBuffer$$UpdateData<Hammersley.Hammersley2dSeq256>",
+    "UnityEngine.Rendering.ConstantBuffer$$UpdateData<Hammersley.Hammersley2dSeq32>",
+    "UnityEngine.Rendering.ConstantBuffer$$UpdateData<Hammersley.Hammersley2dSeq64>",
+    "UnityEngine.Rendering.ConstantBuffer$$UpdateData<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq16>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq256>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq32>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<Hammersley.Hammersley2dSeq64>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$.ctor",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$Release",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$Set",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$SetGlobal",
+    "UnityEngine.Rendering.ConstantBuffer<ShaderVariablesProbeVolumes>$$UpdateData",
+    "UnityEngine.Rendering.ConstantBuffer<__Il2CppFullySharedGenericStructType>$$PushGlobal",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq16>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq16>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq16>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq16>$$set_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq256>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq256>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq256>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq256>$$set_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq32>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq32>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq32>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq32>$$set_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq64>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq64>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq64>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<Hammersley.Hammersley2dSeq64>$$set_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesProbeVolumes>$$.ctor",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesProbeVolumes>$$Release",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesProbeVolumes>$$get_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<ShaderVariablesProbeVolumes>$$set_instance",
+    "UnityEngine.Rendering.ConstantBufferSingleton<__Il2CppFullySharedGenericStructType>$$set_instance",
+    "UnityEngine.Rendering.CoreMatrixUtils$$MatrixTimesTranslation",
+    "UnityEngine.Rendering.CoreMatrixUtils$$MultiplyGenericOrthoMatrix",
+    "UnityEngine.Rendering.CoreMatrixUtils$$MultiplyOrthoMatrix",
+    "UnityEngine.Rendering.CoreMatrixUtils$$TranslationTimesMatrix",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CalculateRadixParams",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CalculateRadixSortSupportArrays",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CalculateRadixSupportSize",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CombineHashes",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CombineHashes<Hash128, CoreUnsafeUtils.DefaultKeyGetter<Hash128>>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CombineHashes<__Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CompareHashes",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CompareHashes<Hash128, CoreUnsafeUtils.DefaultKeyGetter<Hash128>, Hash128, CoreUnsafeUtils.DefaultKeyGetter<Hash128>>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CompareHashes<__Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CopyTo<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$CopyTo<int>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$HaveDuplicates",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$IndexOf<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$MergeSort",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$Partition<__Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$Partition<int, int, CoreUnsafeUtils.DefaultKeyGetter<int>>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$Partition<uint, uint, CoreUnsafeUtils.UintKeyGetter>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort<__Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType, __Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort<int, int, CoreUnsafeUtils.DefaultKeyGetter<int>>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort<int>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$QuickSort<uint, uint, CoreUnsafeUtils.UintKeyGetter>",
+    "UnityEngine.Rendering.CoreUnsafeUtils$$RadixSort",
+    "UnityEngine.Rendering.CoreUnsafeUtils.DefaultKeyGetter<Hash128>$$Get",
+    "UnityEngine.Rendering.CoreUnsafeUtils.DefaultKeyGetter<__Il2CppFullySharedGenericType>$$Get",
+    "UnityEngine.Rendering.CoreUnsafeUtils.DefaultKeyGetter<int>$$Get",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$.ctor",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$Clear",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$TryPop",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$TryPush",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$get_Count",
+    "UnityEngine.Rendering.CoreUnsafeUtils.FixedBufferStringQueue$$set_Count",
+    "UnityEngine.Rendering.CoreUnsafeUtils.UintKeyGetter$$Get",
+    "UnityEngine.Rendering.CoreUtils$$AreAnimatedMaterialsEnabled",
+    "UnityEngine.Rendering.CoreUtils$$ClearCubemap",
+    "UnityEngine.Rendering.CoreUtils$$DrawRendererList",
+    "UnityEngine.Rendering.CoreUtils$$GetCorePath",
+    "UnityEngine.Rendering.CoreUtils$$GetLastEnumValue<Int32Enum>",
+    "UnityEngine.Rendering.CoreUtils$$GetLastEnumValue<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.CoreUtils$$GetTextureAutoName",
+    "UnityEngine.Rendering.CoreUtils$$HasFlag<__Il2CppFullySharedGenericType>",
+    "UnityEngine.Rendering.CoreUtils$$IsLightOverlapDebugEnabled",
+    "UnityEngine.Rendering.CoreUtils$$IsSceneFilteringEnabled",
+    "UnityEngine.Rendering.CoreUtils$$IsSceneViewFogEnabled",
+    "UnityEngine.Rendering.CoreUtils$$IsSceneViewPrefabStageContextHidden",
+    "UnityEngine.Rendering.CoreUtils$$PreviousPowerOfTwo",
+    "UnityEngine.Rendering.CoreUtils$$get_blackVolumeTexture",
+    "UnityEngine.Rendering.CoreUtils$$get_emptyUAV",
+    "UnityEngine.Rendering.CoreUtils$$get_magentaCubeTexture",
+    "UnityEngine.Rendering.CoreUtils$$get_magentaCubeTextureArray",
+    "UnityEngine.Rendering.CoreUtils$$get_whiteCubeTexture",
+    "UnityEngine.Rendering.DebugActionDesc$$.ctor",
+    "UnityEngine.Rendering.DebugActionState$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsPanel<__Il2CppFullySharedGenericType>$$set_data",
+    "UnityEngine.Rendering.DebugDisplaySettingsPanel<object>$$set_data",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$.cctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$GenerateTableColumns",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$GenerateTableRows",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$GetResolutionChain",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$GetSelectedVolumeComponent",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory$$SetTableColumnVisibility",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<.cctor>b__11_0",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c$$<GenerateTableColumns>b__9_2",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass7_0$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass7_0$$<CreateVolumeTable>b__0",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass9_0$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass9_1$$.ctor",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass9_1$$<GenerateTableColumns>b__0",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass9_1$$<GenerateTableColumns>b__1",
+    "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass9_1$$<GenerateTableColumns>b__3",
+    "UnityEngine.Rendering.DebugFrameTiming$$Reset",
+    "UnityEngine.Rendering.DebugFrameTiming$$UpdateFrameTiming",
+    "UnityEngine.Rendering.DebugFrameTiming$$set_bottleneckHistorySize",
+    "UnityEngine.Rendering.DebugFrameTiming$$set_sampleHistorySize",
+    "UnityEngine.Rendering.DebugManager$$AddAction",
+    "UnityEngine.Rendering.DebugManager$$FindPanelIndex",
+    "UnityEngine.Rendering.DebugManager$$GetItem",
+    "UnityEngine.Rendering.DebugManager$$GetRequestedEditorWindowPanelIndex",
+    "UnityEngine.Rendering.DebugManager$$PanelDiplayName",
+    "UnityEngine.Rendering.DebugManager$$RegisterActions",
+    "UnityEngine.Rendering.DebugManager$$RegisterInputs",
+    "UnityEngine.Rendering.DebugManager$$ToggleEditorUI",
+    "UnityEngine.Rendering.DebugManager$$add_onDisplayRuntimeUIChanged",
+    "UnityEngine.Rendering.DebugManager$$add_onSetDirty",
+    "UnityEngine.Rendering.DebugManager$$add_windowStateChanged",
+    "UnityEngine.Rendering.DebugManager$$get_displayEditorUI",
+    "UnityEngine.Rendering.DebugManager$$get_displayPersistentRuntimeUI",
+    "UnityEngine.Rendering.DebugManager$$get_enableRuntimeUI",
+    "UnityEngine.Rendering.DebugManager$$get_isAnyDebugUIActive",
+    "UnityEngine.Rendering.DebugManager$$remove_onDisplayRuntimeUIChanged",
+    "UnityEngine.Rendering.DebugManager$$remove_onSetDirty",
+    "UnityEngine.Rendering.DebugManager$$remove_windowStateChanged",
+    "UnityEngine.Rendering.DebugManager$$set_displayEditorUI",
+    "UnityEngine.Rendering.DebugManager$$set_enableRuntimeUI",
+    "UnityEngine.Rendering.DebugManager.<>c__DisplayClass86_0$$.ctor",
+    "UnityEngine.Rendering.DebugManager.<>c__DisplayClass86_0$$<FindPanelIndex>b__0",
+    "UnityEngine.Rendering.DebugManager.UIState$$get_open",
+    "UnityEngine.Rendering.DebugUI$$.ctor",
+    "UnityEngine.Rendering.DebugUI.EnumField$$get_indexes",
+    "UnityEngine.Rendering.DebugUI.Field<Color>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<Color>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector2>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector2>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector3>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector3>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector4>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<Vector4>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<__Il2CppFullySharedGenericType>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<__Il2CppFullySharedGenericType>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<bool>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<bool>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<float>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<float>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<int>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<int>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<object>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<object>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Field<uint>$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Field<uint>$$UnityEngine.Rendering.DebugUI.IValueField.ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Foldout$$UnityEngine.Rendering.DebugUI.IValueField.GetValue",
+    "UnityEngine.Rendering.DebugUI.Foldout$$ValidateValue",
+    "UnityEngine.Rendering.DebugUI.Foldout$$get_columnTooltips",
+    "UnityEngine.Rendering.DebugUI.Foldout$$get_isReadOnly",
+    "UnityEngine.Rendering.DebugUI.Foldout$$set_columnTooltips",
+    "UnityEngine.Rendering.DebugUI.HBox$$.ctor",
+    "UnityEngine.Rendering.DebugUI.HistoryBoolField$$.ctor",
+    "UnityEngine.Rendering.DebugUI.HistoryBoolField$$set_historyGetter",
+    "UnityEngine.Rendering.DebugUI.HistoryEnumField$$.ctor",
+    "UnityEngine.Rendering.DebugUI.HistoryEnumField$$set_historyIndexGetter",
+    "UnityEngine.Rendering.DebugUI.Panel$$get_editorForceUpdate",
+    "UnityEngine.Rendering.DebugUI.Panel$$get_isInactiveInEditor",
+    "UnityEngine.Rendering.DebugUI.Panel$$get_isRuntimeOnly",
+    "UnityEngine.Rendering.DebugUI.VBox$$.ctor",
+    "UnityEngine.Rendering.DebugUI.Widget$$get_isInactiveInEditor",
+    "UnityEngine.Rendering.DebugUI.Widget$$get_isRuntimeOnly",
+    "UnityEngine.Rendering.DebugUI.Widget$$get_tooltip",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledPassInfo>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledPassInfo>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledPassInfo>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledPassInfo>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledResourceInfo>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledResourceInfo>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledResourceInfo>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RenderGraph.CompiledResourceInfo>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RendererListResource>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RendererListResource>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RendererListResource>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.Iterator<RendererListResource>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.Iterator<__Il2CppFullySharedGenericType>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.Iterator<__Il2CppFullySharedGenericType>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.Iterator<__Il2CppFullySharedGenericType>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.Iterator<__Il2CppFullySharedGenericType>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.Iterator<object>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.Iterator<object>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.Iterator<object>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.Iterator<object>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledPassInfo>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledPassInfo>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledPassInfo>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledPassInfo>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledResourceInfo>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledResourceInfo>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledResourceInfo>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RenderGraph.CompiledResourceInfo>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RendererListResource>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RendererListResource>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RendererListResource>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<RendererListResource>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<__Il2CppFullySharedGenericType>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<__Il2CppFullySharedGenericType>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<__Il2CppFullySharedGenericType>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<__Il2CppFullySharedGenericType>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<object>$$.ctor",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<object>$$MoveNext",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<object>$$Reset",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable.RangeIterator<object>$$get_Current",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable<RenderGraph.CompiledPassInfo>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable<RenderGraph.CompiledResourceInfo>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable<RendererListResource>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable<__Il2CppFullySharedGenericType>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray.RangeEnumerable<object>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$Add",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$AddRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$Contains",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$FindIndex",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$IndexOf",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$Remove",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$RemoveAt",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$RemoveRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$SubRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledPassInfo>$$op_Implicit",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$Add",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$AddRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$Contains",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$FindIndex",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$IndexOf",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$Remove",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$RemoveAt",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$RemoveRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$SubRange",
+    "UnityEngine.Rendering.DynamicArray<RenderGraph.CompiledResourceInfo>$$op_Implicit",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$Add",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$AddRange",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$Contains",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$FindIndex",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$IndexOf",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$Remove",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$RemoveAt",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$RemoveRange",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$SubRange",
+    "UnityEngine.Rendering.DynamicArray<RendererListResource>$$op_Implicit",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$Add",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$AddRange",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$Contains",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$FindIndex",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$IndexOf",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$Remove",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$RemoveAt",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$RemoveRange",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$SubRange",
+    "UnityEngine.Rendering.DynamicArray<__Il2CppFullySharedGenericType>$$op_Implicit",
+    "UnityEngine.Rendering.DynamicArray<object>$$Add",
+    "UnityEngine.Rendering.DynamicArray<object>$$AddRange",
+    "UnityEngine.Rendering.DynamicArray<object>$$Contains",
+    "UnityEngine.Rendering.DynamicArray<object>$$FindIndex",
+    "UnityEngine.Rendering.DynamicArray<object>$$GetEnumerator",
+    "UnityEngine.Rendering.DynamicArray<object>$$IndexOf",
+    "UnityEngine.Rendering.DynamicArray<object>$$Remove",
+    "UnityEngine.Rendering.DynamicArray<object>$$RemoveAt",
+    "UnityEngine.Rendering.DynamicArray<object>$$RemoveRange",
+    "UnityEngine.Rendering.DynamicArray<object>$$SubRange",
+    "UnityEngine.Rendering.DynamicArray<object>$$op_Implicit",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$CalculateMipBias",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$ClearSelectedCamera",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$DynamicResolutionEnabled",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$FlushScalableBufferManagerState",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$ForceSoftwareFallback",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetCurrentScale",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetLastScaledSize",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetLowResMultiplier",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetOrCreateDrsInstanceHandler",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetResolvedScale",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$GetScaledSize",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$ProcessSettings",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SetActiveDynamicScalerSlot",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SetCurrentCameraRequest",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SetDynamicResScaler",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SetSystemDynamicResScaler",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SetUpscaleFilter",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$SoftwareDynamicResIsEnabled",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$Update",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$UpdateAndUseCamera",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$get_filter",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$get_runUpscalerFilterOnFullResolution",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$get_upsamplerSchedule",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$set_finalViewport",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$set_runUpscalerFilterOnFullResolution",
+    "UnityEngine.Rendering.DynamicResolutionHandler$$set_upsamplerSchedule",
+    "UnityEngine.Rendering.FrameTimeSample$$.ctor",
+    "UnityEngine.Rendering.FrameTimeSampleHistory$$<ComputeAggregateValues>g__ForEachSampleMember|12_0",
+    "UnityEngine.Rendering.FrameTimeSampleHistory$$Add",
+    "UnityEngine.Rendering.FrameTimeSampleHistory$$Clear",
+    "UnityEngine.Rendering.FrameTimeSampleHistory$$ComputeAggregateValues",
+    "UnityEngine.Rendering.FrameTimeSampleHistory$$DiscardOldSamples",
+    "UnityEngine.Rendering.HDROutputUtils$$IsShaderVariantValid",
+    "UnityEngine.Rendering.HableCurve$$Eval",
+    "UnityEngine.Rendering.HableCurve$$get_whitePoint",
+    "UnityEngine.Rendering.HashFNV1A32$$Append<__Il2CppFullySharedGenericStructType>",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$<ShapeAttenuationAreaTubeLight>g__DiffLineIntegral|28_2",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$<ShapeAttenuationAreaTubeLight>g__Fpo|28_0",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$<ShapeAttenuationAreaTubeLight>g__Fwt|28_1",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$Dispose",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$Initialize",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$IsCloudLayerOpacityNeeded",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$ShapeAttenuationAreaDiscLight",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$ShapeAttenuationAreaRectangleLight",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$ShapeAttenuationAreaTubeLight",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$ShapeAttenuationSpotBoxLight",
+    "UnityEngine.Rendering.LensFlareCommonSRP$$ShapeAttenuationSpotPyramidLight",
+    "UnityEngine.Rendering.ListChangedEventHandler<__Il2CppFullySharedGenericType>$$BeginInvoke",
+    "UnityEngine.Rendering.ListChangedEventHandler<__Il2CppFullySharedGenericType>$$EndInvoke",
+    "UnityEngine.Rendering.ListChangedEventHandler<object>$$BeginInvoke",
+    "UnityEngine.Rendering.ListChangedEventHandler<object>$$EndInvoke",
+    "UnityEngine.Rendering.ObjectParameter.<>c<__Il2CppFullySharedGenericType>$$.cctor",
+    "UnityEngine.Rendering.ObjectParameter.<>c<__Il2CppFullySharedGenericType>$$.ctor",
+    "UnityEngine.Rendering.ObjectParameter.<>c<__Il2CppFullySharedGenericType>$$<set_value>b__9_0",
+    "UnityEngine.Rendering.ObjectParameter.<>c<__Il2CppFullySharedGenericType>$$<set_value>b__9_1",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$.ctor",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$<set_value>b__9_2",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$Interp",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$get_overrideState",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$get_parameters",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$get_value",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$set_overrideState",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$set_parameters",
+    "UnityEngine.Rendering.ObjectParameter<__Il2CppFullySharedGenericType>$$set_value",
+    "UnityEngine.Rendering.ObjectPool<__Il2CppFullySharedGenericType>$$get_countActive",
+    "UnityEngine.Rendering.ObjectPool<__Il2CppFullySharedGenericType>$$get_countInactive",
+    "UnityEngine.Rendering.ObjectPool<object>$$get_countActive",
+    "UnityEngine.Rendering.ObjectPool<object>$$get_countInactive",
+    "UnityEngine.Rendering.PerformDynamicRes$$BeginInvoke",
+    "UnityEngine.Rendering.PerformDynamicRes$$EndInvoke",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$BlitOctahedralTexture",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$BlitOctahedralTextureMultiply",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$BlitTextureMultiply",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$GetApproxCacheSizeInByte",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$GetMaxCacheSizeForWeightInByte",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$RelayoutEntries",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$ReserveSpace",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas$$ResetRequestedTexture",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas.<>c$$.cctor",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas.<>c$$.ctor",
+    "UnityEngine.Rendering.PowerOfTwoTextureAtlas.<>c$$<RelayoutEntries>b__23_0",
+    "UnityEngine.Rendering.ProfilingSampler$$Begin",
+    "UnityEngine.Rendering.ProfilingSampler$$End",
+    "UnityEngine.Rendering.ProfilingSampler$$IsValid",
+    "UnityEngine.Rendering.ProfilingSampler$$get_cpuElapsedTime",
+    "UnityEngine.Rendering.ProfilingSampler$$get_cpuSampleCount",
+    "UnityEngine.Rendering.ProfilingSampler$$get_gpuElapsedTime",
+    "UnityEngine.Rendering.ProfilingSampler$$get_gpuSampleCount",
+    "UnityEngine.Rendering.ProfilingSampler$$get_inlineCpuElapsedTime",
+    "UnityEngine.Rendering.ProfilingSampler$$get_inlineCpuSampleCount",
+    "UnityEngine.Rendering.ProfilingSampler$$set_enableRecording",
+    "UnityEngine.Rendering.RTHandle$$ClearCustomHandleProperties",
+    "UnityEngine.Rendering.RTHandle$$CopyToFastMemory",
+    "UnityEngine.Rendering.RTHandle$$SetCustomHandleProperties",
+    "UnityEngine.Rendering.RTHandle$$SwitchOutFastMemory",
+    "UnityEngine.Rendering.RTHandle$$get_isMSAAEnabled",
+    "UnityEngine.Rendering.RTHandleSystem$$DemandResize",
+    "UnityEngine.Rendering.RTHandleSystem$$DumpRTInfo",
+    "UnityEngine.Rendering.RTHandleSystem$$ResetReferenceSize",
+    "UnityEngine.Rendering.RTHandleSystem$$SwitchResizeMode",
+    "UnityEngine.Rendering.RTHandles$$CalculateRatioAgainstMaxSize",
+    "UnityEngine.Rendering.RTHandles$$ResetReferenceSize",
+    "UnityEngine.Rendering.RTHandles$$get_maxHeight",
+    "UnityEngine.Rendering.RTHandles$$get_maxWidth",
+    "UnityEngine.Rendering.ScaleFunc$$BeginInvoke",
+    "UnityEngine.Rendering.ScaleFunc$$EndInvoke",
+    "UnityEngine.Rendering.Texture2DAtlas$$AddTexture",
+    "UnityEngine.Rendering.Texture2DAtlas$$BlitOctahedralTexture",
+    "UnityEngine.Rendering.Texture2DAtlas$$ClearTarget",
+    "UnityEngine.Rendering.Texture2DAtlas$$EnsureTextureSlot",
+    "UnityEngine.Rendering.Texture2DAtlas$$GetCachedTextureSize",
+    "UnityEngine.Rendering.Texture2DAtlas$$GetTextureHash",
+    "UnityEngine.Rendering.Texture2DAtlas$$get_maxMipLevelPadding",
+    "UnityEngine.Rendering.TextureCurve$$AddKey",
+    "UnityEngine.Rendering.TextureCurve$$MoveKey",
+    "UnityEngine.Rendering.TextureCurve$$RemoveKey",
+    "UnityEngine.Rendering.TextureCurve$$SmoothTangents",
+    "UnityEngine.Rendering.TextureCurve$$get_Item",
+    "UnityEngine.Rendering.TextureXR$$CreateBlackTexture3D",
+    "UnityEngine.Rendering.TextureXR$$CreateBlackUIntTextureArray",
+    "UnityEngine.Rendering.TextureXR$$CreateBlackUintTexture",
+    "UnityEngine.Rendering.TextureXR$$CreateTexture2DArrayFromTexture2D",
+    "UnityEngine.Rendering.TextureXR$$Initialize",
+    "UnityEngine.Rendering.Universal.BuddyAllocation$$get_index2D",
+    "UnityEngine.Rendering.Universal.BuddyAllocator$$LevelLength",
+    "UnityEngine.Rendering.Universal.CameraData$$GetGPUProjectionMatrixNoJitter",
+    "UnityEngine.Rendering.Universal.CameraData$$SetViewAndProjectionMatrix",
+    "UnityEngine.Rendering.Universal.CameraExtensions$$GetVolumeFrameworkUpdateMode",
+    "UnityEngine.Rendering.Universal.CameraExtensions$$SetVolumeFrameworkUpdateMode",
+    "UnityEngine.Rendering.Universal.ClearTargetsPass$$.ctor",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$.ctor",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$Dispose",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$OnCameraCleanup",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$OnCameraSetup",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$Setup",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$get_dBufferDepth",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$get_depthHandle",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$set_dBufferColorHandles",
+    "UnityEngine.Rendering.Universal.DBufferRenderPass$$set_depthHandle",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering$$get_overdraw",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering$$set_mipInfoMode",
+    "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering$$set_overdraw",
+    "UnityEngine.Rendering.Universal.DebugDisplayStats$$UpdateFrameTiming",
+    "UnityEngine.Rendering.Universal.DebugHandler$$.ctor",
+    "UnityEngine.Rendering.Universal.DebugHandler$$Setup",
+    "UnityEngine.Rendering.Universal.DebugHandler$$SetupShaderProperties",
+    "UnityEngine.Rendering.Universal.DebugHandler$$UpdateShaderGlobalPropertiesForFinalValidationPass",
+    "UnityEngine.Rendering.Universal.DebugHandler$$get_LightingSettings",
+    "UnityEngine.Rendering.Universal.DebugHandler$$get_MaterialSettings",
+    "UnityEngine.Rendering.Universal.DebugHandler.DrawFunction$$BeginInvoke",
+    "UnityEngine.Rendering.Universal.DebugHandler.DrawFunction$$EndInvoke",
+    "UnityEngine.Rendering.Universal.DebugRenderSetup$$get_LightingSettings",
+    "UnityEngine.Rendering.Universal.DecalCreateDrawCallSystem$$get_maxDrawDistance",
+    "UnityEngine.Rendering.Universal.DecalCreateDrawCallSystem$$set_maxDrawDistance",
+    "UnityEngine.Rendering.Universal.DecalDrawCallChunk$$set_subCallCount",
+    "UnityEngine.Rendering.Universal.DecalDrawDBufferSystem$$.ctor",
+    "UnityEngine.Rendering.Universal.DecalDrawSystem$$.ctor",
+    "UnityEngine.Rendering.Universal.DecalDrawSystem$$get_overrideMaterial",
+    "UnityEngine.Rendering.Universal.DecalDrawSystem$$set_overrideMaterial",
+    "UnityEngine.Rendering.Universal.DecalProjector.DecalProjectorAction$$BeginInvoke",
+    "UnityEngine.Rendering.Universal.DecalProjector.DecalProjectorAction$$EndInvoke",
+    "UnityEngine.Rendering.Universal.DecalUpdateCullingGroupSystem$$GetSceneCullingMaskFromCamera",
+    "UnityEngine.Rendering.Universal.DecalUpdateCullingGroupSystem$$get_boundingDistance",
+    "UnityEngine.Rendering.Universal.DecalUpdateCullingGroupSystem$$set_boundingDistance",
+    "UnityEngine.Rendering.Universal.DisallowMultipleRendererFeature$$get_customTitle",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass$$RenderOffscreen",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass$$RenderOverlay",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass.<>c$$.cctor",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass.<>c$$.ctor",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass.<>c$$<RenderOffscreen>b__12_0",
+    "UnityEngine.Rendering.Universal.DrawScreenSpaceUIPass.<>c$$<RenderOverlay>b__13_0",
+    "UnityEngine.Rendering.Universal.Fixed2<__Il2CppFullySharedGenericStructType>$$CheckRange",
+    "UnityEngine.Rendering.Universal.Fixed2<__Il2CppFullySharedGenericStructType>$$set_Item",
+    "UnityEngine.Rendering.Universal.Fixed2<float4>$$CheckRange",
+    "UnityEngine.Rendering.Universal.Fixed2<float4>$$set_Item",
+    "UnityEngine.Rendering.Universal.Fixed2<float4x4>$$CheckRange",
+    "UnityEngine.Rendering.Universal.Fixed2<float4x4>$$set_Item",
+    "UnityEngine.Rendering.Universal.Fixed2<float>$$CheckRange",
+    "UnityEngine.Rendering.Universal.Fixed2<float>$$set_Item",
+    "UnityEngine.Rendering.Universal.HDRDebugViewPass$$.ctor",
+    "UnityEngine.Rendering.Universal.HDRDebugViewPass$$ConfigureDescriptor",
+    "UnityEngine.Rendering.Universal.HDRDebugViewPass.ShaderConstants$$.ctor",
+    "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$CalcGuardAngle",
+    "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$ComputeShadowRequestHash",
+    "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass$$ResolutionLog2ForHash",
+    "UnityEngine.Rendering.Universal.Internal.CopyColorPass$$set_destinationID",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$GetScreenToWorldMatrix",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderFog",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupMatrixConstants",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_RenderHeight",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_RenderWidth",
+    "UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseJobSystem",
+    "UnityEngine.Rendering.Universal.Internal.RenderTargetBufferSystem$$GetBufferA",
+    "UnityEngine.Rendering.Universal.LightCookieManager.Settings.AtlasSettings$$get_isSquare",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<LightCookieManager.LightCookieMapping>$$get_capacity",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<LightCookieManager.LightCookieMapping>$$set_Item",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<Vector4>$$get_capacity",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<Vector4>$$set_Item",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<__Il2CppFullySharedGenericType>$$get_capacity",
+    "UnityEngine.Rendering.Universal.LightCookieManager.WorkSlice<__Il2CppFullySharedGenericType>$$set_Item",
+    "UnityEngine.Rendering.Universal.MotionVectorsPersistentData$$get_lastFrameIndex",
+    "UnityEngine.Rendering.Universal.MotionVectorsPersistentData$$get_viewProjection",
+    "UnityEngine.Rendering.Universal.PostProcessPasses$$get_afterPostProcessColor",
+    "UnityEngine.Rendering.Universal.RTHandleResourcePool$$LogDebugInfo",
+    "UnityEngine.Rendering.Universal.RTHandleResourcePool$$get_staleResourceCapacity",
+    "UnityEngine.Rendering.Universal.RTHandleResourcePool$$set_staleResourceCapacity",
+    "UnityEngine.Rendering.Universal.RenderingLayerUtils$$CombineRendererEvents",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$Contains",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$GetLastValidColorBufferIndex",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$RenderObjectsWithError",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$SetMaxRTHandlePoolCapacity",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$SetScaleBiasRt",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$get_errorMaterial",
+    "UnityEngine.Rendering.Universal.RenderingUtils$$get_fullscreenMesh",
+    "UnityEngine.Rendering.Universal.ScriptableRenderPass$$ConfigureColorStoreActions",
+    "UnityEngine.Rendering.Universal.ScriptableRenderPass$$SetInputAttachmentTransient",
+    "UnityEngine.Rendering.Universal.ScriptableRenderPass$$get_isBlitRenderPass",
+    "UnityEngine.Rendering.Universal.ScriptableRenderPass$$op_GreaterThan",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$ConfigureActiveTarget",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$DrawGizmos",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$DrawWireOverlay",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$GetValidColorAttachmentCount",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$get_cameraDepth",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$get_cameraDepthTarget",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer$$get_unsupportedGraphicsDeviceTypes",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<BeginRenderGraphXRRendering>b__142_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<DrawRenderGraphGizmos>b__140_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<EndRenderGraphXRRendering>b__144_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<InitRenderGraphFrame>b__135_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<ProcessVFXCameraCommand>b__137_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.<>c$$<SetupRenderGraphCameraProperties>b__138_0",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.RenderingFeatures$$get_cameraStacking",
+    "UnityEngine.Rendering.Universal.ScriptableRenderer.RenderingFeatures$$set_cameraStacking",
+    "UnityEngine.Rendering.Universal.ShaderUtils$$GetEnumFromPath",
+    "UnityEngine.Rendering.Universal.ShaderUtils$$IsLWShader",
+    "UnityEngine.Rendering.Universal.ShaderUtils.<>c__DisplayClass2_0$$.ctor",
+    "UnityEngine.Rendering.Universal.ShaderUtils.<>c__DisplayClass2_0$$<GetEnumFromPath>b__0",
+    "UnityEngine.Rendering.Universal.ShadowUtils$$GetPunctualLightShadowSlicesCount",
+    "UnityEngine.Rendering.Universal.ShadowUtils$$GetTemporaryShadowTexture",
+    "UnityEngine.Rendering.Universal.ShadowUtils$$IsValidShadowCastingLight",
+    "UnityEngine.Rendering.Universal.ShadowUtils$$MinimalPunctualLightShadowResolution",
+    "UnityEngine.Rendering.Universal.SpaceFillingCurves$$EncodeMorton2D",
+    "UnityEngine.Rendering.Universal.SpaceFillingCurves$$Part1By1",
+    "UnityEngine.Rendering.Universal.TaaPersistentData$$get_rtd",
+    "UnityEngine.Rendering.Universal.TemporalAA$$Render",
+    "UnityEngine.Rendering.Universal.TemporalAA.<>c$$.cctor",
+    "UnityEngine.Rendering.Universal.TemporalAA.<>c$$.ctor",
+    "UnityEngine.Rendering.Universal.TemporalAA.<>c$$<Render>b__11_0",
+    "UnityEngine.Rendering.Universal.TemporalAA.<>c$$<Render>b__11_1",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$get_baseBlendFactor",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$set_baseBlendFactor",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$set_contrastAdaptiveSharpening",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$set_mipBias",
+    "UnityEngine.Rendering.Universal.TemporalAA.Settings$$set_varianceClampScale",
+    "UnityEngine.Rendering.Universal.TemporalAA.TaaPassData$$.ctor",
+    "UnityEngine.Rendering.Universal.UniversalAdditionalCameraData.<>c$$<UpdateCameraStack>b__64_0",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$GetLightAttenuationAndSpotDirection",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$IsStereoEnabled",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$get_defaultSettings",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$get_lightsPerTile",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline$$get_maxNumIterationsEnclosingSphere",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipeline.SingleCameraRequest$$.ctor",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset$$get_terrainDetailGrassBillboardShader",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset$$get_terrainDetailGrassShader",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset$$get_terrainDetailLitShader",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset.TextureResources$$NeedsReload",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineDebugDisplaySettings$$UpdateFrameTiming",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineDebugDisplaySettings$$get_commonSettings",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineDebugDisplaySettings$$get_displayStats",
+    "UnityEngine.Rendering.Universal.UniversalRenderPipelineDebugDisplaySettings$$get_volumeSettings",
+    "UnityEngine.Rendering.Universal.UniversalRenderer$$get_depthPrimingMode",
+    "UnityEngine.Rendering.Universal.UniversalRenderer$$set_depthPrimingMode",
+    "UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__92_0",
+    "UnityEngine.Rendering.Universal.UniversalRenderer.<>c$$<Setup>b__92_1",
+    "UnityEngine.Rendering.VolumeComponent.Indent$$.ctor",
+    "UnityEngine.Rendering.VolumeDebugSettings.<>c<object>$$<get_componentTypes>b__44_0",
+    "UnityEngine.Rendering.VolumeDebugSettings.<>c<object>$$<get_componentTypes>b__44_1",
+    "UnityEngine.Rendering.VolumeDebugSettings.<>c<object>$$<get_componentTypes>b__44_2",
+    "UnityEngine.Rendering.VolumeDebugSettings.<>c__DisplayClass23_0<object>$$.ctor",
+    "UnityEngine.Rendering.VolumeDebugSettings.<>c__DisplayClass23_0<object>$$<set_selectedComponentType>b__0",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$ComponentDisplayName",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$RegisterCamera",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$UnRegisterCamera",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$get_additionalCameraDatas",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$get_componentTypes",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$get_selectedCameraIndex",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$set_additionalCameraDatas",
+    "UnityEngine.Rendering.VolumeDebugSettings<object>$$set_selectedComponentType",
+    "UnityEngine.Rendering.VolumeManager$$CheckBaseTypes",
+    "UnityEngine.Rendering.VolumeManager$$CheckStack",
+    "UnityEngine.Rendering.VolumeManager$$DestroyStack",
+    "UnityEngine.Rendering.VolumeManager$$GetDefaultVolumeComponent",
+    "UnityEngine.Rendering.VolumeManager$$IsComponentActiveInMask<object>",
+    "UnityEngine.Rendering.VolumeManager$$IsVolumeRenderedByCamera",
+    "UnityEngine.Rendering.VolumeManager$$get_baseComponentTypes",
+    "UnityEngine.Rendering.VolumeManager$$set_baseComponentTypes",
+    "UnityEngine.Rendering.VolumeParameter$$GetValue<LayerMask>",
+    "UnityEngine.Rendering.VolumeParameter<Bounds>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<Color>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<FlareSetting>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<Int32Enum>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$.ctor",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$Clone",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$Equals",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$GetHashCode",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$Interp",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$Override",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$SetValue",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$ToString",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$get_value",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$op_Equality",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$op_Inequality",
+    "UnityEngine.Rendering.VolumeParameter<LayerMask>$$set_value",
+    "UnityEngine.Rendering.VolumeParameter<Quaternion>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<Vector2>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<Vector3>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<Vector4>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<__Il2CppFullySharedGenericType>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<bool>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<float>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<int>$$op_Explicit",
+    "UnityEngine.Rendering.VolumeParameter<object>$$op_Explicit",
+    "VL.CustomRenderAction$$BeginInvoke",
+    "VL.CustomRenderAction$$EndInvoke",
+    "VL.EntitySystem.EntityComponentEvent.EntityComponentAction<__Il2CppFullySharedGenericType>$$BeginInvoke",
+    "VL.EntitySystem.EntityComponentEvent.EntityComponentAction<__Il2CppFullySharedGenericType>$$EndInvoke",
+    "VL.EntitySystem.EntityComponentEvent.EntityComponentAction<object>$$BeginInvoke",
+    "VL.EntitySystem.EntityComponentEvent.EntityComponentAction<object>$$EndInvoke",
+    "VL.Rendering.FogUtility$$.ctor",
+    "VL.Rendering.MipChainBuffer$$<Execute>g__DivRoundUp|36_1",
+    "VL.Rendering.MipChainBuffer$$<Execute>g__GetExtraPixel|36_0",
+    "VL.Rendering.PlanarReflectionUtility$$.ctor",
+    "VL.Rendering.RenderingBridge.RenderEvent$$BeginInvoke",
+    "VL.Rendering.RenderingBridge.RenderEvent$$EndInvoke"
+  ],
+  "changedByClass": [
+    [
+      "UnityEngine.Rendering.Universal.UniversalRenderPipeline",
+      12
+    ],
+    [
+      "UnityEngine.Rendering.RTHandles",
+      6
+    ],
+    [
+      "UnityEngine.Rendering.Texture2DAtlas",
+      6
+    ],
+    [
+      "UnityEngine.Rendering.Universal.TilingJob",
+      6
+    ],
+    [
+      "UnityEngine.Rendering.Universal.UniversalRenderer",
+      6
+    ],
+    [
+      "VL.Rendering.MipChainBuffer",
+      5
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory",
+      4
+    ],
+    [
+      "UnityEngine.Rendering.PowerOfTwoTextureAtlas",
+      4
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerCanvas",
+      4
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerVector2",
+      4
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsUI",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerPanel",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerVBox",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.CopyDepthPass.<>c",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.DeferredLights",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.Universal.PixelPerfectCameraInternal",
+      3
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume.SettingsPanel",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerRow",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.CameraData",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalDrawSystem",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalEntityChunk",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalEntityManager",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.CopyColorPass.<>c",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.DrawObjectsPass",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.FinalBlitPass",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.LightCookieManager",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion.ScreenSpaceAmbientOcclusionPass",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.Universal.ShaderTimeManager",
+      2
+    ],
+    [
+      "VL.Rendering.ConvolutionBlur",
+      2
+    ],
+    [
+      "VL.Rendering.VLDecalPass",
+      2
+    ],
+    [
+      "VL.Rendering.VLMotionVectorRenderPass",
+      2
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsUI.<>c__DisplayClass3_0",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume.Strings",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass0_0",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugDisplaySettingsVolume.WidgetFactory.<>c__DisplayClass1_0",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugFrameTiming",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.EnumField",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.EnumField<__Il2CppFullySharedGenericType>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.EnumField<int>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.EnumField<object>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<Color>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<Vector2>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<Vector3>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<Vector4>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<__Il2CppFullySharedGenericType>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<bool>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<float>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<int>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<object>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Field<uint>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DebugUI.Widget",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.DynamicResolutionHandler",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.NoInterpCubemapParameter",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.NoInterpTextureParameter",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.ObjectPool<object>",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.RTHandle",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.RTHandleStaticHelpers",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.TextureCurve",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.TextureParameter",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerBitField",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerProgressBar",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerToggle",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerToggleHistory",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerUIntField",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerValue",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.UI.DebugUIHandlerValueTuple",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DebugDisplaySettingsMaterial.WidgetFactory.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.SettingsPanel",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DebugDisplaySettingsRendering.Strings",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DebugRenderSetup",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalCachedChunk",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalCulledChunk",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalDrawCallChunk",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.DecalPrioritySystem",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.AdditionalLightsShadowCasterPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.ColorGradingLutPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.DrawObjectsPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.FinalBlitPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.ForwardLights",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.GBufferPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.Internal.MainLightShadowCasterPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.MotionVectorRenderPass.<>c",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.PlatformAutoDetect",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.PostProcessPass",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.RenderingLayerUtils",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.ScreenSpaceAmbientOcclusion",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.ScriptableRenderer",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.TemporalAA",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.Universal.UniversalRendererData",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.VolumeComponent",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.VolumeManager",
+      1
+    ],
+    [
+      "UnityEngine.Rendering.VolumeStack",
+      1
+    ],
+    [
+      "VL.CustomRenderPassUtility",
+      1
+    ],
+    [
+      "VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>",
+      1
+    ],
+    [
+      "VL.Rendering.DownsampleBlur",
+      1
+    ],
+    [
+      "VL.Rendering.FlareParameter",
+      1
+    ],
+    [
+      "VL.Rendering.FogUtility",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionCombinedChunks",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionCulledChunk",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionCullingSystem.CullingJob",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionDrawSystem",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionResultChunk",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionResultSystem.ResultJob",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionUpdateCachedSystem",
+      1
+    ],
+    [
+      "VL.Rendering.PlanarReflectionUtility",
+      1
+    ],
+    [
+      "VL.Rendering.RenderingBridge",
+      1
+    ],
+    [
+      "VL.Rendering.RenderingUtility",
+      1
+    ],
+    [
+      "VL.Rendering.SubWorldUtility",
+      1
+    ],
+    [
+      "VL.Rendering.SubWorldVolume",
+      1
+    ],
+    [
+      "VL.Rendering.VLActorParameterPass",
+      1
+    ],
+    [
+      "VL.Rendering.VLDecalDrawSystem",
+      1
+    ],
+    [
+      "VL.Rendering.VLPreDepthIDPass",
+      1
+    ],
+    [
+      "VL.Rendering.VLTonemapping",
+      1
+    ],
+    [
+      "VL.Rendering.VLVirtualEffect",
+      1
+    ],
+    [
+      "VL.Rendering.VLWaveJitterGlitch",
+      1
+    ]
+  ]
+}

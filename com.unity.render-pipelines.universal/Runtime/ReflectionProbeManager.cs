@@ -236,17 +236,10 @@ namespace UnityEngine.Rendering.Universal
                 m_AtlasTexture1.height = requiredAtlasSize.y;
                 m_AtlasTexture1.Create();
 
+                cmd.SetRenderTarget(m_AtlasTexture1);
+                cmd.ClearRenderTarget(RTClearFlags.Color, Color.clear, 1.0f, 0);
                 if (m_AtlasTexture0.width != 1)
-                {
-                    if (SystemInfo.copyTextureSupport != CopyTextureSupport.None)
-                    {
-                        Graphics.CopyTexture(m_AtlasTexture0, 0, 0, 0, 0, m_Resolution.x, m_Resolution.y, m_AtlasTexture1, 0, 0, 0, 0);
-                    }
-                    else
-                    {
-                        Graphics.Blit(m_AtlasTexture0, m_AtlasTexture1, (float2)m_Resolution / requiredAtlasSize, Vector2.zero);
-                    }
-                }
+                    cmd.Blit(m_AtlasTexture0, m_AtlasTexture1, (float2)m_Resolution / requiredAtlasSize, Vector2.zero);
 
                 m_AtlasTexture0.Release();
                 (m_AtlasTexture0, m_AtlasTexture1) = (m_AtlasTexture1, m_AtlasTexture0);
@@ -277,7 +270,8 @@ namespace UnityEngine.Rendering.Universal
 
             using (new ProfilingScope(cmd, ProfilingSampler.Get(URPProfileId.UpdateReflectionProbeAtlas)))
             {
-                cmd.SetRenderTarget(m_AtlasTexture0);
+                if (m_NeedsUpdate.Count > 0)
+                    cmd.SetRenderTarget(m_AtlasTexture0);
 
                 foreach (var probeId in m_NeedsUpdate)
                 {

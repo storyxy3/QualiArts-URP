@@ -20,11 +20,11 @@ namespace UnityEngine.Rendering.Universal
 
         RTHandle m_Color;
         RTHandle m_Depth;
-        readonly Material m_CameraMaterial;
-        readonly Material m_ObjectMaterial;
-        readonly FilteringSettings m_FilteringSettings;
+        protected readonly Material m_CameraMaterial;
+        protected readonly Material m_ObjectMaterial;
+        protected readonly FilteringSettings m_FilteringSettings;
 
-        private PassData m_PassData;
+        protected PassData m_PassData;
         #endregion
 
         #region Constructors
@@ -129,7 +129,7 @@ namespace UnityEngine.Rendering.Universal
             ExecutePass(context, m_PassData, ref renderingData);
         }
 
-        private static DrawingSettings GetDrawingSettings(ref RenderingData renderingData, Material objectMaterial)
+        protected static DrawingSettings GetDrawingSettings(ref RenderingData renderingData, Material objectMaterial)
         {
             var camera = renderingData.cameraData.camera;
             var sortingSettings = new SortingSettings(camera) { criteria = SortingCriteria.CommonOpaque };
@@ -152,7 +152,7 @@ namespace UnityEngine.Rendering.Universal
         }
 
         // NOTE: depends on camera depth to reconstruct static geometry positions
-        private static void DrawCameraMotionVectors(ScriptableRenderContext context, CommandBuffer cmd, ref RenderingData renderingData, Camera camera, Material cameraMaterial)
+        protected static void DrawCameraMotionVectors(ScriptableRenderContext context, CommandBuffer cmd, ref RenderingData renderingData, Camera camera, Material cameraMaterial)
         {
 #if ENABLE_VR && ENABLE_XR_MODULE
             bool foveatedRendering = renderingData.cameraData.xr.supportsFoveatedRendering;

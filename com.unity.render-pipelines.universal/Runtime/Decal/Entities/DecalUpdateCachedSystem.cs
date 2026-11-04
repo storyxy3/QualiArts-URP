@@ -29,12 +29,8 @@ namespace UnityEngine.Rendering.Universal
         public NativeArray<BoundingSphere> boundingSpheres;
         public NativeArray<DecalScaleMode> scaleModes;
         public NativeArray<uint> renderingLayerMasks;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public NativeArray<Color32> colors;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public NativeArray<int> priorities;
+        public NativeArray<Color32> colors;
+        public NativeArray<int> priorities;
         public NativeArray<float3> positions;
         public NativeArray<quaternion> rotation;
         public NativeArray<float3> scales;
@@ -57,6 +53,8 @@ public NativeArray<int> priorities;
             RemoveAtSwapBack(ref boundingSpheres, entityIndex, count);
             RemoveAtSwapBack(ref scaleModes, entityIndex, count);
             RemoveAtSwapBack(ref renderingLayerMasks, entityIndex, count);
+            RemoveAtSwapBack(ref colors, entityIndex, count);
+            RemoveAtSwapBack(ref priorities, entityIndex, count);
             RemoveAtSwapBack(ref positions, entityIndex, count);
             RemoveAtSwapBack(ref rotation, entityIndex, count);
             RemoveAtSwapBack(ref scales, entityIndex, count);
@@ -78,6 +76,8 @@ public NativeArray<int> priorities;
             boundingSpheres.ResizeArray(newCapacity);
             scaleModes.ResizeArray(newCapacity);
             renderingLayerMasks.ResizeArray(newCapacity);
+            colors.ResizeArray(newCapacity);
+            priorities.ResizeArray(newCapacity);
             positions.ResizeArray(newCapacity);
             rotation.ResizeArray(newCapacity);
             scales.ResizeArray(newCapacity);
@@ -104,6 +104,8 @@ public NativeArray<int> priorities;
             boundingSpheres.Dispose();
             scaleModes.Dispose();
             renderingLayerMasks.Dispose();
+            colors.Dispose();
+            priorities.Dispose();
             positions.Dispose();
             rotation.Dispose();
             scales.Dispose();
@@ -187,7 +189,7 @@ public NativeArray<int> priorities;
                     minDistance = System.Single.Epsilon,
                 };
 
-                var handle = updateTransformJob.Schedule(entityChunk.transformAccessArray);
+                var handle = updateTransformJob.ScheduleReadOnly(entityChunk.transformAccessArray, 16);
                 cachedChunk.currentJobHandle = handle;
             }
         }

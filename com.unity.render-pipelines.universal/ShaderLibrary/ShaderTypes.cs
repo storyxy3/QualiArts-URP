@@ -40,6 +40,7 @@ namespace UnityEngine.Rendering.Universal
             /// The layer mask used.
             /// </summary>
             public uint layerMask;
+            public Vector4 customLightProperty;
         }
     }
 }

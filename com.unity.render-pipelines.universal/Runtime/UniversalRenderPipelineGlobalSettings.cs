@@ -13,10 +13,9 @@ namespace UnityEngine.Rendering.Universal
     [URPHelpURL("urp-global-settings")]
     partial class UniversalRenderPipelineGlobalSettings : RenderPipelineGlobalSettings, ISerializationCallbackReceiver
     {
+        [SerializeField] private RenderPipelineGraphicsSettingsContainer m_Settings = new RenderPipelineGraphicsSettingsContainer();
+        protected override List<IRenderPipelineGraphicsSettings> settingsList => m_Settings.settingsList;
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-private RenderPipelineGraphicsSettingsContainer m_Settings;
         #region Version system
 
 #pragma warning disable CS0414
@@ -111,6 +110,26 @@ private RenderPipelineGraphicsSettingsContainer m_Settings;
 
         /// <summary>Default name when creating an URP Global Settings asset.</summary>
         public static readonly string defaultAssetName = "UniversalRenderPipelineGlobalSettings";
+        public static readonly string[] ShaderLayerNames = { "Lit", "Simple Lit", "Actor" };
+        public static readonly string[] LightLayerNames = { "Light Layer 1", "Light Layer 2", "Light Layer 3", "Light Layer 4" };
+        public const int LitShaderLayerIndex = 0;
+        public const int SimpleLitShaderLayerIndex = 1;
+        public const int ActorShaderLayerIndex = 2;
+        public const uint LitShaderLayerMask = 1;
+        public const uint SimpleLitShaderLayerMask = 2;
+        public const uint ActorShaderLayerMask = 4;
+        public const uint PlanarDepthLayerMask = 65536;
+        public const uint PlanarEmissionLayerMask = 131072;
+        public const uint PlanarObjectLayerMask = 262144;
+        public const uint ShaderLayerMask = 7;
+        public const int MaterialFlagsOffset = 4;
+        public const int LightLayerMaskOffset = 8;
+        public const uint LightLayerBaseMask = 15;
+        public const uint LightLayerMask = 3840;
+
+        public static uint GetLightLayerMaskFromRenderingLayerMask(uint renderingLayerMask) => (renderingLayerMask >> LightLayerMaskOffset) & LightLayerBaseMask;
+        public static uint GetRenderingLayerMaskFromLightLayerMask(uint lightLayerMask) => (lightLayerMask & LightLayerBaseMask) << LightLayerMaskOffset;
+
 
 #if UNITY_EDITOR
         //Making sure there is at least one UniversalRenderPipelineGlobalSettings instance in the project
@@ -189,54 +208,6 @@ private RenderPipelineGraphicsSettingsContainer m_Settings;
         {
             UpdateRenderingLayerNames();
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly string[] ShaderLayerNames;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly string[] LightLayerNames;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int LitShaderLayerIndex = 0;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int SimpleLitShaderLayerIndex = 1;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int ActorShaderLayerIndex = 2;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint LitShaderLayerMask = 1u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint SimpleLitShaderLayerMask = 2u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint ActorShaderLayerMask = 4u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint PlanarDepthLayerMask = 65536u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint PlanarEmissionLayerMask = 131072u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint PlanarObjectLayerMask = 262144u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint ShaderLayerMask = 7u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int MaterialFlagsOffset = 4;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const int LightLayerMaskOffset = 8;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint LightLayerBaseMask = 15u;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public const uint LightLayerMask = 3840u;
 
         [SerializeField]
         string[] m_RenderingLayerNames = new string[] { "Default" };
@@ -388,27 +359,6 @@ public const uint LightLayerMask = 3840u;
         /// Controls whether Screen Coordinates Override shader variants are automatically stripped.
         /// </summary>
         public bool stripScreenCoordOverrideVariants { get => m_StripScreenCoordOverrideVariants; set => m_StripScreenCoordOverrideVariants = value; }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-protected override List<IRenderPipelineGraphicsSettings> settingsList
-{
-    get
-    {
-        return null;
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static uint GetLightLayerMaskFromRenderingLayerMask(uint renderingLayerMask)
-{
-    return default(uint);
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static uint GetRenderingLayerMaskFromLightLayerMask(uint lightLayerMask)
-{
-    return default(uint);
-}
 
         #endregion
     }

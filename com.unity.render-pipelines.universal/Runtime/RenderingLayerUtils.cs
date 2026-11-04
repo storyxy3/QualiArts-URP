@@ -153,11 +153,8 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public static uint ToValidRenderingLayers(uint renderingLayers)
         {
-            if (UniversalRenderPipelineGlobalSettings.instance)
-            {
-                uint validRenderingLayers = UniversalRenderPipelineGlobalSettings.instance.validRenderingLayers;
-                return validRenderingLayers & renderingLayers;
-            }
+            if ((renderingLayers & UniversalRenderPipelineGlobalSettings.LightLayerMask) == 0)
+                renderingLayers |= 1u << UniversalRenderPipelineGlobalSettings.MaterialFlagsOffset;
             return renderingLayers;
         }
 

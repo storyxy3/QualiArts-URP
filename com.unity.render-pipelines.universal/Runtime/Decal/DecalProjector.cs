@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using System;
 using UnityEditor;
 
@@ -24,6 +23,9 @@ namespace UnityEngine.Rendering.Universal
     [AddComponentMenu("Rendering/URP Decal Projector")]
     public class DecalProjector : MonoBehaviour
     {
+        public static readonly string _DecalTypeName = "_DecalType";
+        public static readonly int _DecalType = Shader.PropertyToID(_DecalTypeName);
+
         internal delegate void DecalProjectorAction(DecalProjector decalProjector);
         internal static event DecalProjectorAction onDecalAdd;
         internal static event DecalProjectorAction onDecalRemove;
@@ -35,15 +37,12 @@ namespace UnityEngine.Rendering.Universal
 
         internal DecalEntity decalEntity { get; set; }
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly string _DecalTypeName;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public static readonly int _DecalType;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-private Color32 m_Color;
+        [SerializeField] private Color32 m_Color = Color.white;
+        public Color32 color
+        {
+            get => m_Color;
+            set { m_Color = value; OnValidate(); }
+        }
 
         [SerializeField]
         private Material m_Material = null;
@@ -185,9 +184,8 @@ private Color32 m_Color;
             set => m_DecalLayerMask = value;
         }
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-private int m_DecalPriority;
+        [SerializeField] private int m_DecalPriority;
+        public int priority { get => m_DecalPriority; set => m_DecalPriority = value; }
 
         [SerializeField]
         private DecalScaleMode m_ScaleMode = DecalScaleMode.ScaleInvariant;
@@ -261,25 +259,15 @@ private int m_DecalPriority;
         }
 
         private Material m_OldMaterial = null;
-        private float m_OldDrawDistance = 1000.0f;
-        private float m_OldFadeScale = 0.9f;
-        private float m_OldStartAngleFade = 180.0f;
-        private float m_OldEndAngleFade = 180.0f;
-        private Vector2 m_OldUVScale = new Vector2(1, 1);
-        private Vector2 m_OldUVBias = new Vector2(0, 0);
-        private DecalScaleMode m_OldScaleMode = DecalScaleMode.ScaleInvariant;
-        private Vector3 m_OldOffset = new Vector3(0, 0, 0.5f);
-        private Vector3 m_OldSize = new Vector3(1, 1, 1);
-        private float m_OldFadeFactor = 1.0f;
 
         /// <summary>A scale that should be used for rendering and handles.</summary>
         internal Vector3 effectiveScale => m_ScaleMode == DecalScaleMode.InheritFromHierarchy ? transform.lossyScale : Vector3.one;
         /// <summary>current size in a way the DecalSystem will be able to use it</summary>
-        internal Vector3 decalSize => new Vector3(m_Size.x, m_Size.z, m_Size.y);
+        internal Vector3 decalSize { [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] get => new Vector3(m_Size.x, m_Size.z, m_Size.y); }
         /// <summary>current size in a way the DecalSystem will be able to use it</summary>
-        internal Vector3 decalOffset => new Vector3(m_Offset.x, -m_Offset.z, m_Offset.y);
+        internal Vector3 decalOffset { [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] get => new Vector3(m_Offset.x, -m_Offset.z, m_Offset.y); }
         /// <summary>current uv parameters in a way the DecalSystem will be able to use it</summary>
-        internal Vector4 uvScaleBias => new Vector4(m_UVScale.x, m_UVScale.y, m_UVBias.x, m_UVBias.y);
+        internal Vector4 uvScaleBias { [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] get => new Vector4(m_UVScale.x, m_UVScale.y, m_UVBias.x, m_UVBias.y); }
 
         void InitMaterial()
         {
@@ -344,35 +332,11 @@ private int m_DecalPriority;
             else
                 onDecalPropertyChange?.Invoke(this);
 
-            m_OldDrawDistance = m_DrawDistance;
-            m_OldFadeScale = m_FadeScale;
-            m_OldStartAngleFade = m_StartAngleFade;
-            m_OldEndAngleFade = m_EndAngleFade;
-            m_OldUVScale = m_UVScale;
-            m_OldUVBias = m_UVBias;
-            m_OldScaleMode = m_ScaleMode;
-            m_OldOffset = m_Offset;
-            m_OldSize = m_Size;
-            m_OldFadeFactor = m_FadeFactor;
         }
 
-        void OnDidApplyAnimationProperties()
+        public void UpdateDecalProperty()
         {
-            // Needed to be able to update state properly for animated serialized-properties.
-            if (m_OldMaterial != m_Material ||
-                Mathf.Abs(m_OldDrawDistance - m_DrawDistance) > Mathf.Epsilon ||
-                Mathf.Abs(m_OldFadeScale - m_FadeScale) > Mathf.Epsilon ||
-                Mathf.Abs(m_OldStartAngleFade - m_StartAngleFade) > Mathf.Epsilon ||
-                Mathf.Abs(m_OldEndAngleFade - m_EndAngleFade) > Mathf.Epsilon ||
-                m_OldUVScale != m_UVScale ||
-                m_OldUVBias != m_UVBias ||
-                m_OldScaleMode != m_ScaleMode ||
-                m_OldOffset != m_Offset ||
-                m_OldSize != m_Size ||
-                Mathf.Abs(m_OldFadeFactor - m_FadeFactor) > Mathf.Epsilon)
-            {
-                OnValidate();
-            }
+            onDecalPropertyChange?.Invoke(this);
         }
 
         /// <summary>
@@ -403,36 +367,5 @@ private int m_DecalPriority;
         {
             onAllDecalPropertyChange?.Invoke();
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public Color32 color
-{
-    get
-    {
-        return default(Color32);
-    }
-
-    set
-    {
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public int priority
-{
-    get
-    {
-        return default(int);
-    }
-
-    set
-    {
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public void UpdateDecalProperty()
-{
-}
     }
 }

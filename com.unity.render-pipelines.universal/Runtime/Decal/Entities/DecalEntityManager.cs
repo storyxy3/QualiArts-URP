@@ -130,6 +130,36 @@ namespace UnityEngine.Rendering.Universal
         public DecalProjector[] decalProjectors;
         public TransformAccessArray transformAccessArray;
 
+        public void RequestMipmapStreaming()
+        {
+            if (material == null)
+                return;
+            var ids = ListPool<int>.Get();
+            material.GetTexturePropertyNameIDs(ids);
+            foreach (int id in ids)
+            {
+                var texture = material.GetTexture(id) as Texture2D;
+                if (texture != null && texture.streamingMipmaps)
+                    texture.requestedMipmapLevel = 0;
+            }
+            ListPool<int>.Release(ids);
+        }
+
+        public void CancelMipmapStreaming()
+        {
+            if (material == null)
+                return;
+            var ids = ListPool<int>.Get();
+            material.GetTexturePropertyNameIDs(ids);
+            foreach (int id in ids)
+            {
+                var texture = material.GetTexture(id) as Texture2D;
+                if (texture != null && texture.streamingMipmaps)
+                    texture.ClearRequestedMipmapLevel();
+            }
+            ListPool<int>.Release(ids);
+        }
+
         public override void Push()
         {
             count++;
@@ -162,16 +192,6 @@ namespace UnityEngine.Rendering.Universal
             count = 0;
             capacity = 0;
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public void RequestMipmapStreaming()
-{
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public void CancelMipmapStreaming()
-{
-}
     }
 
     /// <summary>
@@ -298,7 +318,9 @@ public void CancelMipmapStreaming()
                 propertyBlock.SetMatrixArray("_NormalToWorld", new Matrix4x4[DecalDrawSystem.MaxBatchSize]);
                 propertyBlock.SetFloatArray("_DecalLayerMaskFromDecal", new float[DecalDrawSystem.MaxBatchSize]);
 
-                entityChunks.Add(new DecalEntityChunk() { material = material });
+                var entityChunk = new DecalEntityChunk() { material = material };
+                entityChunk.RequestMipmapStreaming();
+                entityChunks.Add(entityChunk);
                 cachedChunks.Add(new DecalCachedChunk()
                 {
                     propertyBlock = propertyBlock,
@@ -345,7 +367,13 @@ public void CancelMipmapStreaming()
 
             DecalCachedChunk cachedChunk = cachedChunks[chunkIndex];
 
-            cachedChunk.sizeOffsets[arrayIndex] = Matrix4x4.Translate(decalProjector.decalOffset) * Matrix4x4.Scale(decalProjector.decalSize);
+            var offset = decalProjector.decalOffset;
+            var size = decalProjector.decalSize;
+            cachedChunk.sizeOffsets[arrayIndex] = new float4x4(
+                size.x, 0, 0, offset.x,
+                0, size.y, 0, offset.y,
+                0, 0, size.z, offset.z,
+                0, 0, 0, 1);
 
             float drawDistance = decalProjector.drawDistance;
             float fadeScale = decalProjector.fadeScale;
@@ -381,8 +409,11 @@ public void CancelMipmapStreaming()
             cachedChunk.scaleModes[arrayIndex] = decalProjector.scaleMode;
             cachedChunk.renderingLayerMasks[arrayIndex] = RenderingLayerUtils.ToValidRenderingLayers(decalProjector.renderingLayerMask);
 
-            cachedChunk.positions[arrayIndex] = decalProjector.transform.position;
-            cachedChunk.rotation[arrayIndex] = decalProjector.transform.rotation;
+            cachedChunk.colors[arrayIndex] = decalProjector.color;
+            cachedChunk.priorities[arrayIndex] = decalProjector.priority;
+            decalProjector.transform.GetPositionAndRotation(out var position, out var rotation);
+            cachedChunk.positions[arrayIndex] = position;
+            cachedChunk.rotation[arrayIndex] = rotation;
             cachedChunk.scales[arrayIndex] = decalProjector.transform.lossyScale;
             cachedChunk.dirty[arrayIndex] = true;
         }
@@ -407,6 +438,8 @@ public void CancelMipmapStreaming()
             if (arrayIndex != lastArrayIndex)
                 m_DecalEntityIndexer.UpdateIndex(entityChunk.decalEntities[lastArrayIndex], arrayIndex);
 
+            drawCallChunk.currentJobHandle.Complete();
+            entityChunk.CancelMipmapStreaming();
             entityChunk.RemoveAtSwapBack(arrayIndex);
             cachedChunk.RemoveAtSwapBack(arrayIndex);
             culledChunk.RemoveAtSwapBack(arrayIndex);

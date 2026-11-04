@@ -13,6 +13,8 @@ namespace UnityEngine.Rendering.Universal
         readonly Matrix4x4[] m_PreviousViewProjection = new Matrix4x4[k_EyeCount];
         readonly int[] m_LastFrameIndex = new int[k_EyeCount];
         readonly float[] m_PrevAspectRatio = new float[k_EyeCount];
+        Vector4[] m_WorldSpaceCameraPos = new Vector4[k_EyeCount];
+        Vector4[] m_PreviousWorldSpaceCameraPos = new Vector4[k_EyeCount];
 
         #endregion
 
@@ -53,6 +55,9 @@ namespace UnityEngine.Rendering.Universal
         }
         #endregion
 
+        internal Vector4 previousWorldSpaceCameraPos => m_PreviousWorldSpaceCameraPos[0];
+        internal Vector4[] previousWorldSpaceCameraPosStereo => m_PreviousWorldSpaceCameraPos;
+
         public void Reset()
         {
             for (int i = 0; i < m_ViewProjection.Length; i++)
@@ -61,6 +66,8 @@ namespace UnityEngine.Rendering.Universal
                 m_PreviousViewProjection[i] = Matrix4x4.identity;
                 m_LastFrameIndex[i] = -1;
                 m_PrevAspectRatio[i] = -1;
+                m_WorldSpaceCameraPos[i] = Vector3.zero;
+                m_PreviousWorldSpaceCameraPos[i] = Vector3.zero;
             }
         }
 
@@ -91,6 +98,11 @@ namespace UnityEngine.Rendering.Universal
                     m_PreviousViewProjection[1] = aspectChanged ? gpuVP1 : m_ViewProjection[1];
                     m_ViewProjection[0] = gpuVP0;
                     m_ViewProjection[1] = gpuVP1;
+                    Vector4 worldSpaceCameraPos = cameraData.worldSpaceCameraPos;
+                    m_PreviousWorldSpaceCameraPos[0] = aspectChanged ? worldSpaceCameraPos : m_WorldSpaceCameraPos[0];
+                    m_PreviousWorldSpaceCameraPos[1] = aspectChanged ? worldSpaceCameraPos : m_WorldSpaceCameraPos[1];
+                    m_WorldSpaceCameraPos[0] = worldSpaceCameraPos;
+                    m_WorldSpaceCameraPos[1] = worldSpaceCameraPos;
                 }
                 else
 #endif
@@ -98,35 +110,14 @@ namespace UnityEngine.Rendering.Universal
                     var gpuVP = GL.GetGPUProjectionMatrix(cameraData.GetProjectionMatrixNoJitter(0), true) * cameraData.GetViewMatrix(0);
                     m_PreviousViewProjection[idx] = aspectChanged ? gpuVP : m_ViewProjection[idx];
                     m_ViewProjection[idx] = gpuVP;
+                    Vector4 worldSpaceCameraPos = cameraData.worldSpaceCameraPos;
+                    m_PreviousWorldSpaceCameraPos[idx] = aspectChanged ? worldSpaceCameraPos : m_WorldSpaceCameraPos[idx];
+                    m_WorldSpaceCameraPos[idx] = worldSpaceCameraPos;
                 }
 
                 m_LastFrameIndex[idx] = Time.frameCount;
                 m_PrevAspectRatio[idx] = cameraData.aspectRatio;
             }
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-private Vector4[] m_WorldSpaceCameraPos;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-private Vector4[] m_PreviousWorldSpaceCameraPos;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-internal Vector4 previousWorldSpaceCameraPos
-{
-    get
-    {
-        return default(Vector4);
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-internal Vector4[] previousWorldSpaceCameraPosStereo
-{
-    get
-    {
-        return null;
-    }
-}
     }
 }

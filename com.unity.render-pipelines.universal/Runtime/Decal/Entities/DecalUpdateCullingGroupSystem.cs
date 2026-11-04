@@ -15,15 +15,14 @@ namespace UnityEngine.Rendering.Universal
         public CullingGroup cullingGroups;
         public int[] visibleDecalIndexArray;
         public NativeArray<int> visibleDecalIndices;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public NativeArray<uint> sortIndices;
+        public NativeArray<uint> sortIndices;
         public int visibleDecalCount;
 
         public override void RemoveAtSwapBack(int entityIndex)
         {
             RemoveAtSwapBack(ref visibleDecalIndexArray, entityIndex, count);
             RemoveAtSwapBack(ref visibleDecalIndices, entityIndex, count);
+            RemoveAtSwapBack(ref sortIndices, entityIndex, count);
             count--;
         }
 
@@ -31,6 +30,7 @@ public NativeArray<uint> sortIndices;
         {
             ArrayExtensions.ResizeArray(ref visibleDecalIndexArray, newCapacity);
             visibleDecalIndices.ResizeArray(newCapacity);
+            sortIndices.ResizeArray(newCapacity);
             if (cullingGroups == null)
                 cullingGroups = new CullingGroup();
             capacity = newCapacity;
@@ -42,6 +42,7 @@ public NativeArray<uint> sortIndices;
                 return;
 
             visibleDecalIndices.Dispose();
+            sortIndices.Dispose();
             visibleDecalIndexArray = null;
             count = 0;
             capacity = 0;

@@ -30,49 +30,49 @@ namespace UnityEngine.Rendering.Universal
     /// </summary>
     internal class PostProcessPass : ScriptableRenderPass
     {
-        RenderTextureDescriptor m_Descriptor;
-        RTHandle m_Source;
-        RTHandle m_Destination;
+        protected RenderTextureDescriptor m_Descriptor;
+        protected RTHandle m_Source;
+        protected RTHandle m_Destination;
         RTHandle m_Depth;
         RTHandle m_InternalLut;
-        RTHandle m_MotionVectors;
+        protected RTHandle m_MotionVectors;
         RTHandle m_FullCoCTexture;
         RTHandle m_HalfCoCTexture;
-        RTHandle m_PingTexture;
-        RTHandle m_PongTexture;
-        RTHandle[] m_BloomMipDown;
-        RTHandle[] m_BloomMipUp;
+        protected RTHandle m_PingTexture;
+        protected RTHandle m_PongTexture;
+        protected RTHandle[] m_BloomMipDown;
+        protected RTHandle[] m_BloomMipUp;
         RTHandle m_BlendTexture;
         RTHandle m_EdgeColorTexture;
         RTHandle m_EdgeStencilTexture;
-        RTHandle m_TempTarget;
-        RTHandle m_TempTarget2;
+        protected RTHandle m_TempTarget;
+        protected RTHandle m_TempTarget2;
 
         const string k_RenderPostProcessingTag = "Render PostProcessing Effects";
         const string k_RenderFinalPostProcessingTag = "Render Final PostProcessing Pass";
         private static readonly ProfilingSampler m_ProfilingRenderPostProcessing = new ProfilingSampler(k_RenderPostProcessingTag);
         private static readonly ProfilingSampler m_ProfilingRenderFinalPostProcessing = new ProfilingSampler(k_RenderFinalPostProcessingTag);
 
-        MaterialLibrary m_Materials;
-        PostProcessData m_Data;
+        protected MaterialLibrary m_Materials;
+        protected PostProcessData m_Data;
 
         // Builtin effects settings
-        DepthOfField m_DepthOfField;
-        MotionBlur m_MotionBlur;
-        PaniniProjection m_PaniniProjection;
-        Bloom m_Bloom;
-        LensDistortion m_LensDistortion;
-        ChromaticAberration m_ChromaticAberration;
-        Vignette m_Vignette;
-        ColorLookup m_ColorLookup;
-        ColorAdjustments m_ColorAdjustments;
-        Tonemapping m_Tonemapping;
-        FilmGrain m_FilmGrain;
+        protected DepthOfField m_DepthOfField;
+        protected MotionBlur m_MotionBlur;
+        protected PaniniProjection m_PaniniProjection;
+        protected Bloom m_Bloom;
+        protected LensDistortion m_LensDistortion;
+        protected ChromaticAberration m_ChromaticAberration;
+        protected Vignette m_Vignette;
+        protected ColorLookup m_ColorLookup;
+        protected ColorAdjustments m_ColorAdjustments;
+        protected Tonemapping m_Tonemapping;
+        protected FilmGrain m_FilmGrain;
 
         // Misc
         const int k_MaxPyramidSize = 16;
-        readonly GraphicsFormat m_DefaultHDRFormat;
-        bool m_UseRGBM;
+        protected GraphicsFormat m_DefaultHDRFormat;
+        protected bool m_UseRGBM;
         readonly GraphicsFormat m_SMAAEdgeFormat;
         readonly GraphicsFormat m_GaussianCoCFormat;
 
@@ -85,36 +85,36 @@ namespace UnityEngine.Rendering.Universal
         float m_BokehRCPAspect;
 
         // True when this is the very last pass in the pipeline
-        bool m_IsFinalPass;
+        protected bool m_IsFinalPass;
 
         // If there's a final post process pass after this pass.
         // If yes, Film Grain and Dithering are setup in the final pass, otherwise they are setup in this pass.
-        bool m_HasFinalPass;
+        protected bool m_HasFinalPass;
 
         // Some Android devices do not support sRGB backbuffer
         // We need to do the conversion manually on those
         // Also if HDR output is active
-        bool m_EnableColorEncodingIfNeeded;
+        protected bool m_EnableColorEncodingIfNeeded;
 
         // Use Fast conversions between SRGB and Linear
-        bool m_UseFastSRGBLinearConversion;
+        protected bool m_UseFastSRGBLinearConversion;
 
         // Support Data Driven Lens Flare post process effect
-        bool m_SupportDataDrivenLensFlare;
+        protected bool m_SupportDataDrivenLensFlare;
 
         // Blit to screen or color frontbuffer at the end
-        bool m_ResolveToScreen;
+        protected bool m_ResolveToScreen;
 
         // Renderer is using swapbuffer system
-        bool m_UseSwapBuffer;
+        protected bool m_UseSwapBuffer;
 
         // RTHandle used as a temporary target when operations need to be performed before image scaling
-        RTHandle m_ScalingSetupTarget;
+        protected RTHandle m_ScalingSetupTarget;
 
         // RTHandle used as a temporary target when operations need to be performed after upscaling
-        RTHandle m_UpscaledTarget;
+        protected RTHandle m_UpscaledTarget;
 
-        Material m_BlitMaterial;
+        protected Material m_BlitMaterial;
 
         /// <summary>
         /// Creates a new <c>PostProcessPass</c> instance.
@@ -329,12 +329,12 @@ namespace UnityEngine.Rendering.Universal
             return desc;
         }
 
-        bool RequireSRGBConversionBlitToBackBuffer(ref CameraData cameraData)
+        protected bool RequireSRGBConversionBlitToBackBuffer(ref CameraData cameraData)
         {
             return cameraData.requireSrgbConversion && m_EnableColorEncodingIfNeeded;
         }
 
-        bool RequireHDROutput(ref CameraData cameraData)
+        protected bool RequireHDROutput(ref CameraData cameraData)
         {
             // If capturing, don't convert to HDR.
             // If not last in the stack, don't convert to HDR.
@@ -625,7 +625,7 @@ namespace UnityEngine.Rendering.Universal
         }
         #region Sub-pixel Morphological Anti-aliasing
 
-        void DoSubpixelMorphologicalAntialiasing(ref CameraData cameraData, CommandBuffer cmd, RTHandle source, RTHandle destination)
+        protected void DoSubpixelMorphologicalAntialiasing(ref CameraData cameraData, CommandBuffer cmd, RTHandle source, RTHandle destination)
         {
             var camera = cameraData.camera;
             var pixelRect = new Rect(Vector2.zero, new Vector2(cameraData.cameraTargetDescriptor.width, cameraData.cameraTargetDescriptor.height));
@@ -692,7 +692,7 @@ namespace UnityEngine.Rendering.Universal
 
         // TODO: CoC reprojection once TAA gets in LW
         // TODO: Proper LDR/gamma support
-        void DoDepthOfField(Camera camera, CommandBuffer cmd, RTHandle source, RTHandle destination, Rect pixelRect)
+        protected void DoDepthOfField(Camera camera, CommandBuffer cmd, RTHandle source, RTHandle destination, Rect pixelRect)
         {
             if (m_DepthOfField.mode.value == DepthOfFieldMode.Gaussian)
                 DoGaussianDepthOfField(camera, cmd, source, destination, pixelRect);
@@ -750,7 +750,7 @@ namespace UnityEngine.Rendering.Universal
             Blitter.BlitCameraTexture(cmd, source, destination, RenderBufferLoadAction.DontCare, RenderBufferStoreAction.Store, material, 4);
         }
 
-        void PrepareBokehKernel(float maxRadius, float rcpAspect)
+        protected void PrepareBokehKernel(float maxRadius, float rcpAspect)
         {
             const int kRings = 4;
             const int kPointsPerRing = 7;
@@ -888,7 +888,7 @@ namespace UnityEngine.Rendering.Universal
 
             return 1.0f;
         }
-        void LensFlareDataDrivenComputeOcclusion(Camera camera, CommandBuffer cmd, RenderTargetIdentifier source, bool usePanini, float paniniDistance, float paniniCropToFit)
+        protected void LensFlareDataDrivenComputeOcclusion(Camera camera, CommandBuffer cmd, RenderTargetIdentifier source, bool usePanini, float paniniDistance, float paniniCropToFit)
         {
             var gpuNonJitteredProj = GL.GetGPUProjectionMatrix(camera.projectionMatrix, true);
             var gpuVP = gpuNonJitteredProj * camera.worldToCameraMatrix;
@@ -907,7 +907,7 @@ namespace UnityEngine.Rendering.Universal
                 -1, ShaderConstants._FlareData0, ShaderConstants._FlareData1, ShaderConstants._FlareData2, ShaderConstants._FlareData3, ShaderConstants._FlareData4);
         }
 
-        void LensFlareDataDriven(Camera camera, CommandBuffer cmd, RenderTargetIdentifier source, bool usePanini, float paniniDistance, float paniniCropToFit)
+        protected void LensFlareDataDriven(Camera camera, CommandBuffer cmd, RenderTargetIdentifier source, bool usePanini, float paniniDistance, float paniniCropToFit)
         {
             var gpuNonJitteredProj = GL.GetGPUProjectionMatrix(camera.projectionMatrix, true);
             var gpuVP = gpuNonJitteredProj * camera.worldToCameraMatrix;
@@ -969,7 +969,7 @@ namespace UnityEngine.Rendering.Universal
         }
 
 
-        void DoMotionBlur(CommandBuffer cmd, RTHandle source, RTHandle destination, ref CameraData cameraData)
+        protected void DoMotionBlur(CommandBuffer cmd, RTHandle source, RTHandle destination, ref CameraData cameraData)
         {
             var material = m_Materials.cameraMotionBlur;
 
@@ -988,7 +988,7 @@ namespace UnityEngine.Rendering.Universal
 #region Panini Projection
 
         // Back-ported & adapted from the work of the Stockholm demo team - thanks Lasse!
-        void DoPaniniProjection(Camera camera, CommandBuffer cmd, RTHandle source, RTHandle destination)
+        protected void DoPaniniProjection(Camera camera, CommandBuffer cmd, RTHandle source, RTHandle destination)
         {
             float distance = m_PaniniProjection.distance.value;
             var viewExtents = CalcViewExtents(camera);
@@ -1061,7 +1061,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Bloom
 
-        void SetupBloom(CommandBuffer cmd, RTHandle source, Material uberMaterial)
+        protected void SetupBloom(CommandBuffer cmd, RTHandle source, Material uberMaterial)
         {
             // Start at half-res
             int downres = 1;
@@ -1178,7 +1178,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Lens Distortion
 
-        void SetupLensDistortion(Material material, bool isSceneView)
+        protected void SetupLensDistortion(Material material, bool isSceneView)
         {
             float amount = 1.6f * Mathf.Max(Mathf.Abs(m_LensDistortion.intensity.value * 100f), 1f);
             float theta = Mathf.Deg2Rad * Mathf.Min(160f, amount);
@@ -1208,7 +1208,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Chromatic Aberration
 
-        void SetupChromaticAberration(Material material)
+        protected void SetupChromaticAberration(Material material)
         {
             material.SetFloat(ShaderConstants._Chroma_Params, m_ChromaticAberration.intensity.value * 0.05f);
 
@@ -1220,7 +1220,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Vignette
 
-        void SetupVignette(Material material, XRPass xrPass)
+        protected void SetupVignette(Material material, XRPass xrPass)
         {
             var color = m_Vignette.color.value;
             var center = m_Vignette.center.value;
@@ -1296,7 +1296,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region Film Grain
 
-        void SetupGrain(ref CameraData cameraData, Material material)
+        protected void SetupGrain(ref CameraData cameraData, Material material)
         {
             // TODO: Investigate how to make grain work with HDR output.
             if (!m_HasFinalPass && m_FilmGrain.IsActive())
@@ -1315,7 +1315,7 @@ namespace UnityEngine.Rendering.Universal
 
 #region 8-bit Dithering
 
-        void SetupDithering(ref CameraData cameraData, Material material)
+        protected void SetupDithering(ref CameraData cameraData, Material material)
         {
             // TODO: Investigate how to make dithering work with HDR output.
             if (!m_HasFinalPass && cameraData.isDitheringEnabled)
@@ -1333,7 +1333,7 @@ namespace UnityEngine.Rendering.Universal
         #endregion
 
 #region HDR Output
-        void SetupHDROutput(HDROutputUtils.HDRDisplayInformation hdrDisplayInformation, ColorGamut hdrDisplayColorGamut, Material material, HDROutputUtils.Operation hdrOperations)
+        protected void SetupHDROutput(HDROutputUtils.HDRDisplayInformation hdrDisplayInformation, ColorGamut hdrDisplayColorGamut, Material material, HDROutputUtils.Operation hdrOperations)
         {
             Vector4 hdrOutputLuminanceParams;
             UniversalRenderPipeline.GetHDROutputLuminanceParameters(hdrDisplayInformation, hdrDisplayColorGamut, m_Tonemapping, out hdrOutputLuminanceParams);

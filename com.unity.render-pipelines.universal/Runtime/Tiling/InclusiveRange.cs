@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace UnityEngine.Rendering.Universal
 {
@@ -7,12 +8,14 @@ namespace UnityEngine.Rendering.Universal
         public short start;
         public short end;
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public InclusiveRange(short startEnd)
         {
             this.start = startEnd;
             this.end = startEnd;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public InclusiveRange(short start, short end)
         {
             this.start = start;
@@ -31,8 +34,9 @@ namespace UnityEngine.Rendering.Universal
             end = Math.Min(max, end);
         }
 
-        public bool isEmpty => end < start;
+        public bool isEmpty { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => end < start; }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public bool Contains(short index)
         {
             return index >= start && index <= end;
@@ -40,7 +44,7 @@ namespace UnityEngine.Rendering.Universal
 
         public static InclusiveRange Merge(InclusiveRange a, InclusiveRange b) => new(Math.Min(a.start, b.start), Math.Max(a.end, b.end));
 
-        public static InclusiveRange empty => new InclusiveRange(short.MaxValue, short.MinValue);
+        public static InclusiveRange empty { [MethodImpl(MethodImplOptions.AggressiveInlining)] get => new InclusiveRange(short.MaxValue, short.MinValue); }
 
         public override string ToString()
         {

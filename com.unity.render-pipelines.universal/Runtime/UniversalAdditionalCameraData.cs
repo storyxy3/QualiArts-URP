@@ -332,18 +332,13 @@ namespace UnityEngine.Rendering.Universal
         [SerializeField] Vector4 m_ScreenSizeOverride;
         [SerializeField] Vector4 m_ScreenCoordScaleBias;
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-[Range(0.1f, 1f)]
-private float m_RenderScale;
+        [SerializeField, Range(0.1f, 1.0f)] float m_RenderScale = 1.0f;
+        [SerializeField] bool m_FastRendering;
+        [SerializeField] bool m_NeedsAlphaChannel;
 
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-private bool m_FastRendering;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[SerializeField]
-private bool m_NeedsAlphaChannel;
+        public float renderScale { get => m_RenderScale; set => m_RenderScale = value; }
+        public bool fastRendering { get => m_FastRendering; set => m_FastRendering = value; }
+        public bool needsAlphaChannel { get => m_NeedsAlphaChannel; set => m_NeedsAlphaChannel = value; }
 
         [NonSerialized] Camera m_Camera;
         // Deprecated:
@@ -855,44 +850,5 @@ private bool m_NeedsAlphaChannel;
 
             return renderers[m_RendererIndex];
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public float renderScale
-{
-    get
-    {
-        return default(float);
-    }
-
-    set
-    {
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public bool fastRendering
-{
-    get
-    {
-        return default(bool);
-    }
-
-    set
-    {
-    }
-}
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public bool needsAlphaChannel
-{
-    get
-    {
-        return default(bool);
-    }
-
-    set
-    {
-    }
-}
     }
 }

@@ -76,10 +76,21 @@ namespace UnityEngine.Rendering.Universal
 
         // These modes would require putting custom data into gbuffer, so instead we just disable deferred mode.
         internal bool IsActiveModeUnsupportedForDeferred =>
-            m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.None ||
+            (m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.None &&
+             m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.LightingWithoutNormalMaps &&
+             m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.LightingWithNormalMaps &&
+             m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.Reflections &&
+             m_DebugDisplaySettings.lightingSettings.lightingDebugMode != DebugLightingMode.ReflectionsWithSmoothness) ||
             m_DebugDisplaySettings.lightingSettings.lightingFeatureFlags != DebugLightingFeatureFlags.None ||
-            m_DebugDisplaySettings.renderingSettings.sceneOverrideMode != DebugSceneOverrideMode.None ||
-            m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.None ||
+            (m_DebugDisplaySettings.renderingSettings.sceneOverrideMode != DebugSceneOverrideMode.None &&
+             m_DebugDisplaySettings.renderingSettings.sceneOverrideMode != DebugSceneOverrideMode.Overdraw) ||
+            (m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.None &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.Albedo &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.Smoothness &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.AmbientOcclusion &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.NormalWorldSpace &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.LightingComplexity &&
+             m_DebugDisplaySettings.materialSettings.materialDebugMode != DebugMaterialMode.Metallic) ||
             m_DebugDisplaySettings.materialSettings.vertexAttributeDebugMode != DebugVertexAttributeMode.None ||
             m_DebugDisplaySettings.materialSettings.materialValidationMode != DebugMaterialValidationMode.None;
 
@@ -149,6 +160,9 @@ namespace UnityEngine.Rendering.Universal
 
         internal bool IsActiveForCamera(ref CameraData cameraData)
         {
+            if (m_DebugDisplaySettings.renderingSettings.gameViewOnly)
+                return cameraData.cameraType == CameraType.Game && m_DebugDisplaySettings.AreAnySettingsActive;
+
             return !cameraData.isPreviewCamera && AreAnySettingsActive;
         }
 

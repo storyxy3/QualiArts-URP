@@ -232,7 +232,7 @@ namespace UnityEngine.Rendering.Universal
 
             CreateRenderGraphCameraRenderTargets(renderGraph, context, ref renderingData);
             SetupRenderGraphCameraProperties(renderGraph, ref renderingData, m_TargetIsBackbuffer);
-#if VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
+#if UNITY_2022_3_OR_NEWER || VISUAL_EFFECT_GRAPH_0_0_1_OR_NEWER
             ProcessVFXCameraCommand(renderGraph, ref renderingData);
 #endif
             OnBeforeRendering(renderGraph, context, ref renderingData);

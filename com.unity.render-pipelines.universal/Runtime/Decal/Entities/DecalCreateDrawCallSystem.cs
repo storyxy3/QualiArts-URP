@@ -1,15 +1,20 @@
-using Unity.Burst;
 using Unity.Collections;
 using Unity.Jobs;
 using Unity.Mathematics;
 
 namespace UnityEngine.Rendering.Universal
 {
+    internal struct DecalInstanceData
+    {
+        public int layer;
+        public int priority;
+    }
+
     internal struct DecalSubDrawCall
     {
         public int start;
         public int end;
-        public int count { get => end - start; }
+        public int count { [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)] get => end - start; }
     }
 
     /// <summary>
@@ -20,20 +25,29 @@ namespace UnityEngine.Rendering.Universal
         public NativeArray<float4x4> decalToWorlds;
         public NativeArray<float4x4> normalToDecals;
         public NativeArray<float> renderingLayerMasks;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public NativeArray<float> colors;
+        public NativeArray<float> colors;
         public NativeArray<DecalSubDrawCall> subCalls;
         public NativeArray<int> subCallCounts;
+        public NativeArray<DecalInstanceData> instanceDatas;
 
-        public int subCallCount { set { subCallCounts[0] = value; } get => subCallCounts[0]; }
+        public int subCallCount
+        {
+            set { subCallCounts[0] = value; }
+            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+            get => subCallCounts[0];
+        }
+
+        [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+        public DecalDrawCallChunk() { }
 
         public override void RemoveAtSwapBack(int entityIndex)
         {
             RemoveAtSwapBack(ref decalToWorlds, entityIndex, count);
             RemoveAtSwapBack(ref normalToDecals, entityIndex, count);
             RemoveAtSwapBack(ref renderingLayerMasks, entityIndex, count);
+            RemoveAtSwapBack(ref colors, entityIndex, count);
             RemoveAtSwapBack(ref subCalls, entityIndex, count);
+            RemoveAtSwapBack(ref instanceDatas, entityIndex, count);
             count--;
         }
 
@@ -42,7 +56,9 @@ public NativeArray<float> colors;
             decalToWorlds.ResizeArray(newCapacity);
             normalToDecals.ResizeArray(newCapacity);
             renderingLayerMasks.ResizeArray(newCapacity);
+            colors.ResizeArray(newCapacity);
             subCalls.ResizeArray(newCapacity);
+            instanceDatas.ResizeArray(newCapacity);
             capacity = newCapacity;
         }
 
@@ -56,13 +72,12 @@ public NativeArray<float> colors;
             decalToWorlds.Dispose();
             normalToDecals.Dispose();
             renderingLayerMasks.Dispose();
+            colors.Dispose();
             subCalls.Dispose();
+            instanceDatas.Dispose();
             count = 0;
             capacity = 0;
         }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-public NativeArray<DecalInstanceData> instanceDatas;
     }
 
     /// <summary>
@@ -117,6 +132,8 @@ public NativeArray<DecalInstanceData> instanceDatas;
                 fadeFactors = cachedChunk.fadeFactors,
                 boundingSpheres = cachedChunk.boundingSpheres,
                 renderingLayerMasks = cachedChunk.renderingLayerMasks,
+                colors = cachedChunk.colors,
+                priorities = cachedChunk.priorities,
 
                 cameraPosition = culledChunk.cameraPosition,
                 sceneCullingMask = culledChunk.sceneCullingMask,
@@ -128,8 +145,10 @@ public NativeArray<DecalInstanceData> instanceDatas;
                 decalToWorldsDraw = drawCallChunk.decalToWorlds,
                 normalToDecalsDraw = drawCallChunk.normalToDecals,
                 renderingLayerMasksDraw = drawCallChunk.renderingLayerMasks,
+                colorsDraw = drawCallChunk.colors,
                 subCalls = drawCallChunk.subCalls,
                 subCallCount = drawCallChunk.subCallCounts,
+                instanceDatasDraw = drawCallChunk.instanceDatas,
             };
 
             var handle = drawCallJob.Schedule(cachedChunk.currentJobHandle);
@@ -153,14 +172,8 @@ public NativeArray<DecalInstanceData> instanceDatas;
             [ReadOnly] public NativeArray<float> fadeFactors;
             [ReadOnly] public NativeArray<BoundingSphere> boundingSpheres;
             [ReadOnly] public NativeArray<uint> renderingLayerMasks;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[ReadOnly]
-public NativeArray<Color32> colors;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[ReadOnly]
-public NativeArray<int> priorities;
+            [ReadOnly] public NativeArray<Color32> colors;
+            [ReadOnly] public NativeArray<int> priorities;
 
             public Vector3 cameraPosition;
             public ulong sceneCullingMask;
@@ -172,12 +185,10 @@ public NativeArray<int> priorities;
             [WriteOnly] public NativeArray<float4x4> decalToWorldsDraw;
             [WriteOnly] public NativeArray<float4x4> normalToDecalsDraw;
             [WriteOnly] public NativeArray<float> renderingLayerMasksDraw;
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[WriteOnly]
-public NativeArray<float> colorsDraw;
+            [WriteOnly] public NativeArray<float> colorsDraw;
             [WriteOnly] public NativeArray<DecalSubDrawCall> subCalls;
             [WriteOnly] public NativeArray<int> subCallCount;
+            [WriteOnly] public NativeArray<DecalInstanceData> instanceDatasDraw;
 
             public void Execute()
             {
@@ -206,9 +217,12 @@ public NativeArray<float> colorsDraw;
                     if (distanceToDecal > cullDistance)
                         continue;
 
-                    decalToWorldsDraw[instanceIndex] = decalToWorlds[decalIndex];
-
                     float fadeFactorScaler = fadeFactors[decalIndex];
+                    if (fadeFactorScaler < 0.001f)
+                        continue;
+
+                    decalToWorldsDraw[instanceIndex] = decalToWorlds[decalIndex];
+                    instanceDatasDraw[instanceIndex] = new DecalInstanceData { layer = layerMasks[decalIndex], priority = priorities[decalIndex] };
                     float2 angleFade = angleFades[decalIndex];
                     float4 uvScaleBias = uvScaleBiases[decalIndex];
 
@@ -221,7 +235,8 @@ public NativeArray<float> colorsDraw;
                     normalToDecals.c3 = new float4(fadeFactor * 1.0f, angleFade.x, angleFade.y, uvScaleBias.w);
                     normalToDecalsDraw[instanceIndex] = normalToDecals;
 
-                    renderingLayerMasksDraw[instanceIndex] = (float)renderingLayerMasks[decalIndex];
+                    renderingLayerMasksDraw[instanceIndex] = math.asfloat(renderingLayerMasks[decalIndex]);
+                    colorsDraw[instanceIndex] = math.asfloat(colors.ReinterpretLoad<int>(decalIndex));
 
                     instanceIndex++;
 
@@ -250,10 +265,6 @@ public NativeArray<float> colorsDraw;
 
                 subCallCount[0] = subCallIndex;
             }
-
-        // TODO(qa-recon): game declaration; DummyDll body remains a placeholder.
-[WriteOnly]
-public NativeArray<DecalInstanceData> instanceDatasDraw;
         }
     }
 }
