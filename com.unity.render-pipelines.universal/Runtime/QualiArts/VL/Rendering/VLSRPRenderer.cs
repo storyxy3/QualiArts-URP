@@ -12,40 +12,6 @@ using VL.Rendering.Internal;
 
 public sealed class VLSRPRenderer : UniversalRenderer
 {
-	[Serializable]
-
-	[CompilerGenerated]
-	private sealed class _003C_003Ec
-	{
-
-
-		public static readonly _003C_003Ec _003C_003E9;
-
-
-		public static Predicate<ScriptableRenderPass> _003C_003E9__27_0;
-
-
-		public static Predicate<ScriptableRenderPass> _003C_003E9__27_1;
-
-
-		public _003C_003Ec()
-		{
-		}
-
-
-		internal bool _003CSetup_003Eb__27_0(ScriptableRenderPass x)
-		{
-			return x.renderPassEvent == (RenderPassEvent)600;
-	}
-
-
-		internal bool _003CSetup_003Eb__27_1(ScriptableRenderPass x)
-		{
-			return x.renderPassEvent <= RenderPassEvent.BeforeRenderingOpaques && !x.overrideCameraTarget;
-	}
-	}
-
-
 	private VLMotionVectorRenderPass m_VLMotionVectorPass;
 
 
