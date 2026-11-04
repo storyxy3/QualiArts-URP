@@ -75,10 +75,10 @@ namespace UnityEngine.Rendering.Universal
         }
 
         // Rendering mode setup from UI. The final rendering mode used can be different. See renderingModeActual.
-        internal RenderingMode renderingModeRequested => m_RenderingMode;
+        public RenderingMode renderingModeRequested => m_RenderingMode;
 
         // Actual rendering mode, which may be different (ex: wireframe rendering, hardware not capable of deferred rendering).
-        internal RenderingMode renderingModeActual => renderingModeRequested == RenderingMode.Deferred && (GL.wireframe || (DebugHandler != null && DebugHandler.IsActiveModeUnsupportedForDeferred) || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame() || m_DeferredLights.IsOverlay)
+        public RenderingMode renderingModeActual => renderingModeRequested == RenderingMode.Forward || (GL.wireframe || (DebugHandler != null && DebugHandler.IsActiveModeUnsupportedForDeferred) || m_DeferredLights == null || !m_DeferredLights.IsRuntimeSupportedThisFrame() || m_DeferredLights.IsOverlay)
         ? RenderingMode.Forward
         : this.renderingModeRequested;
 
@@ -249,7 +249,6 @@ namespace UnityEngine.Rendering.Universal
                 m_PrimedDepthCopyPass = new CopyDepthPass(RenderPassEvent.AfterRenderingPrePasses, m_CopyDepthMaterial, true);
             }
 
-            if (this.renderingModeRequested == RenderingMode.Deferred)
             {
                 var deferredInitParams = new DeferredLights.InitParams();
                 deferredInitParams.stencilDeferredMaterial = m_StencilDeferredMaterial;
@@ -347,10 +346,6 @@ namespace UnityEngine.Rendering.Universal
                 };
             }
 
-            LensFlareCommonSRP.mergeNeeded = 0;
-            LensFlareCommonSRP.maxLensFlareWithOcclusionTemporalSample = 1;
-            LensFlareCommonSRP.Initialize();
-
             m_VulkanEnablePreTransform = GraphicsSettings.HasShaderDefine(BuiltinShaderDefine.UNITY_PRETRANSFORM_TO_DISPLAY_ORIENTATION);
         }
 
@@ -379,7 +374,6 @@ namespace UnityEngine.Rendering.Universal
 
             CleanupRenderGraphResources();
 
-            LensFlareCommonSRP.Dispose();
         }
 
         internal override void ReleaseRenderTargets()
@@ -458,6 +452,11 @@ namespace UnityEngine.Rendering.Universal
                         case DebugFullScreenMode.ReflectionProbeAtlas:
                         {
                             DebugHandler.SetDebugRenderTarget(m_ForwardLights.reflectionProbeManager.atlasRT, normalizedRect, false);
+                            break;
+                        }
+                        case DebugFullScreenMode.MotionVector:
+                        {
+                            DebugHandler.SetDebugRenderTarget(m_MotionVectorColor, normalizedRect, false);
                             break;
                         }
                         default:

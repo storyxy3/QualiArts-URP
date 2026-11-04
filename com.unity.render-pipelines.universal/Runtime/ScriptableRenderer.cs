@@ -124,6 +124,9 @@ namespace UnityEngine.Rendering.Universal
         /// Similar to https://docs.unity3d.com/ScriptReference/Camera-current.html
         /// </summary>
         internal static ScriptableRenderer current = null;
+        public const int ScreenToWorldDownsampleCount = 3;
+        private Matrix4x4[] _screenToWorld = new Matrix4x4[ScreenToWorldDownsampleCount];
+        public static readonly int _ScreenToWorld = Shader.PropertyToID("_ScreenToWorld");
 
         /// <summary>
         /// Set camera matrices. This method will set <c>UNITY_MATRIX_V</c>, <c>UNITY_MATRIX_P</c>, <c>UNITY_MATRIX_VP</c> to camera matrices.
@@ -279,6 +282,24 @@ namespace UnityEngine.Rendering.Universal
 
             //Set per camera matrices.
             SetCameraMatrices(cmd, ref cameraData, true, isTargetFlipped);
+
+            Matrix4x4 projection = cameraData.GetProjectionMatrix();
+            Matrix4x4 view = cameraData.GetViewMatrix();
+            Matrix4x4 gpuProjection = GL.GetGPUProjectionMatrix(projection, false);
+            Matrix4x4 toScreen = new Matrix4x4(
+                new Vector4(scaledCameraWidth * 0.5f, 0, 0, 0),
+                new Vector4(0, scaledCameraHeight * 0.5f, 0, 0),
+                new Vector4(0, 0, 1, 0),
+                new Vector4(scaledCameraWidth * 0.5f, scaledCameraHeight * 0.5f, 0, 1));
+            for (int i = 0; i < ScreenToWorldDownsampleCount; ++i)
+            {
+                _screenToWorld[i] = Matrix4x4.Inverse(toScreen * gpuProjection * view);
+                toScreen.m00 *= 0.5f;
+                toScreen.m11 *= 0.5f;
+                toScreen.m03 *= 0.5f;
+                toScreen.m13 *= 0.5f;
+            }
+            cmd.SetGlobalMatrixArray(_ScreenToWorld, _screenToWorld);
         }
 
         /// <summary>

@@ -615,7 +615,9 @@ namespace UnityEngine.Rendering.Universal
                 return;
 
             ScriptableRenderer.current = renderer;
+#if UNITY_EDITOR
             bool isSceneViewCamera = cameraData.isSceneViewCamera;
+#endif
 
             // NOTE: Do NOT mix ProfilingScope with named CommandBuffers i.e. CommandBufferPool.Get("name").
             // Currently there's an issue which results in mismatched markers.
@@ -1127,7 +1129,7 @@ namespace UnityEngine.Rendering.Universal
             if (cameraData.xrRendering && rendererSupportsMSAA && camera.targetTexture == null)
                 msaaSamples = (int)XRSystem.GetDisplayMSAASamples();
 
-            bool needsAlphaChannel = Graphics.preserveFramebufferAlpha;
+            bool needsAlphaChannel = Graphics.preserveFramebufferAlpha || (additionalCameraData != null && additionalCameraData.needsAlphaChannel);
 
             cameraData.hdrColorBufferPrecision = asset ? asset.hdrColorBufferPrecision : HDRColorBufferPrecision._32Bits;
             cameraData.cameraTargetDescriptor = CreateRenderTextureDescriptor(camera, ref cameraData,
@@ -1146,7 +1148,10 @@ namespace UnityEngine.Rendering.Universal
             using var profScope = new ProfilingScope(null, Profiling.Pipeline.initializeStackedCameraData);
 
             var settings = asset;
-            cameraData.targetTexture = baseCamera.targetTexture;
+            if (baseCamera.targetTexture != null)
+                cameraData.targetTexture = baseCamera.targetTexture;
+            else if (baseCamera.TryGetComponent<VL.Rendering.VLSRPAdditionalCameraData>(out var vlAdditionalCameraData) && vlAdditionalCameraData.targetTexture != null)
+                cameraData.targetTexture = vlAdditionalCameraData.targetTexture;
             cameraData.cameraType = baseCamera.cameraType;
             bool isSceneViewCamera = cameraData.isSceneViewCamera;
 
@@ -1171,6 +1176,9 @@ namespace UnityEngine.Rendering.Universal
                 cameraData.isStopNaNEnabled = baseAdditionalCameraData.stopNaN && SystemInfo.graphicsShaderLevel >= 35;
                 cameraData.isDitheringEnabled = baseAdditionalCameraData.dithering;
                 cameraData.antialiasing = baseAdditionalCameraData.antialiasing;
+                if (baseAdditionalCameraData.needsAlphaChannel &&
+                    (cameraData.antialiasing == AntialiasingMode.FastApproximateAntialiasing || cameraData.antialiasing == AntialiasingMode.TemporalAntiAliasing))
+                    cameraData.antialiasing = AntialiasingMode.SubpixelMorphologicalAntiAliasing;
                 cameraData.antialiasingQuality = baseAdditionalCameraData.antialiasingQuality;
                 cameraData.xrRendering = baseAdditionalCameraData.allowXRRendering && XRSystem.displayActive;
                 cameraData.allowHDROutput = baseAdditionalCameraData.allowHDROutput;
@@ -1209,6 +1217,8 @@ namespace UnityEngine.Rendering.Universal
             const float kRenderScaleThreshold = 0.05f;
             bool disableRenderScale = ((Mathf.Abs(1.0f - settings.renderScale) < kRenderScaleThreshold) || isScenePreviewOrReflectionCamera);
             cameraData.renderScale = disableRenderScale ? 1.0f : settings.renderScale;
+            if (!isScenePreviewOrReflectionCamera && baseAdditionalCameraData != null)
+                cameraData.renderScale *= Mathf.Abs(1.0f - baseAdditionalCameraData.renderScale) < kRenderScaleThreshold ? 1.0f : baseAdditionalCameraData.renderScale;
 
             // Convert the upscaling filter selection from the pipeline asset into an image upscaling filter
             cameraData.upscalingFilter = ResolveUpscalingFilterSelection(new Vector2(cameraData.pixelWidth, cameraData.pixelHeight), cameraData.renderScale, settings.upscalingFilter);
@@ -1747,7 +1757,7 @@ namespace UnityEngine.Rendering.Universal
                     cameraData.postProcessEnabled = false;
 
                 cameraData.hdrColorBufferPrecision = asset ? asset.hdrColorBufferPrecision : HDRColorBufferPrecision._32Bits;
-                cameraData.cameraTargetDescriptor.graphicsFormat = MakeRenderTextureGraphicsFormat(cameraData.isHdrEnabled, cameraData.hdrColorBufferPrecision, true);
+                cameraData.cameraTargetDescriptor.graphicsFormat = MakeRenderTextureGraphicsFormat(cameraData.isHdrEnabled, cameraData.hdrColorBufferPrecision, false);
                 cameraData.cameraTargetDescriptor.msaaSamples = msaaSamples;
 
             }

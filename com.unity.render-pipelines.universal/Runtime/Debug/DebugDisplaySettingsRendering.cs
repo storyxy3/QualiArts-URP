@@ -172,6 +172,8 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public float validationRangeMax { get; set; } = 1.0f;
 
+        public bool gameViewOnly { get; set; }
+
         static class Strings
         {
             public const string RangeValidationSettingsContainerName = "Pixel Range Settings";
