@@ -108,7 +108,7 @@ namespace UnityEngine.Rendering.Universal
         /// </summary>
         public static readonly int AdditionalLightsShadowDefaultCustomResolution = 128;
 
-        [NonSerialized] private Light m_Light;
+        private Light m_Light;
 
         /// <summary>
         /// Returns the cached light component associated with the game object that owns this light data.
@@ -145,7 +145,7 @@ namespace UnityEngine.Rendering.Universal
 
         // The layer(s) this light belongs too.
         [Obsolete("This is obsolete, please use m_RenderingLayerMask instead.", false)]
-        [SerializeField] uint m_LightLayerMask = (uint)LightLayerEnum.LightLayerDefault;
+        [SerializeField] uint m_LightLayerMask = 1;
 
         /// <summary>
         /// The layer(s) this light belongs to.
@@ -268,15 +268,20 @@ namespace UnityEngine.Rendering.Universal
 
         // ---- QualiArts (VL SRP): custom lighting model of the light (Hidden/Campus/StencilDeferred _CustomLightProperty) ----
         public CustomLightingType customLightingType { get => m_CustomLightingType; set => m_CustomLightingType = value; }
+        [Tooltip("ライティング処理をカスタムします")]
         [SerializeField] private CustomLightingType m_CustomLightingType;
         public bool indirectLighting { get => m_IndirectLighting; set => m_IndirectLighting = value; }
+        [Tooltip("間接光ライティングを切り替えます")]
         [SerializeField] private bool m_IndirectLighting;
         public float backLightingIntensity { get => m_BackLightingIntensity; set => m_BackLightingIntensity = value; }
+        [Tooltip("反対側からの擬似ライティング強度")]
         [SerializeField] private float m_BackLightingIntensity;
         public float mainLightShadowStrength { get => m_MainLightShadowStrength; set => m_MainLightShadowStrength = value; }
+        [Tooltip("MainLightShadow参照")]
         [SerializeField] private float m_MainLightShadowStrength;
         public float specularStrength { get => m_SpecularStrength; set => m_SpecularStrength = value; }
-        [SerializeField] private float m_SpecularStrength;
+        [Tooltip("スペキュラー強度")]
+        [SerializeField] private float m_SpecularStrength = 1.0f;
 
         /// <inheritdoc/>
         public void OnBeforeSerialize()

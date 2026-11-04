@@ -1,0 +1,420 @@
+Task B: DeferredLights and VL planar reflections — 2026-11-04
+
+Inputs: TASK_B_deferredlights.md and COMMON.md; game APK 3.5.3; Unity 6000.0.77f1; URP 14 fork.
+Implementation commits:
+07b9164 Match additional-light custom defaults and serialized tooltips from 3.5.3
+c5ad8ad Reconstruct VL entity and chunk lifecycle used by planar reflections
+44799b7 Reconstruct VL planar bounds, camera planes, and shader tags
+19b515f Match the game's uint lightLayerMask API and light field metadata
+62ee39c Reconstruct VL planar reflection entities, jobs, chunks, and drawing
+32688a7 Finish deferred light setup and VL reflection/debug entry points
+
+Validation:
+  ref14_round.sh 20: 0 C# errors; REF_BUILD Failed errors=3 is the expected Gradle packaging step.
+  IL2CPP output was generated and compared with ref14_check.sh and ref14_show.py.
+  No tests, test scripts, test assemblies, or verification harnesses were written.
+  Nothing was pushed or deployed; no Windows host or old player was touched.
+  Raw broad-filter result: 291 identical, 6 [layout], 5 [semantic], 35 only-in-game, 0 changed signatures.
+  The broad filter also includes unrelated multi-chunk entity managers and motion-vector utilities.
+  Every requested DeferredLights entry point and every required planar dependency is implemented.
+  All 36 UniversalAdditionalLightData methods are identical, including the uint lightLayerMask signature.
+
+Remaining comparison flags / open follow-up items:
+  [semantic] DeferredLights.SetupMainLightConstants: three equivalent source formulations tried.
+    Both binaries set alpha to zero exactly for baked + Mixed + Subtractive, otherwise one.
+    The 116-instruction methods differ in Boolean lowering/branch scheduling; calls and data agree.
+  [semantic] PlanarReflectionCachedChunk..ctor: the game tail-calls the empty Chunk constructor;
+    the reference tail-calls the empty System.Object constructor after inlining. Explicit constructor
+    formulations retain this compiler difference.
+  [semantic] PlanarReflectionCombinedChunks.Create: the same empty-constructor inlining difference
+    at new PlanarReflectionCachedChunk(); allocations and field assignments agree.
+  [semantic] PlanarReflectionUtility.RenderPlanarReflection: the remaining semantic diff is six
+    redundant IL2CPP class-initialization guards; rendering calls, strings, and constants agree.
+  [semantic] PlanarReflectionResultSystem.ResultJob.CameraSpacePlane: comparison boundary artifact.
+    Its first 121 instructions, through the ret at game 0xD7D08A8, are identical. The comparison
+    also includes 417 instructions of unnamed CameraPlanes/matrix helpers starting at 0xD7D08AC.
+  These flags are retained below rather than silently reclassified. There are no unknown-behavior
+    TODO(qa-recon) stubs in the reconstructed dependency path.
+  TransformAABB(float4x4) became identical on the third source formulation.
+
+Task-brief DeferredLights methods (individual status):
+  identical  ExecuteDeferredPass
+  identical  <ExecuteDeferredPass>g__HasLitDirectional|148_0
+  identical  SetupLights
+  identical  PrecomputeLights
+  [semantic]  SetupMainLightConstants
+  identical  .ctor
+  identical  .cctor
+  identical  CreateSphereMesh
+  identical  CreateHemisphereMesh
+  identical  CreateFullscreenMesh
+  identical  ExecuteAdditionalInfo
+  identical  ExecuteIndirectReflection
+  identical  ExecutePlanarReflection
+  identical  CompletePlanarReflectionJob
+  identical  DisposePlanarReflection
+  identical  ExecuteLightingComplexityPass
+  identical  ExecutePreEmissionDebugPass
+  identical  ExecuteEmissionDebugPass
+  identical  GetAdditionalLightsShadowCasterPass
+  identical  InitVLStencilDeferredMaterial
+  identical  get_sharedPlanarReflectionManager
+
+All compared method names:
+  Status follows the supplied comparator, which groups overloads by method name.
+  Generic shared bodies are reported with their IL2CPP instantiation names.
+
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$.cctor
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$.ctor
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$<ExecuteDeferredPass>g__HasLitDirectional|148_0
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ClearStencilPartial
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$CompletePlanarReflectionJob
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$CreateFullscreenMesh
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$CreateGbufferResources
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$CreateHemisphereMesh
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$CreateSphereMesh
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$DisableFramebufferFetchInput
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$DisposePlanarReflection
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecuteAdditionalInfo
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecuteDeferredPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecuteEmissionDebugPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecuteIndirectReflection
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecuteLightingComplexityPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecutePlanarReflection
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ExecutePreEmissionDebugPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$GetAdditionalLightsShadowCasterPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$GetGBufferFormat
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$GetPunctualPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$HasStencilLightsOfType
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$InitStencilDeferredMaterial
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$InitVLStencilDeferredMaterial
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$IsRuntimeSupportedThisFrame
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$IsStencilDeferredLightType
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$OnCameraCleanup
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$OverwriteStencil
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$PrecomputeLights
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ReAllocateGBufferIfNeeded
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ReleaseGbufferResources
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderSSAOBeforeShading
+[layout]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilDirectionalLights
+[layout]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilLights
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilPointLights
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$RenderStencilSpotLights
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$ResolveMixedLightingMode
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetAdditionalLightsShadowsKeyword
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetComplexityScore
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$Setup
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupLights
+[semantic]	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupMainLightConstants
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$SetupShaderLightConstants
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$UpdateDeferredInputAttachments
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_AccurateGbufferNormals
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_DeferredInputAttachments
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_DeferredInputIsTransient
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_DepthAttachment
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_DepthAttachmentHandle
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_DepthCopyTexture
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferAlbedoIndex
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferLightingIndex
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferNormalSmoothnessIndex
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferRenderingLayers
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferShadowMask
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferSliceCount
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GBufferSpecularMetallicIndex
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GbufferAttachments
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GbufferDepthIndex
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GbufferFormats
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_GbufferTextureHandles
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_HasDepthPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_HasNormalPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_HasRenderingLayerPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_IsOverlay
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_MixedLightingSetup
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_RenderingLayerMaskSize
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseDecalLayers
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseLightLayers
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseRenderPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseRenderingLayers
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_UseShadowMask
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_renderedDirectReflection
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_sharedPlanarReflectionManager
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$get_storeLitColor
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_AccurateGbufferNormals
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_DeferredInputAttachments
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_DeferredInputIsTransient
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_DepthAttachment
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_DepthAttachmentHandle
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_DepthCopyTexture
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_GbufferAttachments
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_GbufferFormats
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_GbufferTextureHandles
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_HasDepthPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_HasNormalPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_HasRenderingLayerPrepass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_IsOverlay
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_MixedLightingSetup
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_RenderHeight
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_RenderWidth
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_RenderingLayerMaskSize
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_UseDecalLayers
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_UseJobSystem
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_UseRenderPass
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_renderedDirectReflection
+identical	UnityEngine.Rendering.Universal.Internal.DeferredLights$$set_storeLitColor
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$.cctor
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$.ctor
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$OnAfterDeserialize
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$OnBeforeSerialize
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$SyncLightAndShadowLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_additionalLightsShadowResolutionTier
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_backLightingIntensity
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_customLightingType
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_customShadowLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_indirectLighting
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_light
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_lightCookieOffset
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_lightCookieSize
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_lightLayerMask
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_mainLightShadowStrength
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_renderingLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_shadowLayerMask
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_shadowRenderingLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_softShadowQuality
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_specularStrength
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_usePipelineSettings
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$get_version
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_backLightingIntensity
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_customLightingType
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_customShadowLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_indirectLighting
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_lightCookieOffset
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_lightCookieSize
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_lightLayerMask
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_mainLightShadowStrength
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_renderingLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_shadowLayerMask
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_shadowRenderingLayers
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_softShadowQuality
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_specularStrength
+identical	UnityEngine.Rendering.Universal.UniversalAdditionalLightData$$set_usePipelineSettings
+identical	VL.EntitySystem.Chunk$$.ctor
+identical	VL.EntitySystem.Chunk$$Dispose
+identical	VL.EntitySystem.Chunk$$Push
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<Bounds>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<Entity>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<FilteringSettings>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<PlanarReflection.ShaderTagIdList>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<__Il2CppFullySharedGenericStructType>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<__Il2CppFullySharedGenericType>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<bool>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<float3>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<float4>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<float4x4>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<int>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<object>
+identical	VL.EntitySystem.Chunk$$RemoveAtSwapBack<quaternion>
+identical	VL.EntitySystem.Chunk$$ResizeNativeArray<__Il2CppFullySharedGenericType>
+identical	VL.EntitySystem.Chunk$$ResizeNativeArray<object>
+identical	VL.EntitySystem.Chunk$$get_capacity
+identical	VL.EntitySystem.Chunk$$get_count
+identical	VL.EntitySystem.Chunk$$get_currentJobHandle
+identical	VL.EntitySystem.Chunk$$set_capacity
+identical	VL.EntitySystem.Chunk$$set_count
+identical	VL.EntitySystem.Chunk$$set_currentJobHandle
+identical	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType>$$.ctor
+identical	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType>$$Dispose
+identical	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType>$$Push
+identical	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType>$$RemoveAtSwapBack
+identical	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType>$$SetCapacity
+identical	VL.EntitySystem.EntityChunk<object>$$.ctor
+identical	VL.EntitySystem.EntityChunk<object>$$Dispose
+identical	VL.EntitySystem.EntityChunk<object>$$Push
+identical	VL.EntitySystem.EntityChunk<object>$$RemoveAtSwapBack
+identical	VL.EntitySystem.EntityChunk<object>$$SetCapacity
+identical	VL.EntitySystem.EntityComponentEvent.EntityComponentAction<__Il2CppFullySharedGenericType>$$.ctor
+identical	VL.EntitySystem.EntityComponentEvent.EntityComponentAction<__Il2CppFullySharedGenericType>$$Invoke
+identical	VL.EntitySystem.EntityComponentEvent.EntityComponentAction<object>$$.ctor
+identical	VL.EntitySystem.EntityComponentEvent.EntityComponentAction<object>$$Invoke
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokeAdd
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokeAdd<__Il2CppFullySharedGenericType>
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokePropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokePropertyChange<__Il2CppFullySharedGenericType>
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokeRemove
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$InvokeRemove<__Il2CppFullySharedGenericType>
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$add_onAdd
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$add_onPropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$add_onRemove
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$remove_onAdd
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$remove_onPropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<__Il2CppFullySharedGenericType>$$remove_onRemove
+identical	VL.EntitySystem.EntityComponentEvent<object>$$InvokeAdd
+identical	VL.EntitySystem.EntityComponentEvent<object>$$InvokePropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<object>$$InvokeRemove
+identical	VL.EntitySystem.EntityComponentEvent<object>$$add_onAdd
+identical	VL.EntitySystem.EntityComponentEvent<object>$$add_onPropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<object>$$add_onRemove
+identical	VL.EntitySystem.EntityComponentEvent<object>$$remove_onAdd
+identical	VL.EntitySystem.EntityComponentEvent<object>$$remove_onPropertyChange
+identical	VL.EntitySystem.EntityComponentEvent<object>$$remove_onRemove
+identical	VL.EntitySystem.EntityIndexer$$.ctor
+identical	VL.EntitySystem.EntityIndexer$$Clear
+identical	VL.EntitySystem.EntityIndexer$$CreateEntity
+identical	VL.EntitySystem.EntityIndexer$$DestroyEntity
+identical	VL.EntitySystem.EntityIndexer$$GetItem
+identical	VL.EntitySystem.EntityIndexer$$IsValid
+identical	VL.EntitySystem.EntityIndexer$$RemapChunkIndices
+identical	VL.EntitySystem.EntityIndexer$$UpdateIndex
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$.ctor
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$Dispose
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$Get
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$OnAdd
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$OnPropertyChange
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$OnRemove
+identical	VL.EntitySystem.SharedEntityManager<object, object>$$Release
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$.ctor
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateEntity
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$DestroyEntity
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Dispose
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$IsValidEntity
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Update
+[layout]	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateChunk
+identical	VL.EntitySystem.SingleEntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateEntityData
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$.ctor
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$CreateEntity
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$DestroyEntity
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$Dispose
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$IsValidEntity
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$Update
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$UpdateAllEntityData
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$UpdateChunk
+identical	VL.EntitySystem.SingleEntityManager<object, object, object>$$UpdateEntityData
+identical	VL.Rendering.AABBUtility$$.cctor
+identical	VL.Rendering.AABBUtility$$TestSphereAABB
+identical	VL.Rendering.AABBUtility$$TransformAABB
+identical	VL.Rendering.CameraPlanes$$.ctor
+identical	VL.Rendering.CameraPlanes$$GetDistanceToPoint
+identical	VL.Rendering.CameraPlanes$$TestAABB
+identical	VL.Rendering.CameraPlanes$$TestBoundingSphere
+identical	VL.Rendering.CameraPlanes$$get_Item
+identical	VL.Rendering.CameraUtility$$CalcCullingPlane
+identical	VL.Rendering.CameraUtility$$GetPlane
+identical	VL.Rendering.PlanarReflection$$.ctor
+identical	VL.Rendering.PlanarReflection$$OnDisable
+identical	VL.Rendering.PlanarReflection$$OnEnable
+identical	VL.Rendering.PlanarReflection$$OnValidate
+identical	VL.Rendering.PlanarReflection$$SetDirty
+identical	VL.Rendering.PlanarReflection$$VL.EntitySystem.IEntityComponent.get_transform
+identical	VL.Rendering.PlanarReflection$$get_entity
+identical	VL.Rendering.PlanarReflection$$get_shaderTagIdList
+identical	VL.Rendering.PlanarReflection$$set_entity
+identical	VL.Rendering.PlanarReflection.ShaderTagIdList$$.ctor
+identical	VL.Rendering.PlanarReflection.ShaderTagIdList$$AsReadOnlySpan
+[semantic]	VL.Rendering.PlanarReflectionCachedChunk$$.ctor
+identical	VL.Rendering.PlanarReflectionCachedChunk$$Dispose
+identical	VL.Rendering.PlanarReflectionCachedChunk$$RemoveAtSwapBack
+identical	VL.Rendering.PlanarReflectionCachedChunk$$SetCapacity
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$.ctor
+[semantic]	VL.Rendering.PlanarReflectionCombinedChunks$$Create
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$CreateEntityChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$Dispose
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$Push
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$RemoveAtSwapBack
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$SetCapacity
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$get_cachedChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$get_culledChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$get_entityChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$get_resultChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$set_cachedChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$set_culledChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$set_entityChunk
+identical	VL.Rendering.PlanarReflectionCombinedChunks$$set_resultChunk
+identical	VL.Rendering.PlanarReflectionCulledChunk$$.ctor
+identical	VL.Rendering.PlanarReflectionCulledChunk$$Dispose
+identical	VL.Rendering.PlanarReflectionCulledChunk$$RemoveAtSwapBack
+identical	VL.Rendering.PlanarReflectionCulledChunk$$SetCapacity
+identical	VL.Rendering.PlanarReflectionCullingSystem$$.ctor
+identical	VL.Rendering.PlanarReflectionCullingSystem$$Execute
+[layout]	VL.Rendering.PlanarReflectionCullingSystem.CullingJob$$Execute
+identical	VL.Rendering.PlanarReflectionDrawSystem$$.cctor
+identical	VL.Rendering.PlanarReflectionDrawSystem$$.ctor
+identical	VL.Rendering.PlanarReflectionDrawSystem$$CompleteJob
+identical	VL.Rendering.PlanarReflectionDrawSystem$$Dispose
+[layout]	VL.Rendering.PlanarReflectionDrawSystem$$DrawPlanarReflections
+identical	VL.Rendering.PlanarReflectionDrawSystem$$get_IsActive
+identical	VL.Rendering.PlanarReflectionEntityChunk$$.ctor
+identical	VL.Rendering.PlanarReflectionEntityManager$$.ctor
+identical	VL.Rendering.PlanarReflectionEntityManager$$CreateBoxMesh
+identical	VL.Rendering.PlanarReflectionEntityManager$$Dispose
+identical	VL.Rendering.PlanarReflectionEntityManager$$UpdateChunk
+identical	VL.Rendering.PlanarReflectionResultChunk$$.ctor
+identical	VL.Rendering.PlanarReflectionResultChunk$$Dispose
+identical	VL.Rendering.PlanarReflectionResultChunk$$RemoveAtSwapBack
+identical	VL.Rendering.PlanarReflectionResultChunk$$SetCapacity
+identical	VL.Rendering.PlanarReflectionResultSystem$$.ctor
+identical	VL.Rendering.PlanarReflectionResultSystem$$Execute
+[semantic]	VL.Rendering.PlanarReflectionResultSystem.ResultJob$$CameraSpacePlane
+identical	VL.Rendering.PlanarReflectionResultSystem.ResultJob$$Execute
+identical	VL.Rendering.PlanarReflectionResultSystem.ResultJob$$GetReflectionMatrix
+identical	VL.Rendering.PlanarReflectionResultSystem.ResultJob$$UpdateParams
+identical	VL.Rendering.PlanarReflectionUpdateCachedSystem$$.ctor
+[layout]	VL.Rendering.PlanarReflectionUpdateCachedSystem$$Execute
+identical	VL.Rendering.PlanarReflectionUpdateCachedSystem.UpdateJob$$Execute
+identical	VL.Rendering.PlanarReflectionUtility$$.cctor
+[semantic]	VL.Rendering.PlanarReflectionUtility$$RenderPlanarReflection
+identical	VL.Rendering.PlanarReflectionUtility.PropertyId$$.cctor
+identical	VL.Rendering.PlanarReflectionVolumeComponent$$.ctor
+identical	VL.Rendering.RenderingUtility.ShaderTagIds$$.cctor
+identical	VL.Rendering.SharedPlanarReflectionEntityManager$$.ctor
+
+Broad-filter methods outside the required dependency path / uninstantiated generic bodies:
+  "not done" here does not indicate a stub in the planar path. The Color swap-back and int-keyed
+  event specializations have generic source bodies but are not instantiated by this reference project.
+  The two-key EntityChunk / multi-chunk EntityManager and unrelated RenderingUtility methods were
+  not reconstructed because the planar path uses SingleEntityManager and ShaderTagIds only.
+
+not done / not emitted	VL.EntitySystem.Chunk$$RemoveAtSwapBack<Color>
+not done / not emitted	VL.EntitySystem.EntityChunk<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType>$$.ctor
+not done / not emitted	VL.EntitySystem.EntityChunk<object, int>$$.ctor
+not done / not emitted	VL.EntitySystem.EntityComponentEvent<object>$$InvokeAdd<int>
+not done / not emitted	VL.EntitySystem.EntityComponentEvent<object>$$InvokePropertyChange<int>
+not done / not emitted	VL.EntitySystem.EntityComponentEvent<object>$$InvokeRemove<int>
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$.ctor
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$ChunkSort
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateChunkIndex
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$CreateEntity
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$DestroyEntity
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Dispose
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$IsValidEntity
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$Update
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateAllEntityData
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateChunk
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$UpdateEntityData
+not done / not emitted	VL.EntitySystem.EntityManager<__Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, __Il2CppFullySharedGenericType, object>$$get_defaultChunkKey
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$.ctor
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$ChunkSort
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$CreateChunkIndex
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$CreateEntity
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$DestroyEntity
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$Dispose
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$IsValidEntity
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$Update
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateAllEntityData
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateChunk
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$UpdateEntityData
+not done / not emitted	VL.EntitySystem.EntityManager<object, int, object, object>$$get_defaultChunkKey
+not done / not emitted	VL.Rendering.RenderingUtility$$.cctor
+not done / not emitted	VL.Rendering.RenderingUtility$$GetMotionVectorData
+not done / not emitted	VL.Rendering.RenderingUtility$$IsSupportedDevice
+not done / not emitted	VL.Rendering.RenderingUtility$$SetGlobalMipBias
+not done / not emitted	VL.Rendering.RenderingUtility$$SetupMotionVectorData
+
+Reproduce:
+  /data/tmp/claude-0/-data-xy/d6347410-64eb-4581-b680-50268b6ef823/scratchpad/ref14_round.sh 20
+  /data/xy/gakumas/scripts/ref14_check.sh 'Internal\.DeferredLights\$\$|^VL\.(Rendering\.(Planar|SharedPlanar|CameraPlanes|CameraUtility|AABBUtility|RenderingUtility)|EntitySystem\.)|UniversalAdditionalLightData\$\$'
+  /data/xy/gakumas/tools/venv/bin/python /data/xy/gakumas/scripts/ref14_show.py 'Full.Class$$Method' [--semantic]
+
+  Run comparisons after the build finishes so the reference binary and dumped metadata agree.
+  Evidence and decompilations: /data/xy/gakumas/work/urp14-decomp/{DeferredLights,task_b,task_b_extra,task_b_aabb,task_b_utility}.
+  ExecutePlanarReflection and DrawPlanarReflections were reconstructed from il2dis.py when Hex-Rays failed.
+  Mesh triangle initializers were extracted from the game metadata field-default table.
