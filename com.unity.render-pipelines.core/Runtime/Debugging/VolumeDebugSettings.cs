@@ -80,10 +80,7 @@ namespace UnityEngine.Rendering
 
                     if (camera.cameraType != CameraType.Preview && camera.cameraType != CameraType.Reflection)
                     {
-                        if (!camera.TryGetComponent<T>(out T additionalData))
-                            additionalData = camera.gameObject.AddComponent<T>();
-
-                        if (additionalData != null)
+                        if (camera.TryGetComponent<T>(out T additionalData))
                             m_Cameras.Add(camera);
                     }
                 }
@@ -273,9 +270,17 @@ namespace UnityEngine.Rendering
         /// <returns>The weight of the volume</returns>
         public float GetVolumeWeight(Volume volume)
         {
-            // TODO: Store the calculated weight in the stack for the volumes that have influence and return it here
-            var triggerPos = selectedCameraPosition;
-            return ComputeWeight(volume, triggerPos);
+            if (weights == null)
+                return 0.0f;
+            float accumulatedWeight = 0.0f;
+            for (int i = 0; i < volumes.Length; ++i)
+            {
+                float weight = weights[i] * (1.0f - accumulatedWeight);
+                if (volumes[i] == volume)
+                    return weight;
+                accumulatedWeight += weight;
+            }
+            return 0.0f;
         }
 
         /// <summary>
@@ -285,9 +290,10 @@ namespace UnityEngine.Rendering
         /// <returns>If the volume has influence</returns>
         public bool VolumeHasInfluence(Volume volume)
         {
-            // TODO: Store the calculated weight in the stack for the volumes that have influence and return it here
-            var triggerPos = selectedCameraPosition;
-            return ComputeWeight(volume, triggerPos) > 0.0f;
+            if (weights == null)
+                return false;
+            int index = Array.IndexOf(volumes, volume);
+            return index != -1 && weights[index] != 0.0f;
         }
     }
 }

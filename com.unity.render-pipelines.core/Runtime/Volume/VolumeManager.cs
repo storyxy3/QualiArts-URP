@@ -430,6 +430,9 @@ namespace UnityEngine.Rendering
         /// <seealso cref="VolumeStack"/>
         public void Update(VolumeStack stack, Transform trigger, LayerMask layerMask)
         {
+            if (layerMask == 0)
+                return;
+
             Assert.IsNotNull(stack);
 
             CheckBaseTypes();
