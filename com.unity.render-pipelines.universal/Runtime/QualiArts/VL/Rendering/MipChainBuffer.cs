@@ -78,11 +78,17 @@ namespace VL.Rendering
         }
         public void Execute(CommandBuffer cmd, int width, int height, RTHandle source = null)
         {
+            int GetExtraPixel(int x)
+            {
+                int remainder = x % _threadSize;
+                return remainder == 0 ? 0 : _threadSize - remainder;
+            }
+            static int DivRoundUp(int x, int y) => (x + y - 1) / y;
             using (new ProfilingScope(cmd, _profilingSampler))
             {
                 var desc = new RenderTextureDescriptor(width, height, _format, 0);
-                desc.width += width % _threadSize == 0 ? 0 : _threadSize - width % _threadSize;
-                desc.height += Mathf.CeilToInt(height * 0.5f) + (height % _threadSize == 0 ? 0 : _threadSize - height % _threadSize);
+                desc.width += GetExtraPixel(width);
+                desc.height += Mathf.CeilToInt(height * 0.5f) + GetExtraPixel(height);
                 desc.enableRandomWrite = true;
                 RenderingUtils.ReAllocateIfNeeded(ref _mipBuffer, in desc, FilterMode.Point, TextureWrapMode.Repeat, name: _bufferName);
                 cmd.SetGlobalTexture(_bufferName, _mipBuffer.nameID);
@@ -91,12 +97,12 @@ namespace VL.Rendering
                 cmd.SetComputeTextureParam(_compute, _mipChainKernelIndex, _Output, _mipBuffer.nameID);
                 var size = new Vector2Int(width, height);
                 SetComputeOffsetParams(cmd, Vector2Int.zero, size, Vector2Int.zero, size);
-                cmd.DispatchCompute(_compute, _prepareKernelIndex, (width + _threadSize - 1) / _threadSize, (height + _threadSize - 1) / _threadSize, 1);
+                cmd.DispatchCompute(_compute, _prepareKernelIndex, DivRoundUp(width, _threadSize), DivRoundUp(height, _threadSize), 1);
                 for (int i = 1; i < MipCount; ++i)
                 {
                     var mipSize = Size[i];
                     SetComputeOffsetParams(cmd, MipMin[i - 1], MipMax[i - 1], MipMin[i], Size[i - 1]);
-                    cmd.DispatchCompute(_compute, _mipChainKernelIndex, (mipSize.x + _threadSize - 1) / _threadSize, (mipSize.y + _threadSize - 1) / _threadSize, 1);
+                    cmd.DispatchCompute(_compute, _mipChainKernelIndex, DivRoundUp(mipSize.x, _threadSize), DivRoundUp(mipSize.y, _threadSize), 1);
                 }
             }
         }
