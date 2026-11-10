@@ -28,7 +28,7 @@ namespace VL.Rendering
         public Vector2Int[] MipMin { get; } = new Vector2Int[MaxMipCount];
         public Vector2Int[] MipMax { get; } = new Vector2Int[MaxMipCount];
         public Vector2Int[] Size { get; } = new Vector2Int[MaxMipCount];
-        public RenderTargetIdentifier nameID => _mipBuffer.nameID;
+        public RenderTargetIdentifier nameID => _mipBuffer != null ? _mipBuffer.nameID : default(RenderTargetIdentifier);
         public MipChainBuffer(ComputeShader compute, GraphicsFormat format, string bufferName)
         {
             _profilingSampler = new ProfilingSampler("MipChainBuffer (" + bufferName + ")");

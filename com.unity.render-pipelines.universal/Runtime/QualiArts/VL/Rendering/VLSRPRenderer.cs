@@ -12,6 +12,12 @@ using VL.Rendering.Internal;
 
 public sealed class VLSRPRenderer : UniversalRenderer
 {
+	// DMM PC allocates _CameraDepthTexture / _MotionVectorDepthTexture as D32_SFloat, the APK as D24_UNorm: UniversalRenderer's platform switch.
+#if (UNITY_SWITCH || UNITY_ANDROID) && !UNITY_EDITOR
+	const GraphicsFormat k_VLDepthFormat = GraphicsFormat.D24_UNorm;
+#else
+	const GraphicsFormat k_VLDepthFormat = GraphicsFormat.D32_SFloat;
+#endif
 	private VLMotionVectorRenderPass m_VLMotionVectorPass;
 
 
@@ -261,22 +267,16 @@ public sealed class VLSRPRenderer : UniversalRenderer
 
 		requiresDepthPrepass |= useDepthPriming;
 
-		if (requiresDepthTexture)
+		// APK 3.5.3 / DMM: set unconditionally, default AfterRenderingSkybox, no post-process fallback branch.
+		bool copyDepthAfterTransparents = m_CopyDepthMode == CopyDepthMode.AfterTransparents;
+		RenderPassEvent copyDepthPassEvent = copyDepthAfterTransparents ? RenderPassEvent.AfterRenderingTransparents : RenderPassEvent.AfterRenderingSkybox;
+		if (renderPassInputs.requiresDepthTexture)
+			copyDepthPassEvent = (RenderPassEvent)Mathf.Min((int)RenderPassEvent.AfterRenderingTransparents, ((int)renderPassInputs.requiresDepthTextureEarliestEvent) - 1);
+		m_CopyDepthPass.renderPassEvent = copyDepthPassEvent;
+		if (copyDepthPassEvent < RenderPassEvent.AfterRenderingTransparents)
 		{
-			bool copyDepthAfterTransparents = m_CopyDepthMode == CopyDepthMode.AfterTransparents;
-			RenderPassEvent copyDepthPassEvent = copyDepthAfterTransparents ? RenderPassEvent.AfterRenderingTransparents : RenderPassEvent.AfterRenderingOpaques;
-			if (renderPassInputs.requiresDepthTexture)
-				copyDepthPassEvent = (RenderPassEvent)Mathf.Min((int)RenderPassEvent.AfterRenderingTransparents, ((int)renderPassInputs.requiresDepthTextureEarliestEvent) - 1);
-			m_CopyDepthPass.renderPassEvent = copyDepthPassEvent;
-			if (copyDepthPassEvent < RenderPassEvent.AfterRenderingTransparents)
-			{
-				m_CopyDepthPass.m_CopyResolvedDepth = false;
-				m_CopyDepthMode = CopyDepthMode.AfterOpaques;
-			}
-		}
-		else if (cameraHasPostProcessingWithDepth || isSceneViewOrPreviewCamera || isGizmosEnabled)
-		{
-			m_CopyDepthPass.renderPassEvent = RenderPassEvent.AfterRenderingTransparents;
+			m_CopyDepthPass.m_CopyResolvedDepth = false;
+			m_CopyDepthMode = CopyDepthMode.AfterOpaques;
 		}
 
 		createColorTexture |= RequiresIntermediateColorTexture(ref cameraData);
@@ -422,7 +422,7 @@ public sealed class VLSRPRenderer : UniversalRenderer
 		{
 			var depthDescriptor = cameraTargetDescriptor;
 			depthDescriptor.graphicsFormat = GraphicsFormat.None;
-			depthDescriptor.depthStencilFormat = GraphicsFormat.D24_UNorm;
+			depthDescriptor.depthStencilFormat = k_VLDepthFormat;
 			depthDescriptor.msaaSamples = 1;
 			RenderingUtils.ReAllocateIfNeeded(ref m_DepthTexture, depthDescriptor, FilterMode.Point, wrapMode: TextureWrapMode.Clamp, name: "_CameraDepthTexture");
 			cmd.SetGlobalTexture(m_DepthTexture.name, m_DepthTexture.nameID);
@@ -599,7 +599,7 @@ public sealed class VLSRPRenderer : UniversalRenderer
 		{
 			var depthDescriptor = cameraTargetDescriptor;
 			depthDescriptor.graphicsFormat = GraphicsFormat.None;
-			depthDescriptor.depthStencilFormat = GraphicsFormat.D24_UNorm;
+			depthDescriptor.depthStencilFormat = k_VLDepthFormat;
 			depthDescriptor.msaaSamples = 1;
 			RenderingUtils.ReAllocateIfNeeded(ref m_MotionVectorDepth, depthDescriptor, FilterMode.Point, TextureWrapMode.Clamp, name: "_MotionVectorDepthTexture");
 			m_VLMotionVectorPass.Setup(m_AdditionalInfoTexture, m_MotionVectorDepth);

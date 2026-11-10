@@ -39,7 +39,14 @@ namespace VL.Rendering
             attachment.storeAction = RenderBufferStoreAction.DontCare;
             return attachment;
         }).ToArray();
-        public static readonly AttachmentDescriptor DepthAttachment = new AttachmentDescriptor(GraphicsFormat.D24_UNorm_S8_UInt)
+        // DMM PC .cctor: GraphicsFormat 94 (D32_SFloat_S8_UInt); APK: 92 (D24_UNorm_S8_UInt). Same platform switch as
+        // UniversalRenderer.k_DepthStencilFormat.
+#if (UNITY_SWITCH || UNITY_ANDROID) && !UNITY_EDITOR
+        const GraphicsFormat k_DepthAttachmentFormat = GraphicsFormat.D24_UNorm_S8_UInt;
+#else
+        const GraphicsFormat k_DepthAttachmentFormat = GraphicsFormat.D32_SFloat_S8_UInt;
+#endif
+        public static readonly AttachmentDescriptor DepthAttachment = new AttachmentDescriptor(k_DepthAttachmentFormat)
         {
             loadAction = RenderBufferLoadAction.Clear,
             storeAction = RenderBufferStoreAction.DontCare,

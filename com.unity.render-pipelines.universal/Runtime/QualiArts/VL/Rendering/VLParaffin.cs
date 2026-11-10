@@ -10,7 +10,7 @@ namespace VL.Rendering
 [VolumeComponentMenu("VL/Paraffin")]
 public class VLParaffin : VolumeComponent, IPostProcessComponent
 {
-	public FloatParameter baseAspect = new FloatParameter(1.7778f, false);
+	public FloatParameter baseAspect = new FloatParameter(1.7777778f, false);
 
 	public FlareParameter flare0 = new FlareParameter();
 

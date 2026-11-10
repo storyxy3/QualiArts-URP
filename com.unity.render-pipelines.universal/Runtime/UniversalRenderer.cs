@@ -217,8 +217,8 @@ namespace UnityEngine.Rendering.Universal
 
             ForwardLights.InitParams forwardInitParams;
             forwardInitParams.lightCookieManager = m_LightCookieManager;
-            forwardInitParams.forwardPlus = data.renderingMode == RenderingMode.ForwardPlus;
-            m_Clustering = data.renderingMode == RenderingMode.ForwardPlus;
+            forwardInitParams.forwardPlus = data.renderingMode == RenderingMode.ForwardPlus || data.renderingMode == RenderingMode.Deferred;
+            m_Clustering = data.renderingMode == RenderingMode.ForwardPlus || data.renderingMode == RenderingMode.Deferred;
             m_ForwardLights = new ForwardLights(forwardInitParams);
             //m_DeferredLights.LightCulling = data.lightCulling;
             this.m_RenderingMode = data.renderingMode;

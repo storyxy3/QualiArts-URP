@@ -1498,7 +1498,7 @@ namespace VL.Rendering.Internal
 
         public float Exp2(float x)
         {
-            return Mathf.Exp(x * 0.69315f);
+            return Mathf.Exp(x * 0.6931472f);
         }
 
         private void SetupVLDiffusion(CommandBuffer cmd, Material material, RTHandle source, RenderTextureDescriptor descriptor)

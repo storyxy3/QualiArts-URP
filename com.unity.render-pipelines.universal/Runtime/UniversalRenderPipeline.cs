@@ -1489,7 +1489,7 @@ namespace UnityEngine.Rendering.Universal
                     break;
 
                 case 3:
-                    shadowData.mainLightShadowCascadesSplit = new Vector3(settings.cascade3Split.x, settings.cascade3Split.y, 0.0f);
+                    shadowData.mainLightShadowCascadesSplit = new Vector3(settings.cascade3Split.x, settings.cascade3Split.y, 1.0f);
                     break;
 
                 default:
